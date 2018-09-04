@@ -184,7 +184,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </dependency>
         </dependencies>
     <build>
-        <finalName>international-capstone-exchange</finalName>
+        <finalName>capstone-exchange-sponsors</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

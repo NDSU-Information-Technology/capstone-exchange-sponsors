@@ -59,7 +59,7 @@
 		<Arg />
 		<Arg>java:/comp/env/bean/pac4j</Arg>
 		<Arg>
-			<New class="edu.ndsu.eci.international_capstone_exchange.util.OAuthConfig">
+			<New class="edu.ndsu.eci.capstone_exchange_sponsors.util.OAuthConfig">
 				<Set name="hostname">home.frovarp.com</Set>
 				<Set name="googleId">home.frovarp.com</Set>
 				<Set name="googleSecret">home.frovarp.com</Set>
@@ -72,7 +72,7 @@
     <Arg />
     <Arg>java:/comp/env/bean/singleuser</Arg>
     <Arg>
-      <New class="edu.ndsu.eci.international_capstone_exchange.util.SingleUserMode">
+      <New class="edu.ndsu.eci.capstone_exchange_sponsors.util.SingleUserMode">
         <Set name="credential">foobar</Set>
       </New>
     </Arg>
@@ -82,7 +82,7 @@
     <Arg />
     <Arg>java:/comp/env/bean/emailconf</Arg>
     <Arg>
-      <New class="edu.ndsu.eci.international_capstone_exchange.util.EmailConfig">
+      <New class="edu.ndsu.eci.capstone_exchange_sponsors.util.EmailConfig">
         <Set name="fromAddress">ndsu.icpe@ndsu.edu</Set>
       </New>
     </Arg>
