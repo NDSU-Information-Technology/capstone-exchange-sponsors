@@ -8,6 +8,7 @@ import org.apache.cayenne.CayenneDataObject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Role;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -32,6 +33,7 @@ public abstract class _User extends CayenneDataObject {
     public static final String COUNTRY_PROPERTY = "country";
     public static final String PROPOSALS_PROPERTY = "proposals";
     public static final String ROLES_PROPERTY = "roles";
+    public static final String SPONSORSHIPS_PROPERTY = "sponsorships";
 
     public static final String PK_PK_COLUMN = "pk";
 
@@ -142,6 +144,18 @@ public abstract class _User extends CayenneDataObject {
     @SuppressWarnings("unchecked")
     public List<Role> getRoles() {
         return (List<Role>)readProperty("roles");
+    }
+
+
+    public void addToSponsorships(Sponsorship obj) {
+        addToManyTarget("sponsorships", obj, true);
+    }
+    public void removeFromSponsorships(Sponsorship obj) {
+        removeToManyTarget("sponsorships", obj, true);
+    }
+    @SuppressWarnings("unchecked")
+    public List<Sponsorship> getSponsorships() {
+        return (List<Sponsorship>)readProperty("sponsorships");
     }
 
 

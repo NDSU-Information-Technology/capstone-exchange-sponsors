@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<!--
- Copyright 2018 North Dakota State University
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
--->
+<!-- Copyright 2018 North Dakota State University Licensed under the Apache 
+	License, Version 2.0 (the "License"); you may not use this file except in 
+	compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
 	<head>
 		<meta charset="utf-8" />
 		<title>${title}</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content="" />
 		<meta name="author" content="" />
 		<!-- Fav and touch icons -->
@@ -28,9 +21,12 @@
 
 		<!--@Author masingh -->
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Raleway" />
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 		<style>
 			body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 			body, html {
@@ -49,8 +45,8 @@
 		<div class="navbar navbar-inverse" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".navbar-collapse">
+					<button type="button" class="navbar-toggle"
+						data-toggle="collapse" data-target=".navbar-collapse">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
@@ -79,46 +75,50 @@
 		</div>
 
 		<div class="container">
-          <div class="row">
-			<div class="col-sm-3">
-				<p>Admin pages</p>
-				<ul>
-					<li><t:pagelink page="admin/admin">Admin</t:pagelink></li>
-					<li>
-						<t:pagelink page="admin/countries">Countries</t:pagelink>
-					</li>
-					<li>
-						<t:pagelink page="admin/institutions">Institutions</t:pagelink>
-					</li>
-          <li>
-            <t:pagelink page="admin/pairings">Pairings</t:pagelink>
-          </li>
-          <li>
-            <t:pagelink page="admin/proposals">Proposals</t:pagelink>
-          </li>
-          <li>
-            <t:pagelink page="admin/proposaltypes">Proposal Types</t:pagelink>
-          </li>          
-					<li>
-						<t:pagelink page="admin/subjects">Subjects</t:pagelink>
-					</li>
-					<li>
-						<t:pagelink page="admin/users">Users</t:pagelink>
-					</li>
-					<li>
-						<t:pagelink page="admin/autocomp">Autocomplete Test</t:pagelink>
-					</li>
-				</ul>
+			<div class="row">
+				<div class="col-sm-3">
+					<p>Admin pages</p>
+					<ul>
+						<li>
+							<t:pagelink page="admin/admin">Admin</t:pagelink>
+						</li>
+						<li>
+							<t:pagelink page="admin/countries">Countries</t:pagelink>
+						</li>
+						<!-- <li>
+							<t:pagelink page="admin/institutions">Institutions</t:pagelink>
+						</li>  -->
+						<!-- <li>
+							<t:pagelink page="admin/pairings">Pairings</t:pagelink>
+						</li> -->
+						<li>
+							<t:pagelink page="admin/proposals">Proposals</t:pagelink>
+						</li>
+						<!-- <li>
+							<t:pagelink page="admin/proposaltypes">Proposal Types</t:pagelink>
+						</li> -->
+						<li>
+							<t:pagelink page="admin/subjects">Subjects</t:pagelink>
+						</li>
+						<li>
+							<t:pagelink page="admin/users">Users</t:pagelink>
+						</li>
+						<!-- <li>
+							<t:pagelink page="admin/autocomp">Autocomplete Test</t:pagelink>
+						</li> -->
+					</ul>
+				</div>
+				<div class="col-sm-9">
+					<h1>${title}</h1>
+					<t:body />
+				</div>
 			</div>
-			<div class="col-sm-9">
-				<h1>${title}</h1>
-				<t:body />
-			</div>
-          </div>
 
-          <footer>
-            <p>&copy; International Capstone Exchange 2017</p>
-          </footer>
+			<footer>
+				<p>&copy;
+					International Capstone Exchange 2017
+				</p>
+			</footer>
 
 		</div> <!-- /container -->
 

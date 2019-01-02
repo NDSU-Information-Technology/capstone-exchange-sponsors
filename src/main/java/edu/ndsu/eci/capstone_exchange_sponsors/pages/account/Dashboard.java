@@ -21,10 +21,12 @@ import org.apache.cayenne.ObjectContext;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
@@ -49,9 +51,18 @@ public class Dashboard {
   @Inject
   private ObjectContext context;
   
+  @Inject
+  private JavaScriptSupport javaScriptSupport;
+  
   /** tml row for subjects */
   @Property
   private Subject subjectRow;
+  
+  @Property
+  private Sponsorship sponsorshipRow;
+  
+  @Property
+  private List<Sponsorship> sponsorships;
   
   /** tml row for proposals */
   @Property
@@ -65,7 +76,12 @@ public class Dashboard {
    */
   public void setupRender() {
     user = userInfo.getUser();
+    sponsorships = user.getSponsorships();
     proposals = user.getProposals();
+  }
+  
+  void afterRender() {
+    javaScriptSupport.require("bootstrap/tab");
   }
   
   /**
