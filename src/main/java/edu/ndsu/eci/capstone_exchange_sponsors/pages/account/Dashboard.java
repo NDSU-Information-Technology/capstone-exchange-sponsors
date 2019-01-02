@@ -14,7 +14,6 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
@@ -30,7 +29,6 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.ProposalStatus;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**

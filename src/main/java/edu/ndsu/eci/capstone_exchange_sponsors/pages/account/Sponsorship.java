@@ -1,5 +1,7 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
+import java.util.Date;
+
 import org.apache.cayenne.ObjectContext;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.InjectComponent;
@@ -46,6 +48,7 @@ public class Sponsorship {
   @CommitAfter
   public void onSuccess() {
     sponsorship.setUser((User) context.localObject(userInfo.getUser().getObjectId(), null));
+    sponsorship.setCreated(new Date());
     context.registerNewObject(sponsorship);
     alerts.success("New Sponsorship Successfully Created");
   }

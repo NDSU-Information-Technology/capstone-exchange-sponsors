@@ -1,5 +1,7 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.persist.auto;
 
+import java.util.Date;
+
 import org.apache.cayenne.CayenneDataObject;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
@@ -14,8 +16,10 @@ import edu.ndsu.eci.capstone_exchange_sponsors.util.Payment;
 public abstract class _Sponsorship extends CayenneDataObject {
 
     public static final String COMPANY_PROPERTY = "company";
+    public static final String CREATED_PROPERTY = "created";
     public static final String EMAIL_PROPERTY = "email";
     public static final String PAYMENT_PROPERTY = "payment";
+    public static final String STRATEGIC_PARTNER_PROPERTY = "strategicPartner";
     public static final String USER_PROPERTY = "user";
 
     public static final String PK_PK_COLUMN = "pk";
@@ -25,6 +29,13 @@ public abstract class _Sponsorship extends CayenneDataObject {
     }
     public String getCompany() {
         return (String)readProperty("company");
+    }
+
+    public void setCreated(Date created) {
+        writeProperty("created", created);
+    }
+    public Date getCreated() {
+        return (Date)readProperty("created");
     }
 
     public void setEmail(String email) {
@@ -39,6 +50,13 @@ public abstract class _Sponsorship extends CayenneDataObject {
     }
     public Payment getPayment() {
         return (Payment)readProperty("payment");
+    }
+
+    public void setStrategicPartner(Boolean strategicPartner) {
+        writeProperty("strategicPartner", strategicPartner);
+    }
+    public Boolean getStrategicPartner() {
+        return (Boolean)readProperty("strategicPartner");
     }
 
     public void setUser(User user) {

@@ -35,9 +35,11 @@
 	</db-entity>
 	<db-entity name="sponsorships">
 		<db-attribute name="company" type="VARCHAR" length="255"/>
+		<db-attribute name="created" type="TIMESTAMP" isMandatory="true"/>
 		<db-attribute name="email" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="payment" type="VARCHAR" isMandatory="true" length="50"/>
 		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="strategicPartner" type="BOOLEAN" isMandatory="true"/>
 		<db-attribute name="userPk" type="INTEGER" isMandatory="true"/>
 	</db-entity>
 	<db-entity name="subjects">
@@ -84,8 +86,10 @@
 	</obj-entity>
 	<obj-entity name="Sponsorship" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship" dbEntityName="sponsorships">
 		<obj-attribute name="company" type="java.lang.String" db-attribute-path="company"/>
+		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
 		<obj-attribute name="email" type="java.lang.String" db-attribute-path="email"/>
 		<obj-attribute name="payment" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Payment" db-attribute-path="payment"/>
+		<obj-attribute name="strategicPartner" type="java.lang.Boolean" db-attribute-path="strategicPartner"/>
 	</obj-entity>
 	<obj-entity name="Subject" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject" dbEntityName="subjects">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>

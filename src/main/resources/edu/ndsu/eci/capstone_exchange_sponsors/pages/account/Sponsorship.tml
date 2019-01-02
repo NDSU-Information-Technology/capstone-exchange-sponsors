@@ -3,15 +3,80 @@
 	xmlns:p="tapestry:parameter" t:type="layout" title="Sponsorship Page">
     
     <head>
-    
+    	<style>
+	    	h2 {
+	    		margin-top: 0px;
+	    	}
+	    	ul {
+	    		list-style-type: none;
+	    		padding-left: 0px;
+	    	}
+	    	aside {
+	    		flex: 1;
+	    		min-width: 160px;
+	    		align-self: flex-start;
+	    		position: sticky;
+	    		position: -webkit-sticky; /* Safari */
+	    		top: 20px;
+	    	}
+	    	main {
+	    		flex: 5;
+	    	}
+	    	
+	    	.details {
+	    		margin-bottom: 10px;
+	    	}
+	    	
+	    	#bodyDisplay {
+	    		display: flex;
+	    	}
+    	</style>
     </head>
     <body>
-    	<main>
-	    	<h2>Create Sponsorship</h2>
-	    	<section>Insert Sponsor Details Here</section>
-    		
-    		<t:BeanEditForm t:id="sponsorshipForm" object="sponsorship" submitLabel="Create"
-    			include="company, email, payment"/>
-    	</main>
+    	<div id="bodyDisplay">
+	    	<aside>
+	    		<ul>
+	    			<li><a href="#sponsorDetails">What is Sponsorship?</a></li>
+	    			<li><a href="#partnerDetails">Strategic Partnership</a></li>
+	    			<li><a href="#form">Sponsorship Form</a></li>
+	    		</ul>
+	    	</aside>
+	    	<main>
+		    	<h2>Create Sponsorship</h2>
+		    	<section class="details">
+		    		<h3 id="sponsorDetails">What is Sponsorship?</h3>
+		    		<p>
+		    			Lorem ipsum dolor sit amet, ea usu magna similique, mea error everti invenire ea. An nemore evertitur interpretaris est, dico aperiam reformidans at sit, cu luptatum patrioque theophrastus est. Cu vim vidit eirmod sententiae. Nec nullam semper an, forensibus deseruisse cu mea.
+						
+						Est exerci comprehensam at, graecis definitionem vel no. Cum atqui nostrum te. At idque lorem adipisci sit. His an simul quando. His case atomorum persecuti ut, cu nostrud omittam cum.
+						
+						Placerat sapientem ei nec. In habeo propriae sit, iusto laudem concludaturque eos ea. Ut doming essent menandri qui, pro eu graecis adipiscing. Hinc posse aliquando no sit, nam fugit molestiae urbanitas in, ex illum tation phaedrum usu.
+						
+						Te eum appetere principes assueverit, has cu nullam offendit splendide. Nisl corrumpit intellegebat ut qui, ad porro ceteros scaevola eum. Modo nibh mutat vis ei, assum melius ullamcorper sea ea, mazim copiosae invidunt duo id. Quot munere nonumes ex per, per erant civibus ea.
+						
+						Sed nulla apeirian senserit ex. Quo unum rationibus ex, mea in purto dictas deleniti. Cu liber regione usu, volumus dolores contentiones ad cum. Mei in blandit percipit moderatius, et brute ceteros sit. Id cum homero quaestio appellantur.
+		    		</p>
+		    		
+		    		<h3 id="partnerDetails">Strategic Partnership</h3>
+		    		<p>
+		    			Lorem ipsum dolor sit amet, ea usu magna similique, mea error everti invenire ea. An nemore evertitur interpretaris est, dico aperiam reformidans at sit, cu luptatum patrioque theophrastus est. Cu vim vidit eirmod sententiae. Nec nullam semper an, forensibus deseruisse cu mea.
+						
+						Est exerci comprehensam at, graecis definitionem vel no. Cum atqui nostrum te. At idque lorem adipisci sit. His an simul quando. His case atomorum persecuti ut, cu nostrud omittam cum.
+						
+						Placerat sapientem ei nec. In habeo propriae sit, iusto laudem concludaturque eos ea. Ut doming essent menandri qui, pro eu graecis adipiscing. Hinc posse aliquando no sit, nam fugit molestiae urbanitas in, ex illum tation phaedrum usu.
+						
+						Te eum appetere principes assueverit, has cu nullam offendit splendide. Nisl corrumpit intellegebat ut qui, ad porro ceteros scaevola eum. Modo nibh mutat vis ei, assum melius ullamcorper sea ea, mazim copiosae invidunt duo id. Quot munere nonumes ex per, per erant civibus ea.
+						
+						Sed nulla apeirian senserit ex. Quo unum rationibus ex, mea in purto dictas deleniti. Cu liber regione usu, volumus dolores contentiones ad cum. Mei in blandit percipit moderatius, et brute ceteros sit. Id cum homero quaestio appellantur.
+		    		</p>
+		    	</section>
+	    		
+	    		<section>
+	    			<h3>Sponsorship Form</h3>
+		    		<t:BeanEditForm t:id="sponsorshipForm" object="sponsorship" submitLabel="Create"
+		    			include="company, email, payment, strategicPartner"/>
+	    		</section>
+	    	</main>
+    	</div>
     </body>
 </html>

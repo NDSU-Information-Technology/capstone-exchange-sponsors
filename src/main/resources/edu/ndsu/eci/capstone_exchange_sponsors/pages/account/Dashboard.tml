@@ -42,7 +42,7 @@
 				<div id="tab2" class="tab-pane">
 					<h2>Sponsorships</h2>
 					<t:grid source="sponsorships" row="sponsorshipRow"
-						include="company, payment, email">
+						include="company, payment, email, strategicPartner, created">
 					</t:grid>
 					<div>
 						<t:pagelink page="account/sponsorship">Create Sponsorship</t:pagelink>
