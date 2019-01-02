@@ -32,7 +32,7 @@
 				<div id="tab1" class="tab-pane active">
 					<h2>Account Info</h2>
 					<t:Beandisplay object="user"
-						exclude="proposals,roles,credentialsExpired,accountLocked,id,status,pairingNotes,federatedId,pairsMade">
+						include="name, departmentName, country, email, workPhone, created, source, ssoName, ssoEmail, url">
 					</t:Beandisplay>
 					<div>
 						<t:pagelink page="account/updateaccount">Update Account</t:pagelink>
@@ -42,8 +42,11 @@
 				<div id="tab2" class="tab-pane">
 					<h2>Sponsorships</h2>
 					<t:grid source="sponsorships" row="sponsorshipRow"
-						include="company, name, payment, email">
+						include="company, payment, email">
 					</t:grid>
+					<div>
+						<t:pagelink page="account/sponsorship">Create Sponsorship</t:pagelink>
+					</div>
 				</div>
 
 				<!-- <h2>Pairings</h2> <p>Follow link for more details.</p> <t:grid source="pairings" 
@@ -54,9 +57,9 @@
 			
 				<div id="tab3" class="tab-pane">
 					<h2>Proposals</h2>
-					<t:grid source="proposals"
-						include="created,name,potentialStart,subjects,types,description"
-						row="proposalRow" add="edit,delete">
+					<t:grid source="proposals" row="proposalRow"
+						include="created, name, potentialStart,subjects,types,description"
+						add="edit, delete">
 						<p:descriptionCell>
 							<t:outputraw value="proposalRow.description"></t:outputraw>
 						</p:descriptionCell>
@@ -91,7 +94,7 @@
 						.
 					</div>
 					<t:grid source="subjects" row="subjectRow"
-						include="name,description">
+						include="name, description">
 						<p:descriptionCell>
 							<t:outputraw value="subjectRow.description"></t:outputraw>
 						</p:descriptionCell>

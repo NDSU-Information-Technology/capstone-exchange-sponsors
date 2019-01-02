@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+	xmlns:p="tapestry:parameter" t:type="layout" title="Sponsorship Page">
+    
+    <head>
+    
+    </head>
+    <body>
+    	<main>
+	    	<h2>Create Sponsorship</h2>
+	    	<section>Insert Sponsor Details Here</section>
+    		
+    		<t:BeanEditForm t:id="sponsorshipForm" object="sponsorship" submitLabel="Create"
+    			include="company, email, payment"/>
+    	</main>
+    </body>
+</html>
