@@ -8,7 +8,8 @@
 	the specific language governing permissions and limitations under the License. -->
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+	xmlns:p="tapestry:parameter">
 	<head>
 		<meta charset="utf-8" />
 		<title>${title}</title>
@@ -55,9 +56,14 @@
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<t:loop source="pageNames" value="pageName">
+						<t:loop source="pageNames" value="pageName" index="pageIndex">
 							<t:any element="li" class="prop:classForPageName">
-								<t:pagelink page="prop:pageName">${pageName}</t:pagelink>
+								<t:If test="loggedIn()">
+									<t:pagelink page="prop:pageName">${pseudoName}</t:pagelink>
+									<p:else>
+										<t:pagelink page="prop:pageName">${pageName}</t:pagelink>
+									</p:else>
+								</t:If>
 							</t:any>
 						</t:loop>
 					</ul>
@@ -85,27 +91,22 @@
 						<li>
 							<t:pagelink page="admin/countries">Countries</t:pagelink>
 						</li>
-						<!-- <li>
-							<t:pagelink page="admin/institutions">Institutions</t:pagelink>
-						</li>  -->
-						<!-- <li>
-							<t:pagelink page="admin/pairings">Pairings</t:pagelink>
-						</li> -->
+						<!-- <li> <t:pagelink page="admin/institutions">Institutions</t:pagelink> 
+							</li> -->
+						<!-- <li> <t:pagelink page="admin/pairings">Pairings</t:pagelink> </li> -->
 						<li>
 							<t:pagelink page="admin/proposals">Proposals</t:pagelink>
 						</li>
-						<!-- <li>
-							<t:pagelink page="admin/proposaltypes">Proposal Types</t:pagelink>
-						</li> -->
+						<!-- <li> <t:pagelink page="admin/proposaltypes">Proposal Types</t:pagelink> 
+							</li> -->
 						<li>
 							<t:pagelink page="admin/subjects">Subjects</t:pagelink>
 						</li>
 						<li>
 							<t:pagelink page="admin/users">Users</t:pagelink>
 						</li>
-						<!-- <li>
-							<t:pagelink page="admin/autocomp">Autocomplete Test</t:pagelink>
-						</li> -->
+						<!-- <li> <t:pagelink page="admin/autocomp">Autocomplete Test</t:pagelink> 
+							</li> -->
 					</ul>
 				</div>
 				<div class="col-sm-9">

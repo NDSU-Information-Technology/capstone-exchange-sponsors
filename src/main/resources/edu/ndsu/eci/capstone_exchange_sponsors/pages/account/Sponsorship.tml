@@ -72,11 +72,21 @@
 		    	</section>
 	    		
 	    		<section>
-	    			<h3>Sponsorship Form</h3>
+	    			<h3 id="form">Sponsorship Form</h3>
 		    		<t:BeanEditForm t:id="sponsorshipForm" object="sponsorship" submitLabel="Create"
-		    			include="company, email, payment, strategicPartner"/>
+		    			include="company, email, payment, strategicPartner">
+		    			<p:company>
+		    				<t:Label for="company"/>
+		    				<t:TextField t:id="company" value="sponsorship.company"/>
+		    			</p:company>
+		    			<p:email>
+		    				<t:Label for="email"/>
+		    				<t:TextField t:id="email" type="email" value="sponsorship.email"/>
+		    			</p:email>
+		    		</t:BeanEditForm>
 	    		</section>
 	    	</main>
     	</div>
+    	
     </body>
 </html>

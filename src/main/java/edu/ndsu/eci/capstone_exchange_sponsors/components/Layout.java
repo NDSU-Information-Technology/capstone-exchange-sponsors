@@ -20,6 +20,7 @@ import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.tynamo.security.services.SecurityService;
@@ -45,6 +46,10 @@ public class Layout {
   /** current page name for loop */
   @Property
   private String pageName;
+  
+  /** PageName index in loop */
+  @Property
+  private int pageIndex;
 
   /** user info */
   @Inject
@@ -52,6 +57,14 @@ public class Layout {
   
   @Inject
   private SecurityService securityService;
+  
+  /** List of page names */
+  @Persist
+  private List<String> pageNames;
+  
+  /** List of page name's alternative labels */
+  @Persist
+  private List<String> pseudoNames;
 
   /**
    * Get the styling CSS class for specified page
@@ -62,33 +75,65 @@ public class Layout {
         ? "active"
         : null;
   }
+  
+  /**
+   * Boolean whether user is logged in.
+   * @return True if logged in, false otherwise.
+   */
+  public boolean loggedIn() {
+    return userInfo.isLoggedIn();
+  }
 
   /**
    * List of page names to be shown in the menu
-   * FIXME handle pages and page names
    * @return list of page names
    */
   public String[] getPageNames() {
-    if (!userInfo.isLoggedIn()) {
+    if (!loggedIn()) {
       return new String[]{"Index","Contact","Privacy","Login"};
     }
     
-    List<String> pageNames = new ArrayList<>();
-    pageNames.add("Index");
-    pageNames.add("Contact");
-    pageNames.add("Privacy");
-    
-    if (userInfo.isAdmin()) {
-      pageNames.add("Admin/Admin");
+    if(pageNames == null) {
+      pageNames = new ArrayList<>();
+      pageNames.add("Index");
+      pageNames.add("Contact");
+      pageNames.add("Privacy");
+      
+      if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
+        pageNames.add("Account/Dashboard");
+      }
+      
+      if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
+        pageNames.add("Account/Sponsorship");
+      }
+      
+      if (userInfo.isAdmin()) {
+        pageNames.add("Admin/Admin");
+      }
+      
+      pageNames.add("Logout");
     }
-    
-    if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
-      pageNames.add("Account/Dashboard");
-    }
-    
-    pageNames.add("Logout");
     
     return pageNames.toArray(new String[pageNames.size()]);
+  }
+  
+  /**
+   * Get alternative name of a pageName.
+   * @return Alternative name for a page.
+   */
+  public String getPseudoName() {
+    if(pseudoNames == null) {
+      pseudoNames = new ArrayList<>();
+      pseudoNames.add("Index");
+      pseudoNames.add("Contact");
+      pseudoNames.add("Privacy");
+      pseudoNames.add("Dashboard");
+      pseudoNames.add("Sponsorship");
+      pseudoNames.add("Admin");
+      pseudoNames.add("Logout");
+    }
+    
+    return pseudoNames.get(pageIndex);
   }
 
 }

@@ -4,9 +4,7 @@ import java.util.Date;
 
 import org.apache.cayenne.ObjectContext;
 import org.apache.tapestry5.alerts.AlertManager;
-import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
@@ -14,6 +12,10 @@ import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 
+/**
+ * Create new sponsorship associated to the logged in user.
+ *
+ */
 public class Sponsorship {
 
   /** user info service */
@@ -24,6 +26,7 @@ public class Sponsorship {
   @Property
   private User user;
   
+  /** Cayenne database context */
   @Inject
   private ObjectContext context;
   
@@ -31,11 +34,9 @@ public class Sponsorship {
   @Inject
   private AlertManager alerts;
   
+  /** New database sponsorship object */
   @Property
   private edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship sponsorship;
-  
-  @InjectComponent("sponsorshipForm")
-  private BeanEditForm sponsorshipForm;
   
   
   /**
@@ -45,6 +46,9 @@ public class Sponsorship {
     user = userInfo.getUser();
   }
   
+  /**
+   * Create new sponsorship.
+   */
   @CommitAfter
   public void onSuccess() {
     sponsorship.setUser((User) context.localObject(userInfo.getUser().getObjectId(), null));
