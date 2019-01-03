@@ -57,12 +57,7 @@
 					<ul class="nav navbar-nav">
 						<t:loop source="pageNames" value="pageName" index="pageIndex">
 							<t:any element="li" class="prop:classForPageName">
-								<t:If test="loggedIn()">
-									<t:pagelink page="prop:pageName">${pseudoName}</t:pagelink>
-									<p:else>
-										<t:pagelink page="prop:pageName">${pageName}</t:pagelink>
-									</p:else>
-								</t:If>
+								<t:pagelink page="prop:pageName">${pseudoName}</t:pagelink>
 							</t:any>
 						</t:loop>
 					</ul>

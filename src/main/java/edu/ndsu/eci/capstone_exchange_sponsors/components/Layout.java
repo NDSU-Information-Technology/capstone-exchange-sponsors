@@ -33,12 +33,12 @@ import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
  */
 @Import(module="bootstrap/collapse")
 public class Layout {
+  
+  /** Handles resource referencing */
   @Inject
   private ComponentResources resources;
-
-  /**
-   * The page title, for the <title> element and the <h1> element.
-   */
+  
+  /** The page title, for the <title> element and the <h1> element. */
   @Property
   @Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
   private String title;
@@ -55,6 +55,7 @@ public class Layout {
   @Inject
   private UserInfo userInfo;
   
+  /** Verifies role */
   @Inject
   private SecurityService securityService;
   
@@ -88,12 +89,8 @@ public class Layout {
    * List of page names to be shown in the menu
    * @return list of page names
    */
-  public String[] getPageNames() {
-    if (!loggedIn()) {
-      return new String[]{"Index","Contact","Privacy","Login"};
-    }
-    
-    if(pageNames == null) {
+  public String[] getPageNames() {   
+    if(loggedIn()) {
       pageNames = new ArrayList<>();
       pageNames.add("Index");
       pageNames.add("Contact");
@@ -102,7 +99,6 @@ public class Layout {
       if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
         pageNames.add("Account/Dashboard");
       }
-      
       if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
         pageNames.add("Account/Sponsorship");
       }
@@ -112,6 +108,13 @@ public class Layout {
       }
       
       pageNames.add("Logout");
+      
+    } else {
+      pageNames = new ArrayList<>();
+      pageNames.add("Index");
+      pageNames.add("Contact");
+      pageNames.add("Privacy");
+      pageNames.add("Login");
     }
     
     return pageNames.toArray(new String[pageNames.size()]);
@@ -122,15 +125,31 @@ public class Layout {
    * @return Alternative name for a page.
    */
   public String getPseudoName() {
-    if(pseudoNames == null) {
+    if(loggedIn()) {
       pseudoNames = new ArrayList<>();
       pseudoNames.add("Index");
       pseudoNames.add("Contact");
       pseudoNames.add("Privacy");
-      pseudoNames.add("Dashboard");
-      pseudoNames.add("Sponsorship");
-      pseudoNames.add("Admin");
+      
+      if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
+        pseudoNames.add("Dashboard");
+      }
+      if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
+        pseudoNames.add("Sponsorship");
+      }
+      
+      if (userInfo.isAdmin()) {
+        pseudoNames.add("Admin");
+      }
+      
       pseudoNames.add("Logout");
+      
+    } else {
+      pseudoNames = new ArrayList<>();
+      pseudoNames.add("Index");
+      pseudoNames.add("Contact");
+      pseudoNames.add("Privacy");
+      pseudoNames.add("Login");
     }
     
     return pseudoNames.get(pageIndex);
