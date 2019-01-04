@@ -22,7 +22,6 @@ import java.util.Set;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.Persistent;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.mail.SimpleEmail;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ValueEncoder;
@@ -79,7 +78,10 @@ public class ProjectSubmission {
 
   /** selected subjects from palette */
   @Property
-  List<Subject> selectedSubjects;
+  private List<Subject> selectedSubjects;
+  
+  @Property
+  private Subject subjectRow;
 
   /** encoder for palette */
   @Inject
@@ -151,7 +153,7 @@ public class ProjectSubmission {
     fixupSubjects();
     
     context.commitChanges();
-    alerts.success("Proposal submitted");
+    alerts.success("Project Submitted");
     notifyAdmins();
     return dashboard;
   }
@@ -159,7 +161,7 @@ public class ProjectSubmission {
   private void notifyAdmins() throws ResourceNotFoundException, ParseErrorException, Exception {
     VelocityContext velContext = new VelocityContext();
     velContext.put("proposal", project);
-    emailService.sendAdminEmail(velContext, "proposal-submitted.vm", "Proposal submission");
+    emailService.sendAdminEmail(velContext, "project-submitted.vm", "Project Submission");
   }
   
   private void fixupSubjects() {
@@ -191,7 +193,7 @@ public class ProjectSubmission {
    * Possible subjects
    * @return sort approved subjects
    */
-  private List<Subject> getSubjects() {
+  public List<Subject> getSubjects() {
     return CapstoneDomainMap.getInstance().performSubjectsByStatus(context, Status.APPROVED);
   } 
 

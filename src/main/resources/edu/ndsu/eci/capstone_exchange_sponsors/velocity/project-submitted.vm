@@ -10,28 +10,19 @@
 ## See the License for the specific language governing permissions and
 ## limitations under the License.
 
-New proposal submitted:
+New project submitted:
 
-User: $proposal.user.name
-Department: $proposal.user.departmentName
-Institution: $proposal.user.institution
-Country: $proposal.user.institution.country
+User: $project.user.name
+Site: $project.user.site.name
 
-Proposal Name: $proposal.name
-Potential Start: $proposal.potentialStart
-
-Types:
-#foreach ($type in $proposal.types)
- -$type.name
-#end
+Project Name: $project.name
+Potential Start: $project.potentialStart
 
 
 Subjects:
-#foreach ($subject in $proposal.subjects)
+#foreach ($subject in $project.subjects)
  -$subject.name
 #end
-
-
 
 
 

@@ -78,7 +78,7 @@ public class VelocityEmailServiceImpl implements VelocityEmailService {
     VelocityEngine engine = velocityService.getEngine();
     
     StringWriter writer = new StringWriter();
-    Template template = engine.getTemplate("edu/ndsu/eci/international_capstone_exchange/velocity/" + templateName);
+    Template template = engine.getTemplate("edu/ndsu/eci/capstone_exchange_sponsors/velocity/" + templateName);
     template.merge(context, writer);
     
     SimpleEmail email = emailService.getSimpleEmail();

@@ -22,14 +22,11 @@
 	</head>
 
 	<body>
-		<h2>
-			Enter Project Details
-		</h2>
-	
-	
+		<h2>Enter Project Details</h2>
 		<t:beaneditform t:id="form" object="project"
-			add="subjects, propTypes" submitLabel="Save"
-			include="name, budget, potentialStart, durationInWeeks, description">
+			add="subjects" submitLabel="Save"
+			include="name, budget, potentialStart, durationInWeeks, description"
+			reorder="name, budget, potentialStart, durationInWeeks, subjects, description">
 			<p:name>
 				<t:Label for="name" />
 				<t:textfield t:id="name" value="project.name" />
@@ -45,16 +42,19 @@
 					value="project.description" t:validate="required"></t:textarea>
 			</p:description>
 			<p:subjects>
-				<t:label for="selectedSubjects">Subjects</t:label>
+				<t:label for="selectedSubjects"><a href="#subjectDescription" title="View Subject Descriptions">Subjects</a></t:label>
 				<t:checklist t:id="selectedSubjects" encoder="encoder"
 					model="subjectsModel" t:validate="required" />
 			</p:subjects>
-			<p:propTypes>
-				<!-- <t:label for="selectedPropTypes">Proposal Types</t:label>
-				<t:checklist t:id="selectedPropTypes" encoder="encoder"
-					model="propTypesModel" t:validate="required" />  -->
-			</p:propTypes>
 		</t:beaneditform>
+		
+		<h2 id="subjectDescription">Subject Descriptions</h2>
+		<t:Grid source="subjects" row="subjectRow"
+			include="name, description">
+			<p:descriptionCell>
+				<t:outputraw value="subjectRow.description"></t:outputraw>
+			</p:descriptionCell>
+		</t:Grid>
 
 	</body>
 

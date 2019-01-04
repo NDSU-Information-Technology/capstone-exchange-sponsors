@@ -9,6 +9,15 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
 	xmlns:p="tapestry:parameter" t:type="layout" title="User Details Page">
 
+	<head>
+		<style>
+			.description {
+				max-height: 80px;
+				overflow-y: scroll;
+			}
+		</style>
+	</head>
+
 	<body>
 		<div>
 
@@ -58,10 +67,10 @@
 				<div id="tab3" class="tab-pane">
 					<h2>Projects</h2>
 					<t:grid source="projects" row="projectRow"
-						include="created, name, potentialStart,subjects,types,description"
+						include="created, name, potentialStart, subjects, description"
 						add="edit, delete">
 						<p:descriptionCell>
-							<t:outputraw value="projectRow.description"></t:outputraw>
+							<div class="description"><t:outputraw value="projectRow.description"></t:outputraw></div>
 						</p:descriptionCell>
 		
 						<p:editCell>
@@ -95,7 +104,7 @@
 					<t:grid source="subjects" row="subjectRow"
 						include="name, description">
 						<p:descriptionCell>
-							<t:outputraw value="subjectRow.description"></t:outputraw>
+							<div class="description"><t:outputraw value="subjectRow.description"></t:outputraw></div>
 						</p:descriptionCell>
 					</t:grid>
 				</div>
