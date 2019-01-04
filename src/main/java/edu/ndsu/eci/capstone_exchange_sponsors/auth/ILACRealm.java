@@ -18,7 +18,7 @@ import org.apache.commons.codec.binary.StringUtils;
 import org.apache.tapestry5.plastic.MethodInvocation;
 import org.apache.tapestry5.services.Environment;
 
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 
 public class ILACRealm extends BaseILACRealm {
@@ -41,7 +41,7 @@ public class ILACRealm extends BaseILACRealm {
       return false;
     }
 
-    Proposal proposal = (Proposal) invocation.getParameter(0);
+    Project proposal = (Project) invocation.getParameter(0);
 
     if (proposal.getPersistenceState() == PersistenceState.TRANSIENT) {
       return true;

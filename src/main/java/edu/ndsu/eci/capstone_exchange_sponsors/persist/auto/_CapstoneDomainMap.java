@@ -6,11 +6,11 @@ import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.NamedQuery;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Role;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.ProposalStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.UserRole;
 
@@ -24,7 +24,7 @@ public class _CapstoneDomainMap {
 
     public static final String COUNTRIES_QUERYNAME = "Countries";
 
-    public static final String PROPOSALS_BY_STATUS_QUERYNAME = "ProposalsByStatus";
+    public static final String PROJECT_BY_STATUS_QUERYNAME = "ProjectByStatus";
 
     public static final String ROLE_BY_NAME_QUERY_QUERYNAME = "RoleByNameQuery";
 
@@ -48,7 +48,7 @@ public class _CapstoneDomainMap {
         return context.performQuery(new NamedQuery("Countries", parameters, values));
     }
 
-    public List<Proposal> performProposalsByStatus(ObjectContext context , ProposalStatus status) {
+    public List<Project> performProjectByStatus(ObjectContext context , ProjectStatus status) {
         String[] parameters = {
             "status",
         };
@@ -57,7 +57,7 @@ public class _CapstoneDomainMap {
             status,
         };
 
-        return context.performQuery(new NamedQuery("ProposalsByStatus", parameters, values));
+        return context.performQuery(new NamedQuery("ProjectByStatus", parameters, values));
     }
 
     public List<Role> performRoleByNameQuery(ObjectContext context , UserRole name) {

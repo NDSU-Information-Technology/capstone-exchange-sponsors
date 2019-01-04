@@ -4,12 +4,18 @@
     
     <head>
     	<style>
+    	
+    		//Consider moving into seperate CSS file
+    	
 	    	h2 {
 	    		margin-top: 0px;
 	    	}
 	    	ul {
 	    		list-style-type: none;
 	    		padding-left: 0px;
+	    	}
+	    	li {
+	    		padding-left: 10px;
 	    	}
 	    	aside {
 	    		flex: 1;
@@ -23,28 +29,70 @@
 	    		flex: 5;
 	    	}
 	    	
-	    	.details {
-	    		margin-bottom: 10px;
+	    	.asideTitle {
+	    		margin-top: 2px;
+	    	}
+	    	.asideBorder {
+	    		background-image: linear-gradient(to right, #ddd, #ddd, #fff, #fff);
+	    		border-radius: 5px;
+	    		height: 2px;
 	    	}
 	    	
 	    	#bodyDisplay {
 	    		display: flex;
 	    	}
+	    	
+	    	#detailsSection {
+	    		border-top: solid #aaa 1px;
+	    		padding-top: 20px;
+	    	}
     	</style>
     </head>
     <body>
     	<div id="bodyDisplay">
-	    	<aside>
+	    	<aside title="Same Page Navigation">
 	    		<ul>
-	    			<li><a href="#sponsorDetails">What is Sponsorship?</a></li>
-	    			<li><a href="#partnerDetails">Strategic Partnership</a></li>
+	    			<li class="asideTitle">Create Sponsorship</li>
+	    			<li class="asideBorder"></li>
+	    			<li><a href="#overviewDetails">What is Sponsorship?</a></li>
 	    			<li><a href="#form">Sponsorship Form</a></li>
+	    			
+	    			<li class="asideTitle">Tier Details</li>
+	    			<li class="asideBorder"></li>
+	    			<li><a href="#generalSponsorshipDetails">General Sponsorship</a></li>
+	    			<li><a href="#strategicPartnerDetails">Strategic Partnership</a></li>
 	    		</ul>
 	    	</aside>
 	    	<main>
 		    	<h2>Create Sponsorship</h2>
-		    	<section class="details">
-		    		<h3 id="sponsorDetails">What is Sponsorship?</h3>
+		    	<section title="Overview Section">
+		    		<h3 id="overviewDetails">What is Sponsorship?</h3>
+		    		<p>
+		    			Lorem ipsum dolor sit amet, ea usu magna similique, mea error everti invenire ea. An nemore evertitur interpretaris est, dico aperiam reformidans at sit, cu luptatum patrioque theophrastus est. Cu vim vidit eirmod sententiae. Nec nullam semper an, forensibus deseruisse cu mea.
+						
+						Est exerci comprehensam at, graecis definitionem vel no. Cum atqui nostrum te. At idque lorem adipisci sit. His an simul quando. His case atomorum persecuti ut, cu nostrud omittam cum.
+						
+						Placerat sapientem ei nec. In habeo propriae sit, iusto laudem concludaturque eos ea. Ut doming essent menandri qui, pro eu graecis adipiscing. Hinc posse aliquando no sit, nam fugit molestiae urbanitas in, ex illum tation phaedrum usu.
+						
+						Te eum appetere principes assueverit, has cu nullam offendit splendide. Nisl corrumpit intellegebat ut qui, ad porro ceteros scaevola eum. Modo nibh mutat vis ei, assum melius ullamcorper sea ea, mazim copiosae invidunt duo id. Quot munere nonumes ex per, per erant civibus ea.
+						
+						Sed nulla apeirian senserit ex. Quo unum rationibus ex, mea in purto dictas deleniti. Cu liber regione usu, volumus dolores contentiones ad cum. Mei in blandit percipit moderatius, et brute ceteros sit. Id cum homero quaestio appellantur.
+		    		</p>
+		    	</section>
+		    	
+		    	<section title="Sponsorship Form Section">
+	    			<h3 id="form">Sponsorship Form</h3>
+		    		<t:BeanEditForm t:id="sponsorshipForm" object="sponsorship" submitLabel="Create Sponsorship" autofocus="false"
+		    			include="tier, payment">
+		    			
+		    		</t:BeanEditForm>
+	    		</section>
+		    	
+		    	<section title="Sponsorship Tier Details Section" id="detailsSection">
+		    		
+		    		<h2>Sponsorship Tier Details</h2>
+		    		
+		    		<h3 id="generalSponsorshipDetails">General Sponsorship</h3>
 		    		<p>
 		    			Lorem ipsum dolor sit amet, ea usu magna similique, mea error everti invenire ea. An nemore evertitur interpretaris est, dico aperiam reformidans at sit, cu luptatum patrioque theophrastus est. Cu vim vidit eirmod sententiae. Nec nullam semper an, forensibus deseruisse cu mea.
 						
@@ -57,7 +105,7 @@
 						Sed nulla apeirian senserit ex. Quo unum rationibus ex, mea in purto dictas deleniti. Cu liber regione usu, volumus dolores contentiones ad cum. Mei in blandit percipit moderatius, et brute ceteros sit. Id cum homero quaestio appellantur.
 		    		</p>
 		    		
-		    		<h3 id="partnerDetails">Strategic Partnership</h3>
+		    		<h3 id="strategicPartnerDetails">Strategic Partnership</h3>
 		    		<p>
 		    			Lorem ipsum dolor sit amet, ea usu magna similique, mea error everti invenire ea. An nemore evertitur interpretaris est, dico aperiam reformidans at sit, cu luptatum patrioque theophrastus est. Cu vim vidit eirmod sententiae. Nec nullam semper an, forensibus deseruisse cu mea.
 						
@@ -71,20 +119,6 @@
 		    		</p>
 		    	</section>
 	    		
-	    		<section>
-	    			<h3 id="form">Sponsorship Form</h3>
-		    		<t:BeanEditForm t:id="sponsorshipForm" object="sponsorship" submitLabel="Create"
-		    			include="company, email, payment, strategicPartner">
-		    			<p:company>
-		    				<t:Label for="company"/>
-		    				<t:TextField t:id="company" value="sponsorship.company"/>
-		    			</p:company>
-		    			<p:email>
-		    				<t:Label for="email"/>
-		    				<t:TextField t:id="email" type="email" value="sponsorship.email"/>
-		    			</p:email>
-		    		</t:BeanEditForm>
-	    		</section>
 	    	</main>
     	</div>
     	

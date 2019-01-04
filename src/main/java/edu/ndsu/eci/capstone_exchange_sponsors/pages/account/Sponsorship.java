@@ -9,6 +9,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 
@@ -51,7 +52,7 @@ public class Sponsorship {
    */
   @CommitAfter
   public void onSuccess() {
-    sponsorship.setUser((User) context.localObject(userInfo.getUser().getObjectId(), null));
+    sponsorship.setSite((Site) context.localObject(userInfo.getUser().getSite().getObjectId(), null));
     sponsorship.setCreated(new Date());
     context.registerNewObject(sponsorship);
     alerts.success("New Sponsorship Successfully Created");

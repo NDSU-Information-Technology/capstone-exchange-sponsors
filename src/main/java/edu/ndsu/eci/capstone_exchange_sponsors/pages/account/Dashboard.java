@@ -24,7 +24,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
@@ -64,18 +64,18 @@ public class Dashboard {
   
   /** tml row for proposals */
   @Property
-  private Proposal proposalRow;
+  private Project projectRow;
   
   @Property
-  private List<Proposal> proposals;
+  private List<Project> projects;
   
   /**
    * Setup render, get logged in user
    */
   public void setupRender() {
     user = userInfo.getUser();
-    sponsorships = user.getSponsorships();
-    proposals = user.getProposals();
+    sponsorships = user.getSite().getSponsorships();
+    projects = user.getProjects();
   }
   
   void afterRender() {
@@ -91,11 +91,11 @@ public class Dashboard {
   }
   
   @RequiresPermissions(ILACRealm.PROPOSAL_EDIT_INSTANCE)
-  public void onDelete(Proposal proposal) {
-    if (!proposal.isDeletable()) {
+  public void onDelete(Project project) {
+    if (!project.isDeletable()) {
       return;
     }
-    context.deleteObject(proposal);
+    context.deleteObject(project);
     context.commitChanges();
   }
   

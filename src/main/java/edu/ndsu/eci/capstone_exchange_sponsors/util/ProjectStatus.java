@@ -19,7 +19,7 @@ import org.apache.cayenne.ExtendedEnumeration;
  * Status of a proposal
  *
  */
-public enum ProposalStatus implements ExtendedEnumeration {
+public enum ProjectStatus implements ExtendedEnumeration {
 
   /** indicates that the item has been declined / rejected */
   DECLINED,

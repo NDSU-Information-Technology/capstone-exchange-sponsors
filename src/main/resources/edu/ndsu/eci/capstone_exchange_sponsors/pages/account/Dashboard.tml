@@ -21,7 +21,7 @@
 					<a href="#tab2" data-toggle="tab">Sponsorships</a>
 				</li>
 				<li>
-					<a href="#tab3" data-toggle="tab">Proposals</a>
+					<a href="#tab3" data-toggle="tab">Projects</a>
 				</li>
 				<li>
 					<a href="#tab4" data-toggle="tab">Subjects</a>
@@ -32,7 +32,7 @@
 				<div id="tab1" class="tab-pane active">
 					<h2>Account Info</h2>
 					<t:Beandisplay object="user"
-						include="name, departmentName, country, email, workPhone, created, source, ssoName, ssoEmail, url">
+						include="name, email, workPhone, created, source, ssoName, ssoEmail, url">
 					</t:Beandisplay>
 					<div>
 						<t:pagelink page="account/updateaccount">Update Account</t:pagelink>
@@ -42,7 +42,7 @@
 				<div id="tab2" class="tab-pane">
 					<h2>Sponsorships</h2>
 					<t:grid source="sponsorships" row="sponsorshipRow"
-						include="company, payment, email, strategicPartner, created">
+						include="tier, payment, created">
 					</t:grid>
 					<div>
 						<t:pagelink page="account/sponsorship">Create Sponsorship</t:pagelink>
@@ -56,24 +56,24 @@
 					</t:grid> -->
 			
 				<div id="tab3" class="tab-pane">
-					<h2>Proposals</h2>
-					<t:grid source="proposals" row="proposalRow"
+					<h2>Projects</h2>
+					<t:grid source="projects" row="projectRow"
 						include="created, name, potentialStart,subjects,types,description"
 						add="edit, delete">
 						<p:descriptionCell>
-							<t:outputraw value="proposalRow.description"></t:outputraw>
+							<t:outputraw value="projectRow.description"></t:outputraw>
 						</p:descriptionCell>
 		
 						<p:editCell>
-							<t:if test="proposalRow.editable">
-								<t:pagelink page="account/proposalsubmission"
-									context="proposalRow">Edit ${proposalRow.name}</t:pagelink>
+							<t:if test="projectRow.editable">
+								<t:pagelink page="account/projectsubmission"
+									context="projectRow">Edit ${projectRow.name}</t:pagelink>
 							</t:if>
 						</p:editCell>
 						<p:deleteCell>
-							<t:if test="proposalRow.deletable">
-								<t:eventlink event="delete" context="proposalRow">Delete
-									${proposalRow.name}</t:eventlink>
+							<t:if test="projectRow.deletable">
+								<t:eventlink event="delete" context="projectRow">Delete
+									${projectRow.name}</t:eventlink>
 							</t:if>
 						</p:deleteCell>
 					</t:grid>

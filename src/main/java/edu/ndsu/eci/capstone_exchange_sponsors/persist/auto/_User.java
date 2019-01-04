@@ -5,10 +5,9 @@ import java.util.List;
 
 import org.apache.cayenne.CayenneDataObject;
 
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Role;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -20,7 +19,6 @@ import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 public abstract class _User extends CayenneDataObject {
 
     public static final String CREATED_PROPERTY = "created";
-    public static final String DEPARTMENT_NAME_PROPERTY = "departmentName";
     public static final String EMAIL_PROPERTY = "email";
     public static final String ID_PROPERTY = "id";
     public static final String NAME_PROPERTY = "name";
@@ -30,10 +28,9 @@ public abstract class _User extends CayenneDataObject {
     public static final String STATUS_PROPERTY = "status";
     public static final String URL_PROPERTY = "url";
     public static final String WORK_PHONE_PROPERTY = "workPhone";
-    public static final String COUNTRY_PROPERTY = "country";
-    public static final String PROPOSALS_PROPERTY = "proposals";
+    public static final String PROJECTS_PROPERTY = "projects";
     public static final String ROLES_PROPERTY = "roles";
-    public static final String SPONSORSHIPS_PROPERTY = "sponsorships";
+    public static final String SITE_PROPERTY = "site";
 
     public static final String PK_PK_COLUMN = "pk";
 
@@ -42,13 +39,6 @@ public abstract class _User extends CayenneDataObject {
     }
     public Date getCreated() {
         return (Date)readProperty("created");
-    }
-
-    public void setDepartmentName(String departmentName) {
-        writeProperty("departmentName", departmentName);
-    }
-    public String getDepartmentName() {
-        return (String)readProperty("departmentName");
     }
 
     public void setEmail(String email) {
@@ -114,24 +104,15 @@ public abstract class _User extends CayenneDataObject {
         return (String)readProperty("workPhone");
     }
 
-    public void setCountry(Country country) {
-        setToOneTarget("country", country, true);
+    public void addToProjects(Project obj) {
+        addToManyTarget("projects", obj, true);
     }
-
-    public Country getCountry() {
-        return (Country)readProperty("country");
-    }
-
-
-    public void addToProposals(Proposal obj) {
-        addToManyTarget("proposals", obj, true);
-    }
-    public void removeFromProposals(Proposal obj) {
-        removeToManyTarget("proposals", obj, true);
+    public void removeFromProjects(Project obj) {
+        removeToManyTarget("projects", obj, true);
     }
     @SuppressWarnings("unchecked")
-    public List<Proposal> getProposals() {
-        return (List<Proposal>)readProperty("proposals");
+    public List<Project> getProjects() {
+        return (List<Project>)readProperty("projects");
     }
 
 
@@ -147,15 +128,12 @@ public abstract class _User extends CayenneDataObject {
     }
 
 
-    public void addToSponsorships(Sponsorship obj) {
-        addToManyTarget("sponsorships", obj, true);
+    public void setSite(Site site) {
+        setToOneTarget("site", site, true);
     }
-    public void removeFromSponsorships(Sponsorship obj) {
-        removeToManyTarget("sponsorships", obj, true);
-    }
-    @SuppressWarnings("unchecked")
-    public List<Sponsorship> getSponsorships() {
-        return (List<Sponsorship>)readProperty("sponsorships");
+
+    public Site getSite() {
+        return (Site)readProperty("site");
     }
 
 

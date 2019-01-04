@@ -43,16 +43,16 @@ import com.googlecode.tapestry5cayenne.annotations.Cayenne;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.HtmlCleaner;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.ProposalStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
-public class ProposalSubmission {
+public class ProjectSubmission {
 
   /** user info service */
   @Inject
@@ -71,7 +71,7 @@ public class ProposalSubmission {
 
   /** form object */
   @Property
-  private Proposal proposal;
+  private Project project;
 
   /** form */
   @Component
@@ -98,12 +98,12 @@ public class ProposalSubmission {
    * Setup the form if it is a new submission
    */
   public void onActivate() {
-    if (proposal != null) {
+    if (project != null) {
       return;
     }
-    proposal = new Proposal();
+    project = new Project();
     // required for autoboxing
-    proposal.setCost(0.0);
+    project.setCost(0.0);
   }
 
   /**
@@ -111,14 +111,14 @@ public class ProposalSubmission {
    * @return proposal
    */
   public Object onPassivate() {
-    return proposal;
+    return project;
   }
 
   @RequiresPermissions(ILACRealm.PROPOSAL_EDIT_INSTANCE)
-  public void onActivate(Proposal proposal) {
-    this.proposal = proposal;
-    if (selectedSubjects == null && proposal.getSubjects() != null) {
-      selectedSubjects = new ArrayList<>(proposal.getSubjects());
+  public void onActivate(Project project) {
+    this.project = project;
+    if (selectedSubjects == null && project.getSubjects() != null) {
+      selectedSubjects = new ArrayList<>(project.getSubjects());
     }
   }
 
@@ -126,7 +126,7 @@ public class ProposalSubmission {
    * Validate the form
    */
   public void onValidateFromForm() {
-    if (StringUtils.isBlank(proposal.getDescription())) {
+    if (StringUtils.isBlank(project.getDescription())) {
       form.recordError("Must provide a description");
       context.rollbackChanges();
     }
@@ -140,13 +140,13 @@ public class ProposalSubmission {
    * @throws ResourceNotFoundException 
    */
   public Object onSuccessFromForm() throws ResourceNotFoundException, ParseErrorException, Exception {
-    if (proposal.getCreated() == null) {
-      proposal.setCreated(new Date());
+    if (project.getCreated() == null) {
+      project.setCreated(new Date());
     }
-    proposal.setLastModified(new Date());
-    proposal.setProposalStatus(ProposalStatus.PENDING);
-    proposal.setDescription(cleaner.cleanCapstone(proposal.getDescription()));
-    proposal.setUser((User) context.localObject(userInfo.getUser().getObjectId(), null));
+    project.setLastModified(new Date());
+    project.setProjectStatus(ProjectStatus.PENDING);
+    project.setDescription(cleaner.cleanCapstone(project.getDescription()));
+    project.setUser((User) context.localObject(userInfo.getUser().getObjectId(), null));
     
     fixupSubjects();
     
@@ -158,24 +158,24 @@ public class ProposalSubmission {
   
   private void notifyAdmins() throws ResourceNotFoundException, ParseErrorException, Exception {
     VelocityContext velContext = new VelocityContext();
-    velContext.put("proposal", proposal);
+    velContext.put("proposal", project);
     emailService.sendAdminEmail(velContext, "proposal-submitted.vm", "Proposal submission");
   }
   
   private void fixupSubjects() {
-    Set<Subject> existing = new HashSet<>(proposal.getSubjects());
+    Set<Subject> existing = new HashSet<>(project.getSubjects());
     Set<Subject> newSubjects = new HashSet<>(selectedSubjects);
     
     SetView<Subject> newView = Sets.difference(newSubjects, existing);
     
     for (Subject subject : newView) {
-      proposal.addToSubjects(subject);
+      project.addToSubjects(subject);
     }
 
     SetView<Subject> oldView = Sets.difference(existing, newSubjects);
     
     for (Subject subject : oldView) {
-      proposal.removeFromSubjects(subject);
+      project.removeFromSubjects(subject);
     }
   }
 

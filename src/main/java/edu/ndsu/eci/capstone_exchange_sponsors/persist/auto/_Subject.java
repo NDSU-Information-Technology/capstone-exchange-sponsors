@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.cayenne.CayenneDataObject;
 
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -52,15 +52,15 @@ public abstract class _Subject extends CayenneDataObject {
         return (Status)readProperty("status");
     }
 
-    public void addToProposals(Proposal obj) {
+    public void addToProposals(Project obj) {
         addToManyTarget("proposals", obj, true);
     }
-    public void removeFromProposals(Proposal obj) {
+    public void removeFromProposals(Project obj) {
         removeToManyTarget("proposals", obj, true);
     }
     @SuppressWarnings("unchecked")
-    public List<Proposal> getProposals() {
-        return (List<Proposal>)readProperty("proposals");
+    public List<Project> getProposals() {
+        return (List<Project>)readProperty("proposals");
     }
 
 

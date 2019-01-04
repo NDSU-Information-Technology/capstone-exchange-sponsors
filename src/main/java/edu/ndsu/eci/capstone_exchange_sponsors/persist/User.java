@@ -71,7 +71,6 @@ public class User extends _User implements FederatedAccount {
     setSsoName(getName());
     setSsoEmail(getEmail());
     setCreated(new Date());
-    setDepartmentName("Unknown");
    
     return false;
   }
@@ -104,7 +103,6 @@ public class User extends _User implements FederatedAccount {
     setName(user.getName());
     setUrl(user.getUrl());
     setWorkPhone(user.getWorkPhone());
-    setDepartmentName(user.getDepartmentName());
   }
 
   /**

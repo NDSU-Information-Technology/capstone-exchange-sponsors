@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.cayenne.CayenneDataObject;
 
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -19,7 +19,7 @@ public abstract class _Country extends CayenneDataObject {
     public static final String CREATED_PROPERTY = "created";
     public static final String NAME_PROPERTY = "name";
     public static final String STATUS_PROPERTY = "status";
-    public static final String USERS_PROPERTY = "users";
+    public static final String SITES_PROPERTY = "sites";
 
     public static final String PK_PK_COLUMN = "pk";
 
@@ -44,15 +44,15 @@ public abstract class _Country extends CayenneDataObject {
         return (Status)readProperty("status");
     }
 
-    public void addToUsers(User obj) {
-        addToManyTarget("users", obj, true);
+    public void addToSites(Site obj) {
+        addToManyTarget("sites", obj, true);
     }
-    public void removeFromUsers(User obj) {
-        removeToManyTarget("users", obj, true);
+    public void removeFromSites(Site obj) {
+        removeToManyTarget("sites", obj, true);
     }
     @SuppressWarnings("unchecked")
-    public List<User> getUsers() {
-        return (List<User>)readProperty("users");
+    public List<Site> getSites() {
+        return (List<Site>)readProperty("sites");
     }
 
 

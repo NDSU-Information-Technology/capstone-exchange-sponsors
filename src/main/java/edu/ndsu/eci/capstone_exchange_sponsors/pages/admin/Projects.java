@@ -21,22 +21,22 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Proposal;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.ProposalStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
 
-public class Proposals {
+public class Projects {
 
   @Inject
   private ObjectContext context;
   
   @Property
-  private Proposal row;
+  private Project row;
   
-  public List<Proposal> getPendingProposals() {
-    return CapstoneDomainMap.getInstance().performProposalsByStatus(context, ProposalStatus.PENDING);
+  public List<Project> getPendingProjects() {
+    return CapstoneDomainMap.getInstance().performProjectByStatus(context, ProjectStatus.PENDING);
   }
   
-  public List<Proposal> getAllProposals() {
-    return context.performQuery(new SelectQuery(Proposal.class));
+  public List<Project> getAllProjects() {
+    return context.performQuery(new SelectQuery(Project.class));
   }
 }

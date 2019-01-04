@@ -192,10 +192,8 @@ public class CreateAccount {
       usr.setName(name);
     }
     usr.setUrl(url);
-    usr.setDepartmentName(departmentName);
     usr.setStatus(Status.PENDING);
     usr.setWorkPhone(phone);
-    usr.setCountry(country);
 
     context.commitChanges();
     alerts.success("Account Creation Request Submitted. Wait until your request is approved");
