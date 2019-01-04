@@ -103,7 +103,7 @@ public class ProjectSubmission {
     }
     project = new Project();
     // required for autoboxing
-    project.setCost(0.0);
+    project.setBudget(0.0);
   }
 
   /**

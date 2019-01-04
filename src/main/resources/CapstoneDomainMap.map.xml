@@ -78,7 +78,7 @@
 		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Status" db-attribute-path="status"/>
 	</obj-entity>
 	<obj-entity name="Project" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Project" dbEntityName="projects">
-		<obj-attribute name="cost" type="java.lang.Double" db-attribute-path="budget"/>
+		<obj-attribute name="budget" type="java.lang.Double" db-attribute-path="budget"/>
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
 		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
 		<obj-attribute name="durationInWeeks" type="java.lang.Integer" db-attribute-path="durationInWeeks"/>

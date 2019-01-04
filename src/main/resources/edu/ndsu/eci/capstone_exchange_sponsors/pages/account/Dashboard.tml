@@ -72,12 +72,11 @@
 						</p:editCell>
 						<p:deleteCell>
 							<t:if test="projectRow.deletable">
-								<t:eventlink event="delete" context="projectRow">Delete
-									${projectRow.name}</t:eventlink>
+								<t:eventlink event="delete" context="projectRow">Delete ${projectRow.name}</t:eventlink>
 							</t:if>
 						</p:deleteCell>
 					</t:grid>
-					<!-- <div><t:pagelink page="account/proposalsubmission">Create Proposal</t:pagelink></div> -->
+					<div><t:pagelink page="account/projectsubmission">Create Project</t:pagelink></div>
 				</div>
 
 				<!-- <h2>Proposal Types</h2> <div>Description of the types of proposals 

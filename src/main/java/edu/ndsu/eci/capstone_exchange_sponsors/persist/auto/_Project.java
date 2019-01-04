@@ -17,7 +17,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
  */
 public abstract class _Project extends CayenneDataObject {
 
-    public static final String COST_PROPERTY = "cost";
+    public static final String BUDGET_PROPERTY = "budget";
     public static final String CREATED_PROPERTY = "created";
     public static final String DESCRIPTION_PROPERTY = "description";
     public static final String DURATION_IN_WEEKS_PROPERTY = "durationInWeeks";
@@ -30,11 +30,11 @@ public abstract class _Project extends CayenneDataObject {
 
     public static final String PK_PK_COLUMN = "pk";
 
-    public void setCost(Double cost) {
-        writeProperty("cost", cost);
+    public void setBudget(Double budget) {
+        writeProperty("budget", budget);
     }
-    public Double getCost() {
-        return (Double)readProperty("cost");
+    public Double getBudget() {
+        return (Double)readProperty("budget");
     }
 
     public void setCreated(Date created) {
