@@ -93,7 +93,6 @@
 	<obj-entity name="Site" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Site" dbEntityName="sites">
 		<obj-attribute name="city" type="java.lang.String" db-attribute-path="city"/>
 		<obj-attribute name="code" type="java.lang.String" db-attribute-path="code"/>
-		<obj-attribute name="countryPk" type="java.lang.Integer" db-attribute-path="countryPk"/>
 		<obj-attribute name="email" type="java.lang.String" db-attribute-path="email"/>
 		<obj-attribute name="logo" type="java.lang.String" db-attribute-path="logo"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
@@ -171,6 +170,7 @@
 	<obj-relationship name="subjects" source="Project" target="Subject" deleteRule="Nullify" db-relationship-path="subjects.subject"/>
 	<obj-relationship name="user" source="Project" target="User" deleteRule="Nullify" db-relationship-path="user"/>
 	<obj-relationship name="user" source="Role" target="User" deleteRule="Nullify" db-relationship-path="user"/>
+	<obj-relationship name="country" source="Site" target="Country" deleteRule="Nullify" db-relationship-path="country"/>
 	<obj-relationship name="sponsorships" source="Site" target="Sponsorship" deleteRule="Deny" db-relationship-path="sponsorships"/>
 	<obj-relationship name="users" source="Site" target="User" deleteRule="Deny" db-relationship-path="users"/>
 	<obj-relationship name="site" source="Sponsorship" target="Site" deleteRule="Nullify" db-relationship-path="site"/>

@@ -17,6 +17,6 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
 	xmlns:p="tapestry:parameter" t:type="layout" title="Edit Account">
     
-    <t:beaneditform t:id="form" object="user" include="name,email,departmentName,workPhone,url"></t:beaneditform>
+    <t:beaneditform t:id="form" object="user" include="name, email, workPhone, url"></t:beaneditform>
     
 </html>

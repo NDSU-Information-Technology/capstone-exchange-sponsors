@@ -52,7 +52,7 @@
     	<div id="bodyDisplay">
 	    	<aside title="Same Page Navigation">
 	    		<ul>
-	    			<li class="asideTitle">Create Sponsorship</li>
+	    			<li class="asideTitle">Sponsorship Application</li>
 	    			<li class="asideBorder"></li>
 	    			<li><a href="#overviewDetails">What is Sponsorship?</a></li>
 	    			<li><a href="#form">Sponsorship Form</a></li>
@@ -64,7 +64,7 @@
 	    		</ul>
 	    	</aside>
 	    	<main>
-		    	<h2>Create Sponsorship</h2>
+		    	<h2>Sponsorship Application</h2>
 		    	<section title="Overview Section">
 		    		<h3 id="overviewDetails">What is Sponsorship?</h3>
 		    		<p>

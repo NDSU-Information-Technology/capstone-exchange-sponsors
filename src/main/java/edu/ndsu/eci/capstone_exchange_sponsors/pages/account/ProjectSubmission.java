@@ -14,7 +14,9 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +51,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.services.HtmlCleaner;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.SponsorTier;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 public class ProjectSubmission {
@@ -96,6 +99,7 @@ public class ProjectSubmission {
   @Inject
   private VelocityEmailService emailService;
 
+  
   /**
    * Setup the form if it is a new submission
    */
@@ -116,7 +120,7 @@ public class ProjectSubmission {
     return project;
   }
 
-  @RequiresPermissions(ILACRealm.PROPOSAL_EDIT_INSTANCE)
+  @RequiresPermissions(ILACRealm.PROJECT_EDIT_INSTANCE)
   public void onActivate(Project project) {
     this.project = project;
     if (selectedSubjects == null && project.getSubjects() != null) {
@@ -128,10 +132,37 @@ public class ProjectSubmission {
    * Validate the form
    */
   public void onValidateFromForm() {
+    if(!verifyPartnership()) {
+      form.recordError("Only Strategic Partners are allowed to create Projects.");
+      context.rollbackChanges();
+    }
+    
     if (StringUtils.isBlank(project.getDescription())) {
       form.recordError("Must provide a description");
       context.rollbackChanges();
     }
+  }
+  
+  /**
+   * Check if site has a valid Strategic Partner sponsorship.
+   * @return True if a valid sponsorship, false otherwise.
+   */
+  public boolean verifyPartnership() {
+    final int expiration = 1;
+    Date today = new Date();
+    Calendar cal = new GregorianCalendar();
+    
+    //FIXME replace with sponsorship query that targets a given site and active status 
+    for(edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship s : userInfo.getUser().getSite().getSponsorships()) {
+      //Get creation date + expiration in months
+      cal.setTime(s.getCreated());
+      cal.add(Calendar.MONTH, expiration);
+      // Sponsorship is of strategic partner tier and today is before expiration date
+      if(s.getTier().equals(SponsorTier.STRATEGIC_PARTNER) && today.before(cal.getTime())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -155,12 +186,13 @@ public class ProjectSubmission {
     context.commitChanges();
     alerts.success("Project Submitted");
     notifyAdmins();
+    
     return dashboard;
   }
   
   private void notifyAdmins() throws ResourceNotFoundException, ParseErrorException, Exception {
     VelocityContext velContext = new VelocityContext();
-    velContext.put("proposal", project);
+    velContext.put("project", project);
     emailService.sendAdminEmail(velContext, "project-submitted.vm", "Project Submission");
   }
   

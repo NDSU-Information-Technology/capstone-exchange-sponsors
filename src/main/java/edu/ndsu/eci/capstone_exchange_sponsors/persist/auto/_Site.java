@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.cayenne.CayenneDataObject;
 
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 
@@ -17,7 +18,6 @@ public abstract class _Site extends CayenneDataObject {
 
     public static final String CITY_PROPERTY = "city";
     public static final String CODE_PROPERTY = "code";
-    public static final String COUNTRY_PK_PROPERTY = "countryPk";
     public static final String EMAIL_PROPERTY = "email";
     public static final String LOGO_PROPERTY = "logo";
     public static final String NAME_PROPERTY = "name";
@@ -25,6 +25,7 @@ public abstract class _Site extends CayenneDataObject {
     public static final String STREET_PROPERTY = "street";
     public static final String URL_PROPERTY = "url";
     public static final String ZIP_POSTAL_PROPERTY = "zipPostal";
+    public static final String COUNTRY_PROPERTY = "country";
     public static final String SPONSORSHIPS_PROPERTY = "sponsorships";
     public static final String USERS_PROPERTY = "users";
 
@@ -42,13 +43,6 @@ public abstract class _Site extends CayenneDataObject {
     }
     public String getCode() {
         return (String)readProperty("code");
-    }
-
-    public void setCountryPk(Integer countryPk) {
-        writeProperty("countryPk", countryPk);
-    }
-    public Integer getCountryPk() {
-        return (Integer)readProperty("countryPk");
     }
 
     public void setEmail(String email) {
@@ -99,6 +93,15 @@ public abstract class _Site extends CayenneDataObject {
     public String getZipPostal() {
         return (String)readProperty("zipPostal");
     }
+
+    public void setCountry(Country country) {
+        setToOneTarget("country", country, true);
+    }
+
+    public Country getCountry() {
+        return (Country)readProperty("country");
+    }
+
 
     public void addToSponsorships(Sponsorship obj) {
         addToManyTarget("sponsorships", obj, true);

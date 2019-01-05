@@ -24,7 +24,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 public class ILACRealm extends BaseILACRealm {
 
   /** ability to edit a proposal */
-  public static final String PROPOSAL_EDIT_INSTANCE = "proposal_edit:instance";
+  public static final String PROJECT_EDIT_INSTANCE = "project_edit:instance";
 
   private final UserInfo userInfo;
 
@@ -33,21 +33,21 @@ public class ILACRealm extends BaseILACRealm {
     this.userInfo = userInfo;
   }
 
-  @InstanceAccessMethod(PROPOSAL_EDIT_INSTANCE) 
-  public boolean isProposalEditMemeber() {
+  @InstanceAccessMethod(PROJECT_EDIT_INSTANCE) 
+  public boolean isProjectEditMember() {
     MethodInvocation invocation = getInvocation();
 
     if (invocation == null) {
       return false;
     }
 
-    Project proposal = (Project) invocation.getParameter(0);
+    Project project = (Project) invocation.getParameter(0);
 
-    if (proposal.getPersistenceState() == PersistenceState.TRANSIENT) {
+    if (project.getPersistenceState() == PersistenceState.TRANSIENT) {
       return true;
     }
 
-    return StringUtils.equals(proposal.getUser().getFederatedId(), userInfo.getUser().getFederatedId());
+    return StringUtils.equals(project.getUser().getFederatedId(), userInfo.getUser().getFederatedId());
 
   }
 

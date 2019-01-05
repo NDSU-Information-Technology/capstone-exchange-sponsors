@@ -14,6 +14,8 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
@@ -69,6 +71,7 @@ public class Dashboard {
   @Property
   private List<Project> projects;
   
+  
   /**
    * Setup render, get logged in user
    */
@@ -89,14 +92,38 @@ public class Dashboard {
   public List<Subject> getSubjects() {
     return CapstoneDomainMap.getInstance().performSubjectsByStatus(context, Status.APPROVED);
   }
+
   
-  @RequiresPermissions(ILACRealm.PROPOSAL_EDIT_INSTANCE)
+  @RequiresPermissions(ILACRealm.PROJECT_EDIT_INSTANCE)
   public void onDelete(Project project) {
     if (!project.isDeletable()) {
       return;
     }
     context.deleteObject(project);
     context.commitChanges();
+  }
+  
+  public void onCancelSponsorship(Sponsorship sponsorship) {
+    //Change sponsorship status and send notifications
+  }
+  
+  /**
+   * Attempts to navigate to a given external URL string.
+   * @param urlValue URL value.
+   * @return External URL.
+   */
+  public URL onNavigate(String urlValue) {
+    try {
+      String url;
+      if( !(urlValue.contains("http://") || urlValue.contains("https://")) ) {
+        url = "http://" + urlValue;
+      } else {
+        url = urlValue;
+      }
+      return new URL(url);
+    } catch (MalformedURLException e) {
+      return null;
+    }
   }
   
 }
