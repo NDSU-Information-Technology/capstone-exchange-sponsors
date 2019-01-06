@@ -8,6 +8,8 @@ import org.apache.cayenne.query.NamedQuery;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Role;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
@@ -27,6 +29,8 @@ public class _CapstoneDomainMap {
     public static final String PROJECT_BY_STATUS_QUERYNAME = "ProjectByStatus";
 
     public static final String ROLE_BY_NAME_QUERY_QUERYNAME = "RoleByNameQuery";
+
+    public static final String SPONSORSHIP_BY_STATUS_SITE_QUERY_QUERYNAME = "SponsorshipByStatusSiteQuery";
 
     public static final String SUBJECTS_BY_STATUS_QUERYNAME = "SubjectsByStatus";
 
@@ -70,6 +74,20 @@ public class _CapstoneDomainMap {
         };
 
         return context.performQuery(new NamedQuery("RoleByNameQuery", parameters, values));
+    }
+
+    public List<Sponsorship> performSponsorshipByStatusSiteQuery(ObjectContext context , Status status, Site site) {
+        String[] parameters = {
+            "status",
+            "site",
+        };
+
+        Object[] values = {
+            status,
+            site,
+        };
+
+        return context.performQuery(new NamedQuery("SponsorshipByStatusSiteQuery", parameters, values));
     }
 
     public List<Subject> performSubjectsByStatus(ObjectContext context , Status status) {

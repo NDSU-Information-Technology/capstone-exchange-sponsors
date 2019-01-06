@@ -103,6 +103,13 @@ public class Dashboard {
     context.commitChanges();
   }
   
+  public boolean onPending(Sponsorship sponsorship) {
+    if(Status.PENDING.equals(sponsorship.getStatus())) {
+      return true;
+    }
+    return false;
+  }
+  
   public void onCancelSponsorship(Sponsorship sponsorship) {
     //Change sponsorship status and send notifications
   }

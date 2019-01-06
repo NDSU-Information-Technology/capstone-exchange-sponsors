@@ -66,11 +66,13 @@
 				<div id="tab2" class="tab-pane">
 					<h2>Sponsorships</h2>
 					<t:grid source="sponsorships" row="sponsorshipRow"
-						include="tier, payment, created"
+						include="created, tier, status, payment, expires"
 						add="cancel">
 						<p:cancelHeader>Cancel Sponsorship</p:cancelHeader>
 						<p:cancelCell>
-							<t:EventLink event="cancelSponsorship" context="sponsorshipRow">Cancel</t:EventLink>
+							<t:If test="pending(${sponsorshipRow})">
+								<t:EventLink event="cancelSponsorship" context="sponsorshipRow">Cancel</t:EventLink>
+							</t:If>
 						</p:cancelCell>
 						
 					</t:grid>

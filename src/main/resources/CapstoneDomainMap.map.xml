@@ -46,9 +46,11 @@
 	</db-entity>
 	<db-entity name="sponsorships">
 		<db-attribute name="created" type="TIMESTAMP" isMandatory="true"/>
+		<db-attribute name="expires" type="TIMESTAMP" isMandatory="true"/>
 		<db-attribute name="payment" type="VARCHAR" isMandatory="true" length="50"/>
 		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
 		<db-attribute name="sitePk" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="status" type="VARCHAR" isMandatory="true" length="50"/>
 		<db-attribute name="tier" type="VARCHAR" isMandatory="true" length="255"/>
 	</db-entity>
 	<db-entity name="subjects">
@@ -103,7 +105,9 @@
 	</obj-entity>
 	<obj-entity name="Sponsorship" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship" dbEntityName="sponsorships">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
+		<obj-attribute name="expires" type="java.util.Date" db-attribute-path="expires"/>
 		<obj-attribute name="payment" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Payment" db-attribute-path="payment"/>
+		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Status" db-attribute-path="status"/>
 		<obj-attribute name="tier" type="edu.ndsu.eci.capstone_exchange_sponsors.util.SponsorTier" db-attribute-path="tier"/>
 	</obj-entity>
 	<obj-entity name="Subject" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject" dbEntityName="subjects">
@@ -188,6 +192,9 @@
 	</query>
 	<query name="RoleByNameQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Role">
 		<qualifier><![CDATA[role = $name]]></qualifier>
+	</query>
+	<query name="SponsorshipByStatusSiteQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Sponsorship">
+		<qualifier><![CDATA[(status = $status) and (site = $site)]]></qualifier>
 	</query>
 	<query name="SubjectsByStatus" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Subject">
 		<qualifier><![CDATA[status = $status]]></qualifier>

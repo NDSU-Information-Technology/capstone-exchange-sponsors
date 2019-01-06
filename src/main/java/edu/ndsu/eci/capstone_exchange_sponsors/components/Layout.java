@@ -100,7 +100,7 @@ public class Layout {
         pageNames.add("Account/Dashboard");
       }
       if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
-        pageNames.add("Account/Sponsorship");
+        pageNames.add("Account/SponsorshipSubmission");
       }
       
       if (userInfo.isAdmin()) {

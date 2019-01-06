@@ -14,9 +14,7 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,6 +43,7 @@ import com.googlecode.tapestry5cayenne.annotations.Cayenne;
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.HtmlCleaner;
@@ -83,6 +82,7 @@ public class ProjectSubmission {
   @Property
   private List<Subject> selectedSubjects;
   
+  /** Selected subject row */
   @Property
   private Subject subjectRow;
 
@@ -96,8 +96,12 @@ public class ProjectSubmission {
   @Inject
   private HtmlCleaner cleaner;
   
+  /** Email service for notification */
   @Inject
   private VelocityEmailService emailService;
+  
+  /** Cayenne data map for querying */
+  private CapstoneDomainMap map = CapstoneDomainMap.getInstance();
 
   
   /**
@@ -120,6 +124,10 @@ public class ProjectSubmission {
     return project;
   }
 
+  /**
+   * On activate for editing a project's details.
+   * @param project The project being edited.
+   */
   @RequiresPermissions(ILACRealm.PROJECT_EDIT_INSTANCE)
   public void onActivate(Project project) {
     this.project = project;
@@ -133,7 +141,7 @@ public class ProjectSubmission {
    */
   public void onValidateFromForm() {
     if(!verifyPartnership()) {
-      form.recordError("Only Strategic Partners are allowed to create Projects.");
+      form.recordError("Only Strategic Partners are allowed to create Projects. Please check your sponsorship details.");
       context.rollbackChanges();
     }
     
@@ -148,21 +156,23 @@ public class ProjectSubmission {
    * @return True if a valid sponsorship, false otherwise.
    */
   public boolean verifyPartnership() {
-    final int expiration = 1;
     Date today = new Date();
-    Calendar cal = new GregorianCalendar();
     
-    //FIXME replace with sponsorship query that targets a given site and active status 
-    for(edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship s : userInfo.getUser().getSite().getSponsorships()) {
-      //Get creation date + expiration in months
-      cal.setTime(s.getCreated());
-      cal.add(Calendar.MONTH, expiration);
-      // Sponsorship is of strategic partner tier and today is before expiration date
-      if(s.getTier().equals(SponsorTier.STRATEGIC_PARTNER) && today.before(cal.getTime())) {
-        return true;
-      }
+    Sponsorship sponsorship;
+    List<Sponsorship> sponsorshipList = map.performSponsorshipByStatusSiteQuery(context, Status.APPROVED, userInfo.getUser().getSite());
+    
+    if(sponsorshipList.isEmpty()) {
+      return false;
+    } else {
+      sponsorship = sponsorshipList.get(0);
     }
-    return false;
+
+    // Sponsorship is of strategic partner tier and today is before expiration date
+    if(sponsorship.getTier().equals(SponsorTier.STRATEGIC_PARTNER) && today.before(sponsorship.getExpires())) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -190,6 +200,12 @@ public class ProjectSubmission {
     return dashboard;
   }
   
+  /**
+   * Emails admin upon project submission.
+   * @throws ResourceNotFoundException
+   * @throws ParseErrorException
+   * @throws Exception
+   */
   private void notifyAdmins() throws ResourceNotFoundException, ParseErrorException, Exception {
     VelocityContext velContext = new VelocityContext();
     velContext.put("project", project);

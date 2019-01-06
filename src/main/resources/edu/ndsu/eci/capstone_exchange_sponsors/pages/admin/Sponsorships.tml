@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+	xmlns:p="tapestry:parameter" t:type="adminlayout" title="Sponsorships">
+    
+    <t:if test="sponsorship">
+    	<t:beaneditform t:id="form" object="sponsorship" include="status, tier, payment, expires"></t:beaneditform>
+    </t:if>
+    
+    <t:Grid source="sponsorships" row="sponsorshipRow"
+    	include="site, created, tier, status, expires">
+    	<p:siteCell>
+    		<t:pagelink page="admin/sponsorships" context="sponsorshipRow">${sponsorshipRow.site.name}</t:pagelink>
+    	</p:siteCell>
+    </t:Grid>
+    
+    
+</html>

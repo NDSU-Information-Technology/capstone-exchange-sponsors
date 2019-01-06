@@ -95,6 +95,9 @@
 						<!-- <li> <t:pagelink page="admin/proposaltypes">Proposal Types</t:pagelink> 
 							</li> -->
 						<li>
+							<t:pagelink page="admin/sponsorships">Sponsorships</t:pagelink>
+						</li>
+						<li>
 							<t:pagelink page="admin/subjects">Subjects</t:pagelink>
 						</li>
 						<li>
