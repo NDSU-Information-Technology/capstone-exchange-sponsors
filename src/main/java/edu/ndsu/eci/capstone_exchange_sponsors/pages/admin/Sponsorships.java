@@ -30,6 +30,7 @@ public class Sponsorships {
   private Sponsorship sponsorshipRow;
 
   
+  @SuppressWarnings("unchecked")
   public List<Sponsorship> getSponsorships() {
     return context.performQuery(new SelectQuery(Sponsorship.class));
   }

@@ -20,9 +20,12 @@ import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+
+import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
@@ -51,16 +54,23 @@ public class Dashboard {
   @Inject
   private ObjectContext context;
   
+  /** JavaScript Support */
   @Inject
   private JavaScriptSupport javaScriptSupport;
+  
+  /** Alert Manager */
+  @Inject
+  private AlertManager alerts;
   
   /** tml row for subjects */
   @Property
   private Subject subjectRow;
   
+  /** Sponsorship row */
   @Property
   private Sponsorship sponsorshipRow;
   
+  /** List of sponsorships */
   @Property
   private List<Sponsorship> sponsorships;
   
@@ -68,6 +78,7 @@ public class Dashboard {
   @Property
   private Project projectRow;
   
+  /** List of projects */
   @Property
   private List<Project> projects;
   
@@ -81,6 +92,9 @@ public class Dashboard {
     projects = user.getProjects();
   }
   
+  /**
+   * After render to include JS files.
+   */
   void afterRender() {
     javaScriptSupport.require("bootstrap/tab");
   }
@@ -93,7 +107,10 @@ public class Dashboard {
     return CapstoneDomainMap.getInstance().performSubjectsByStatus(context, Status.APPROVED);
   }
 
-  
+  /**
+   * Delete a given project.
+   * @param project Project to delete.
+   */
   @RequiresPermissions(ILACRealm.PROJECT_EDIT_INSTANCE)
   public void onDelete(Project project) {
     if (!project.isDeletable()) {
@@ -101,17 +118,6 @@ public class Dashboard {
     }
     context.deleteObject(project);
     context.commitChanges();
-  }
-  
-  public boolean onPending(Sponsorship sponsorship) {
-    if(Status.PENDING.equals(sponsorship.getStatus())) {
-      return true;
-    }
-    return false;
-  }
-  
-  public void onCancelSponsorship(Sponsorship sponsorship) {
-    //Change sponsorship status and send notifications
   }
   
   /**

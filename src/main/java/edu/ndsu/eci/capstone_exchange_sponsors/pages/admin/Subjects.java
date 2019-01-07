@@ -47,6 +47,7 @@ public class Subjects {
   @Inject
   private HtmlCleaner cleaner;
   
+  @SuppressWarnings("unchecked")
   public List<Subject> getSubjects() {
     return context.performQuery(new SelectQuery(Subject.class));
   }

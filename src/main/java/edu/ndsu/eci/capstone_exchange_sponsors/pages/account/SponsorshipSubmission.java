@@ -10,14 +10,17 @@ import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.exception.ParseErrorException;
+import org.apache.velocity.exception.ResourceNotFoundException;
 
 import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
+import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -30,10 +33,6 @@ public class SponsorshipSubmission {
   @Inject
   private UserInfo userInfo;
   
-  /** logged in user */
-  @Property
-  private User user;
-  
   /** Cayenne database context */
   @Inject
   private ObjectContext context;
@@ -42,6 +41,11 @@ public class SponsorshipSubmission {
   @Inject
   private AlertManager alerts;
   
+  /** Email service for notification */
+  @Inject
+  private VelocityEmailService emailService;
+  
+  /** Form reference */
   @Component
   private BeanEditForm sponsorshipForm;
   
@@ -55,19 +59,14 @@ public class SponsorshipSubmission {
   /** Number of months a sponsorship lasts */
   private static final int sponsorshipLength = 1;
   
-  
   /**
-   * Setup render, get logged in user
+   * Validation for form.
    */
-  public void setupRender() {
-    user = userInfo.getUser();
-  }
-  
   public void onValidateFromSponsorshipForm() {
     Site site = userInfo.getUser().getSite();
     
     if(!map.performSponsorshipByStatusSiteQuery(context, Status.PENDING, site).isEmpty()) {
-      sponsorshipForm.recordError("Your site already has a pending sponsorship. Please cancel your previously submitted sponsorship request before submitting another.");
+      sponsorshipForm.recordError("Your site already has a pending sponsorship. Please contact a system admin if you want your current sponsorship details to be adjusted.");
       context.rollbackChanges();
     }
     if(!map.performSponsorshipByStatusSiteQuery(context, Status.APPROVED, site).isEmpty()) {
@@ -78,9 +77,12 @@ public class SponsorshipSubmission {
   
   /**
    * Create new sponsorship.
+   * @throws Exception 
+   * @throws ParseErrorException 
+   * @throws ResourceNotFoundException 
    */
   @CommitAfter
-  public void onSuccess() {
+  public void onSuccess() throws ResourceNotFoundException, ParseErrorException, Exception {
     sponsorship.setSite((Site) context.localObject(userInfo.getUser().getSite().getObjectId(), null));
     sponsorship.setStatus(Status.PENDING);
     
@@ -98,6 +100,21 @@ public class SponsorshipSubmission {
     
     context.registerNewObject(sponsorship);
     alerts.success("New Sponsorship Successfully Created");
+    
+    notifyAdminsSubmit();
+  }
+  
+  /**
+   * Emails admin upon sponsorship submission.
+   * @throws ResourceNotFoundException
+   * @throws ParseErrorException
+   * @throws Exception
+   */
+  private void notifyAdminsSubmit() throws ResourceNotFoundException, ParseErrorException, Exception {
+    VelocityContext velContext = new VelocityContext();
+    velContext.put("sponsorship", sponsorship);
+    velContext.put("user", userInfo.getUser());
+    emailService.sendAdminEmail(velContext, "sponsorship-submitted.vm", "Sponsorship Submission");
   }
   
 }
