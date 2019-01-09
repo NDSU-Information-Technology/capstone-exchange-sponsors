@@ -86,14 +86,12 @@
 						<li>
 							<t:pagelink page="admin/countries">Countries</t:pagelink>
 						</li>
-						<!-- <li> <t:pagelink page="admin/institutions">Institutions</t:pagelink> 
-							</li> -->
-						<!-- <li> <t:pagelink page="admin/pairings">Pairings</t:pagelink> </li> -->
 						<li>
 							<t:pagelink page="admin/proposals">Proposals</t:pagelink>
 						</li>
-						<!-- <li> <t:pagelink page="admin/proposaltypes">Proposal Types</t:pagelink> 
-							</li> -->
+						<li>
+							<t:pagelink page="admin/sites">Sites</t:pagelink>
+						</li>
 						<li>
 							<t:pagelink page="admin/sponsorships">Sponsorships</t:pagelink>
 						</li>
@@ -103,8 +101,6 @@
 						<li>
 							<t:pagelink page="admin/users">Users</t:pagelink>
 						</li>
-						<!-- <li> <t:pagelink page="admin/autocomp">Autocomplete Test</t:pagelink> 
-							</li> -->
 					</ul>
 				</div>
 				<div class="col-sm-9">

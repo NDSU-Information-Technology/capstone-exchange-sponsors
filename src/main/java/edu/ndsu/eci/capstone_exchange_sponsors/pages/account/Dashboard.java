@@ -25,8 +25,6 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
-import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
-
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;

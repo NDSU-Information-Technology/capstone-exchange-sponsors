@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html
+    xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+    xmlns:p="tapestry:parameter" t:type="adminlayout" title="Sites">
+    
+    <head>
+		<style>
+			h3 {
+				font-weight: bold;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<t:beaneditform t:id="form" object="site"
+			include="name, email, phone, url, country, street, city, zipPostal">
+			
+		</t:beaneditform>
+	
+		<t:Grid source="sites" row="siteRow"
+			include="name, code, email, phone">
+			<p:nameCell>
+				<t:pagelink page="admin/sites"
+					context="siteRow">${siteRow.name}</t:pagelink>
+			</p:nameCell>
+		</t:Grid>
+	</body>
+    
+</html>
