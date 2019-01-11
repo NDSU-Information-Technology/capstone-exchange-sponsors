@@ -125,13 +125,7 @@ public class Dashboard {
    */
   public URL onNavigate(String urlValue) {
     try {
-      String url;
-      if( !(urlValue.contains("http://") || urlValue.contains("https://")) ) {
-        url = "http://" + urlValue;
-      } else {
-        url = urlValue;
-      }
-      return new URL(url);
+      return new URL(urlValue);
     } catch (MalformedURLException e) {
       return null;
     }

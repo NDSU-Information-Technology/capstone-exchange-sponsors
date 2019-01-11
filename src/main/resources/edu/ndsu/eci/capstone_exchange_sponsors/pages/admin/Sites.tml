@@ -14,8 +14,28 @@
 	<body>
 
 		<t:beaneditform t:id="form" object="site"
-			include="name, email, phone, url, country, street, city, zipPostal">
+			include="name, email, phone, url, country, street, city, zipPostal"
+			add="new">
+			<p:name>
+				<t:Label for="name">Name</t:Label>
+				<t:TextField t:id="name" value="site.name"></t:TextField>
+			</p:name>
+			<p:email>
+				<t:Label for="email">Email</t:Label>
+				<t:TextField t:id="email" type="email" value="site.email"></t:TextField>
+			</p:email>
+			<p:url>
+				<t:Label for="url">Website</t:Label>
+				<t:TextField t:id="url" type="url" value="site.url"></t:TextField>
+			</p:url>
+			<p:city>
+				<t:Label for="city">City</t:Label>
+				<t:TextField t:id="city" value="site.city"></t:TextField>
+			</p:city>
 			
+			<p:new>
+				<t:EventLink event="clear">Clear Fields</t:EventLink>
+			</p:new>
 		</t:beaneditform>
 	
 		<t:Grid source="sites" row="siteRow"

@@ -30,6 +30,8 @@ public class _CapstoneDomainMap {
 
     public static final String ROLE_BY_NAME_QUERY_QUERYNAME = "RoleByNameQuery";
 
+    public static final String SITE_BY_CODE_QUERY_QUERYNAME = "SiteByCodeQuery";
+
     public static final String SPONSORSHIP_BY_STATUS_SITE_QUERY_QUERYNAME = "SponsorshipByStatusSiteQuery";
 
     public static final String SUBJECTS_BY_STATUS_QUERYNAME = "SubjectsByStatus";
@@ -74,6 +76,18 @@ public class _CapstoneDomainMap {
         };
 
         return context.performQuery(new NamedQuery("RoleByNameQuery", parameters, values));
+    }
+
+    public List<Site> performSiteByCodeQuery(ObjectContext context , String code) {
+        String[] parameters = {
+            "code",
+        };
+
+        Object[] values = {
+            code,
+        };
+
+        return context.performQuery(new NamedQuery("SiteByCodeQuery", parameters, values));
     }
 
     public List<Sponsorship> performSponsorshipByStatusSiteQuery(ObjectContext context , Status status, Site site) {

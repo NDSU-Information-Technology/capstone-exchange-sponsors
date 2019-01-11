@@ -193,6 +193,9 @@
 	<query name="RoleByNameQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Role">
 		<qualifier><![CDATA[role = $name]]></qualifier>
 	</query>
+	<query name="SiteByCodeQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Site">
+		<qualifier><![CDATA[code = $code]]></qualifier>
+	</query>
 	<query name="SponsorshipByStatusSiteQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Sponsorship">
 		<qualifier><![CDATA[(status = $status) and (site = $site)]]></qualifier>
 	</query>
