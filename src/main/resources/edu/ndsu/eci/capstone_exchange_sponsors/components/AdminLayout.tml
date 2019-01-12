@@ -29,14 +29,33 @@
 		<link rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 		<style>
-			body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
-			body, html {
-			height: 100%;
-			line-height: 1.8;
+			body,h1,h2,h3,h4,h5,h6 {
+				font-family: "Raleway", sans-serif;
 			}
-
+			body, html {
+				height: 100%;
+				line-height: 1.8;
+			}
 			.w3-bar .w3-button {
-			padding: 16px;
+				padding: 16px;
+			}
+			#navMenu {
+				padding-left: 0;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-evenly;
+				list-style-type: none;
+			}
+			.navItem {
+				padding: 0.25em 0.75em;
+				font-size: 2em;
+				background-color: #cfeaf9;
+				border: 1px solid #cfeaf9;
+				
+			}
+			.navItem:hover {
+				background-color: white;
+				text-decoration: none;
 			}
 		</style>
 	</head>
@@ -77,33 +96,33 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-3">
+				<div>
 					<p>Admin pages</p>
-					<ul>
+					<ul id="navMenu">
 						<li>
-							<t:pagelink page="admin/admin">Admin</t:pagelink>
+							<t:pagelink page="admin/admin" class="navItem">Admin</t:pagelink>
 						</li>
 						<li>
-							<t:pagelink page="admin/countries">Countries</t:pagelink>
+							<t:pagelink page="admin/countries" class="navItem">Countries</t:pagelink>
 						</li>
 						<li>
-							<t:pagelink page="admin/proposals">Proposals</t:pagelink>
+							<t:pagelink page="admin/projects" class="navItem">Projects</t:pagelink>
 						</li>
 						<li>
-							<t:pagelink page="admin/sites">Sites</t:pagelink>
+							<t:pagelink page="admin/sites" class="navItem">Sites</t:pagelink>
 						</li>
 						<li>
-							<t:pagelink page="admin/sponsorships">Sponsorships</t:pagelink>
+							<t:pagelink page="admin/sponsorships" class="navItem">Sponsorships</t:pagelink>
 						</li>
 						<li>
-							<t:pagelink page="admin/subjects">Subjects</t:pagelink>
+							<t:pagelink page="admin/subjects" class="navItem">Subjects</t:pagelink>
 						</li>
 						<li>
-							<t:pagelink page="admin/users">Users</t:pagelink>
+							<t:pagelink page="admin/users" class="navItem">Users</t:pagelink>
 						</li>
 					</ul>
 				</div>
-				<div class="col-sm-9">
+				<div >
 					<h1>${title}</h1>
 					<t:body />
 				</div>

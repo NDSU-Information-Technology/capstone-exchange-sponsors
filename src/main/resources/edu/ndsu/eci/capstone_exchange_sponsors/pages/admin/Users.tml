@@ -18,19 +18,28 @@
     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
     xmlns:p="tapestry:parameter" t:type="adminlayout" title="Users">
     <div>A lot of functionality remains here, plus the layout is broken</div>
-    <t:grid source="pending" add="approve,deny" row="row" reorder="approve,deny,created,institution,departmentName,name,email">
+    <t:grid source="pending" add="approve,deny" row="row" 
+    	exclude="url, federatedId, projects, roles"
+    	reorder="approve,deny,created,site,name,email">
     	<p:approveCell><t:eventlink event="approve" context="row">Approve ${row.ssoemail}</t:eventlink></p:approveCell>
     	<p:denyCell><t:eventlink event="deny" context="row">Deny ${row.ssoemail}</t:eventlink></p:denyCell>
+    	<p:siteCell>${row.site.name}</p:siteCell>
     </t:grid>
     
     <h2>Active Users</h2>
-    <t:grid source="active" add="makeAdmin" row="row" reorder="created,institution,departmentName,name,email">
+    <t:grid source="active" add="makeAdmin" row="row" 
+    	exclude="url, federatedId, projects, roles"
+    	reorder="created,site,name,email">
       <p:makeAdminCell><t:eventlink event="makeAdmin" context="row">Make ${row.ssoemail} admin</t:eventlink></p:makeAdminCell>
+      <p:siteCell>${row.site.name}</p:siteCell>
     </t:grid>
     
     <h2>Admin Users</h2>
-    <t:grid source="admins" add="removeAdmin" row="row" reorder="created,institution,departmentName,name,email">
+    <t:grid source="admins" add="removeAdmin" row="row" 
+    	exclude="url, federatedId, projects, roles"
+    	reorder="created,site,name,email">
       <p:removeAdminCell><t:eventlink event="removeAdmin" context="row">Remove ${row.ssoemail} admin</t:eventlink></p:removeAdminCell>
+      <p:siteCell>${row.site.name}</p:siteCell>
     
     </t:grid>
 </html>
