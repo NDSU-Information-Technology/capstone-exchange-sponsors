@@ -19,6 +19,7 @@ import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.SelectQuery;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
@@ -29,8 +30,19 @@ public class Projects {
   @Inject
   private ObjectContext context;
   
+  /** JavaScript Support */
+  @Inject
+  private JavaScriptSupport javaScriptSupport;
+  
   @Property
   private Project row;
+  
+  /**
+   * After render to include JS files.
+   */
+  void afterRender() {
+    javaScriptSupport.require("bootstrap/tab");
+  }
   
   public List<Project> getPendingProjects() {
     return CapstoneDomainMap.getInstance().performProjectByStatus(context, ProjectStatus.PENDING);

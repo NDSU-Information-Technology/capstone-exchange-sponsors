@@ -43,19 +43,29 @@
 				padding-left: 0;
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-evenly;
 				list-style-type: none;
 			}
+			#navMenu li {
+				margin: 5px;
+				min-width: 200px;
+				flex: 1;
+				display: flex;
+			}
 			.navItem {
-				padding: 0.25em 0.75em;
+				flex: 1;
+				padding: 0.25em;
 				font-size: 2em;
+				text-align: center;
 				background-color: #cfeaf9;
 				border: 1px solid #cfeaf9;
-				
 			}
 			.navItem:hover {
 				background-color: white;
 				text-decoration: none;
+			}
+			.container {
+				margin: 0 5%;
+				width: 90%;
 			}
 		</style>
 	</head>

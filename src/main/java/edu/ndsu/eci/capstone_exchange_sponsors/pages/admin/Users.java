@@ -19,6 +19,7 @@ import org.apache.cayenne.ObjectContext;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -40,6 +41,10 @@ public class Users {
   @Inject
   private ObjectContext context;
   
+  /** JavaScript Support */
+  @Inject
+  private JavaScriptSupport javaScriptSupport;
+  
   @Property
   private User row;
   
@@ -50,6 +55,13 @@ public class Users {
   private VelocityEmailService emailService;
   
   private CapstoneDomainMap map = CapstoneDomainMap.getInstance();
+  
+  /**
+   * After render to include JS files.
+   */
+  void afterRender() {
+    javaScriptSupport.require("bootstrap/tab");
+  }
   
   public List<User> getPending() {
     return map.performUsersByStatus(context, Status.PENDING);

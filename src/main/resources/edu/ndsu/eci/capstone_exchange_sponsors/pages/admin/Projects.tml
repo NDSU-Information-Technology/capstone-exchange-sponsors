@@ -1,39 +1,72 @@
 <!DOCTYPE html>
-<!--
- Copyright 2018 North Dakota State University
+<!-- Copyright 2018 North Dakota State University Licensed under the Apache 
+	License, Version 2.0 (the "License"); you may not use this file except in 
+	compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+	xmlns:p="tapestry:parameter" t:type="adminlayout" title="Projects">
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+	<head>
+		<style>
+			.description {
+				max-height: 80px;
+				overflow-y: scroll;
+				min-width: 200px;
+			}
+		</style>
+	</head>
 
-     http://www.apache.org/licenses/LICENSE-2.0
+	<body>
+	
+		<ul t:id="tabs" t:type="any" class="nav nav-tabs">
+			<li class="active">
+				<a href="#tab1" data-toggle="tab">Pending</a>
+			</li>
+			<li>
+				<a href="#tab2" data-toggle="tab">All</a>
+			</li>
+		</ul>
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
--->
-<html
-    xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
-    xmlns:p="tapestry:parameter" t:type="adminlayout" title="Projects">
-    
- <body>   
- 
- <h3>Pending Projects</h3>
- <!-- reorder="pair,institution,country,subjects,types,user,description,potentialStart,teamSize,cost,created,durationInWeeks,perStudentWeekly,lastModified" -->
- <t:grid source="pendingProjects" row="row" 
- 	exclude="company,pairing,editable,projectStatus,name"
- 	add="approve">
- <p:descriptionCell><t:outputraw value="row.description"></t:outputraw></p:descriptionCell>
- 
+		<div class="tab-content">
+			<div id="tab1" class="tab-pane active">
+				<h3>Pending Projects</h3>
+				<t:grid source="pendingProjects" row="row"
+					exclude="editable, projectStatus, deletable" 
+					add="approve, site, country"
+					reorder="site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks, user">
+					<p:descriptionCell>
+						<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
+					</p:descriptionCell>
+					<p:siteCell>
+						${row.user.site.name}
+					</p:siteCell>
+					<p:countryCell>
+						${row.user.site.country.name}
+					</p:countryCell>
+				</t:grid>
+			</div>
 
- </t:grid>
- 
- <h3>All Projects</h3>
-  <t:grid source="allProjects" row="row">
-  <p:descriptionCell><t:outputraw value="row.description"></t:outputraw></p:descriptionCell>
-  </t:grid>
- 
-</body>  
+			<div id="tab2" class="tab-pane">
+				<h3>All Projects</h3>
+				<t:grid source="allProjects" row="row"
+					exclude="editable, deletable"
+					add="site, country"
+					reorder="site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks, user">
+					<p:descriptionCell>
+						<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
+					</p:descriptionCell>
+					<p:siteCell>
+						${row.user.site.name}
+					</p:siteCell>
+					<p:countryCell>
+						${row.user.site.country.name}
+					</p:countryCell>
+				</t:grid>
+			</div>
+		</div>
+
+	</body>
 </html>
