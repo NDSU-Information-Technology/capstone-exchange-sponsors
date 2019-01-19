@@ -43,6 +43,7 @@ public class Countries {
   @Property
   private Country row;
   
+  @SuppressWarnings("unchecked")
   public List<Country> getCountries() {
     return context.performQuery(new SelectQuery(Country.class));
   }

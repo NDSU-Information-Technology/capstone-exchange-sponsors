@@ -15,7 +15,7 @@
 
 		<t:beaneditform t:id="form" object="site"
 			include="name, email, phone, url, country, street, city, zipPostal"
-			add="new">
+			add="clear">
 			<p:name>
 				<t:Label for="name">Name</t:Label>
 				<t:TextField t:id="name" value="site.name"></t:TextField>
@@ -33,16 +33,15 @@
 				<t:TextField t:id="city" value="site.city"></t:TextField>
 			</p:city>
 			
-			<p:new>
+			<p:clear>
 				<t:EventLink event="clear">Clear Fields</t:EventLink>
-			</p:new>
+			</p:clear>
 		</t:beaneditform>
 	
 		<t:Grid source="sites" row="siteRow"
 			include="name, code, email, phone">
 			<p:nameCell>
-				<t:pagelink page="admin/sites"
-					context="siteRow">${siteRow.name}</t:pagelink>
+				<t:pagelink page="admin/sites" context="siteRow">${siteRow.name}</t:pagelink>
 			</p:nameCell>
 		</t:Grid>
 	</body>

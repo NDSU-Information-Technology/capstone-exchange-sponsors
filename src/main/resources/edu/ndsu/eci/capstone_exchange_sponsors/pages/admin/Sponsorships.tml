@@ -11,15 +11,34 @@
 	</head>
 
 	<body>
-		<t:if test="sponsorship">
-			<t:beaneditform t:id="form" object="sponsorship"
-				add="name"
-				include="status, tier, payment, expires"
-				reorder="name, status, tier, payment, expires">
-				<p:name><h3>${sponsorship.site.name}</h3></p:name>	
-			</t:beaneditform>
+		
+		<t:if test="site">
+		
+			<t:if test="sponsorship">
+				<t:beaneditform t:id="form" object="sponsorship"
+					add="name"
+					include="status, tier, payment, expires"
+					reorder="name, status, tier, payment, expires">
+					<p:name><h3>${sponsorship.site.name}</h3></p:name>	
+				</t:beaneditform>
+			</t:if>
+			
+			<h3>${site.name} Sponsorships</h3>
+			<em>Select a Sponsorship to edit it's details.</em>
+			<br/>
+			<t:Grid source="sponsorships" row="sponsorshipRow"
+				include="created, tier, status, expires" add="select"
+				reorder="select, created, tier, status, expires">
+				<p:selectCell>
+					<t:pagelink page="admin/sponsorships" context="sponsorshipRow">Select</t:pagelink>
+				</p:selectCell>
+			</t:Grid>
+			
 		</t:if>
 	
+		<h3>Sites</h3>
+		<em>Select a Site name to view it's associated Sponsorships.</em>
+		<br/>
 		<ul t:id="tabs" t:type="any" class="nav nav-tabs">
 			<li class="active">
 				<a href="#tab1" data-toggle="tab">Pending</a>
@@ -28,24 +47,20 @@
 				<a href="#tab2" data-toggle="tab">All</a>
 			</li>
 		</ul>
-	
+		
 		<div class="tab-content">
 			<div id="tab1" class="tab-pane active">
-				<t:Grid source="pendingSponsorships" row="sponsorshipRow"
-					include="site, created, tier, status, expires">
-					<p:siteCell>
-						<t:pagelink page="admin/sponsorships"
-							context="sponsorshipRow">${sponsorshipRow.site.name}</t:pagelink>
-					</p:siteCell>
+				<t:Grid source="pendingSites" row="siteRow" include="name">
+					<p:nameCell>
+						<t:eventlink event="pendingSite" context="siteRow">${siteRow.name}</t:eventlink>
+					</p:nameCell>
 				</t:Grid>
 			</div>
 			<div id="tab2" class="tab-pane">
-				<t:Grid source="allSponsorships" row="sponsorshipRow"
-					include="site, created, tier, status, expires">
-					<p:siteCell>
-						<t:pagelink page="admin/sponsorships"
-							context="sponsorshipRow">${sponsorshipRow.site.name}</t:pagelink>
-					</p:siteCell>
+				<t:Grid source="allSites" row="siteRow" include="name">
+					<p:nameCell>
+						<t:eventlink event="allSite" context="siteRow">${siteRow.name}</t:eventlink>
+					</p:nameCell>
 				</t:Grid>
 			</div>
 		</div>

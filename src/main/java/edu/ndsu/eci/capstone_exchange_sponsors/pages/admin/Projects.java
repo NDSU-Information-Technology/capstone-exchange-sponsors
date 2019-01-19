@@ -48,6 +48,7 @@ public class Projects {
     return CapstoneDomainMap.getInstance().performProjectByStatus(context, ProjectStatus.PENDING);
   }
   
+  @SuppressWarnings("unchecked")
   public List<Project> getAllProjects() {
     return context.performQuery(new SelectQuery(Project.class));
   }

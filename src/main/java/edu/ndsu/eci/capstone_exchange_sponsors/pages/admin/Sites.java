@@ -108,7 +108,7 @@ public class Sites {
   public void onSuccessFromForm() {
     CodeGenerator generator = new CodeGenerator();
     site.setCode(generator.getCode(context));
-    alerts.success("New Site Created");
+    alerts.success("Site Created/Updated");
   }
   
   /**

@@ -107,7 +107,6 @@
 		<div class="container">
 			<div class="row">
 				<div>
-					<p>Admin pages</p>
 					<ul id="navMenu">
 						<li>
 							<t:pagelink page="admin/admin" class="navItem">Admin</t:pagelink>
