@@ -13,6 +13,7 @@
 // limitations under the License.
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.admin;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
@@ -100,6 +101,8 @@ public class Projects {
   @CommitAfter
   public void onApprove(Project row) {
     row.setProjectStatus(ProjectStatus.APPROVED);
+    row.setLastModified(new Date());
+    
     if (request.isXHR()) {
       ajaxResponseRenderer.addRender(allZone);
       ajaxResponseRenderer.addRender(pendingZone);
@@ -113,6 +116,8 @@ public class Projects {
   @CommitAfter
   public void onDeny(Project row) {
     row.setProjectStatus(ProjectStatus.DECLINED);
+    row.setLastModified(new Date());
+    
     if (request.isXHR()) {
       ajaxResponseRenderer.addRender(allZone);
       ajaxResponseRenderer.addRender(pendingZone);
@@ -126,6 +131,8 @@ public class Projects {
   @CommitAfter
   public void onSuccessFromStatusForm(Project row) {
     row.setProjectStatus(status);
+    row.setLastModified(new Date());
+    
     if (request.isXHR()) {
       ajaxResponseRenderer.addRender(allZone);
       ajaxResponseRenderer.addRender(pendingZone);

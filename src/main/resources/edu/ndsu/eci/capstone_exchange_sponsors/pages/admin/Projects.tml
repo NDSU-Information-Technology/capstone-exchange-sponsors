@@ -35,9 +35,9 @@
 				<h3>Pending Projects</h3>
 				<t:zone t:id="pendingZone">
 					<t:grid source="pendingProjects" row="row"
-						exclude="editable, projectStatus, deletable" 
+						exclude="editable, projectStatus, deletable, user" 
 						add="approve, deny, site, country"
-						reorder="approve, deny, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks, user">
+						reorder="approve, deny, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
 						<p:descriptionCell>
 							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
 						</p:descriptionCell>
@@ -62,9 +62,9 @@
 				<h3>All Projects</h3>
 				<t:zone t:id="allZone">
 					<t:grid source="allProjects" row="row"
-						exclude="editable, deletable"
+						exclude="editable, deletable, user"
 						add="site, country, changeStatus"
-						reorder="site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks, user">
+						reorder="site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
 						<p:descriptionCell>
 							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
 						</p:descriptionCell>
