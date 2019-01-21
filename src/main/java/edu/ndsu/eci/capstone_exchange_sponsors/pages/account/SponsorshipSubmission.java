@@ -57,7 +57,7 @@ public class SponsorshipSubmission {
   private CapstoneDomainMap map = CapstoneDomainMap.getInstance();
   
   /** Number of months a sponsorship lasts */
-  private static final int sponsorshipLength = 1;
+  public static final int sponsorshipLength = 1;
   
   /**
    * Validation for form.

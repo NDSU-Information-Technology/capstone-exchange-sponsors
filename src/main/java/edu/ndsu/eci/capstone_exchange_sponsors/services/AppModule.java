@@ -31,9 +31,12 @@ import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.Decorate;
 import org.apache.tapestry5.ioc.annotations.InjectService;
+import org.apache.tapestry5.ioc.annotations.Startup;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.ApplicationDefaults;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
+import org.apache.tapestry5.ioc.services.cron.CronSchedule;
+import org.apache.tapestry5.ioc.services.cron.PeriodicExecutor;
 import org.apache.tapestry5.services.BaseURLSource;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.ExceptionReporter;
@@ -57,6 +60,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.ECIFederatedAccount
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.EmailServiceImpl;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.FormInputTrimmerFilterImpl;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.HtmlCleanerImpl;
+import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.UpdateSponsorshipsImpl;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.UserInfoImpl;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.VelocityEmailServiceImpl;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.VelocityServiceImpl;
@@ -96,6 +100,7 @@ public class AppModule {
     binder.bind(EmailService.class, EmailServiceImpl.class);
     binder.bind(VelocityService.class, VelocityServiceImpl.class);
     binder.bind(VelocityEmailService.class, VelocityEmailServiceImpl.class);
+    binder.bind(UpdateSponsorships.class, UpdateSponsorshipsImpl.class);
   }
 
   public static void contributeFederatedAccountService(MappedConfiguration<String, Object> configuration) {
@@ -261,6 +266,21 @@ public class AppModule {
       public void reportException(Throwable exception) {
       }
     };
+  }
+  
+  /**
+   * Schedules jobs to run daily.
+   * @param executor Executor service.
+   * @param updateSponsorships Service that handles updating Sponsorships.
+   */
+  @Startup
+  public static void scheduleJobs(PeriodicExecutor executor, final UpdateSponsorships updateSponsorships) {
+    // 4:00 always happens, and happens only once, and is outside of normal maintenance windows and backups
+    executor.addJob(new CronSchedule("0 00 4 * * ?"), "Import Job", new Runnable() {
+      public void run() {
+        updateSponsorships.update();
+      }
+    });
   }
 
 }
