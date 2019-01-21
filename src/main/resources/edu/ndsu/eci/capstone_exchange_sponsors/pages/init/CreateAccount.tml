@@ -33,14 +33,11 @@
 <select t:type="select" t:id="country" value="country"  model="countries" blankOption="ALWAYS" blankLabel="Choose" zone="institutionZone" validate="required"/>
 <br/>
 
-
-<t:zone t:id="institutionZone"> 
-	<label t:type="label" for="institution"/><span style="color:red;">*</span>
-	<t:select t:id="institution" model="institutions" blankLabel="Choose" validate="required" value="institution"/>
-</t:zone>
-
 <label t:type="label" for="name"/>
 <input t:type="textfield" t:id="name" t:placeholder="Name" value="name" t:validate="required"/>
+
+<label t:type="label" for="siteCode"/>
+<input t:type="textfield" t:id="siteCode" t:placeholder="Site Code" value="siteCode" t:validate="required" />
 
 <label t:type="label" for="email"/>
 <input t:type="textfield" t:id="email" t:placeholder="Email" value="email" t:validate="required"/>
@@ -50,9 +47,6 @@
 
 <label t:type="label" for="url">Personal Website URL (optional)</label>
 <input t:type="textfield" t:id="url" value="url"/>
-
-<label t:type="label" for="departmentName">Department Name</label>
-<input t:type="textfield" t:id="departmentName" t:placeholder="Enter the name of your department" value="departmentName" t:validate="required" />
 
 <label t:type="label" for="agree">I agree to the <t:pagelink page="privacy" target="_blank">privacy policy.</t:pagelink></label>
 <t:Checkbox value="agree" t:id="agree" required="required"/>

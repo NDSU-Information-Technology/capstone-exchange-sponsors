@@ -94,6 +94,10 @@ public class CreateAccount {
   /** name that the user wants to use, rather than the one from SSO */
   @Property
   private String name;
+  
+  /** Code for the site to be associated to */
+  @Property
+  private String siteCode;
 
   /** email that the user wants to use, rather than the one from SSO */
   @Property
@@ -127,6 +131,7 @@ public class CreateAccount {
   public void setupRender() {
     user = userInfo.getUser();
     name = user.getName();
+    siteCode = user.getSite().getCode();
     email = user.getEmail();
   } 
 
@@ -168,6 +173,10 @@ public class CreateAccount {
     if (!agree) {
       form.recordError("Must agree to privacy policy.");
     }
+    
+    if(CapstoneDomainMap.getInstance().performSiteByCodeQuery(context, siteCode).isEmpty()) {
+      form.recordError("Given site code does not match any known site. Please check the entered site code and try again.");
+    }
   }
 
   /**
@@ -191,6 +200,8 @@ public class CreateAccount {
     } else {
       usr.setName(name);
     }
+    
+    usr.setSite(CapstoneDomainMap.getInstance().performSiteByCodeQuery(context, siteCode).get(0));
     usr.setUrl(url);
     usr.setStatus(Status.PENDING);
     usr.setWorkPhone(phone);
@@ -216,38 +227,5 @@ public class CreateAccount {
   public List<Country> getCountries() {
     return CapstoneDomainMap.getInstance().performCountries(context, Status.APPROVED);
   }
+  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
