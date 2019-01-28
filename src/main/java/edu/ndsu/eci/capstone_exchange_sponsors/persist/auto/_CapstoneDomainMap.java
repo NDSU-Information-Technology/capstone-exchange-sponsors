@@ -32,7 +32,9 @@ public class _CapstoneDomainMap {
 
     public static final String SITE_BY_CODE_QUERY_QUERYNAME = "SiteByCodeQuery";
 
-    public static final String SPONSORSHIP_BY_STATUS_SITE_QUERY_QUERYNAME = "SponsorshipByStatusSiteQuery";
+    public static final String SPONSORSHIP_BY_STATUS_AND_SITE_QUERY_QUERYNAME = "SponsorshipByStatusAndSiteQuery";
+
+    public static final String SPONSORSHIP_BY_STATUS_QUERY_QUERYNAME = "SponsorshipByStatusQuery";
 
     public static final String SUBJECTS_BY_STATUS_QUERYNAME = "SubjectsByStatus";
 
@@ -90,7 +92,7 @@ public class _CapstoneDomainMap {
         return context.performQuery(new NamedQuery("SiteByCodeQuery", parameters, values));
     }
 
-    public List<Sponsorship> performSponsorshipByStatusSiteQuery(ObjectContext context , Status status, Site site) {
+    public List<Sponsorship> performSponsorshipByStatusAndSiteQuery(ObjectContext context , Status status, Site site) {
         String[] parameters = {
             "status",
             "site",
@@ -101,7 +103,19 @@ public class _CapstoneDomainMap {
             site,
         };
 
-        return context.performQuery(new NamedQuery("SponsorshipByStatusSiteQuery", parameters, values));
+        return context.performQuery(new NamedQuery("SponsorshipByStatusAndSiteQuery", parameters, values));
+    }
+
+    public List<Sponsorship> performSponsorshipByStatusQuery(ObjectContext context , Status status) {
+        String[] parameters = {
+            "status",
+        };
+
+        Object[] values = {
+            status,
+        };
+
+        return context.performQuery(new NamedQuery("SponsorshipByStatusQuery", parameters, values));
     }
 
     public List<Subject> performSubjectsByStatus(ObjectContext context , Status status) {

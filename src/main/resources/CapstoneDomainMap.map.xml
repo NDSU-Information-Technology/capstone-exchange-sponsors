@@ -196,8 +196,11 @@
 	<query name="SiteByCodeQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Site">
 		<qualifier><![CDATA[code = $code]]></qualifier>
 	</query>
-	<query name="SponsorshipByStatusSiteQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Sponsorship">
+	<query name="SponsorshipByStatusAndSiteQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Sponsorship">
 		<qualifier><![CDATA[(status = $status) and (site = $site)]]></qualifier>
+	</query>
+	<query name="SponsorshipByStatusQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Sponsorship">
+		<qualifier><![CDATA[status = $status]]></qualifier>
 	</query>
 	<query name="SubjectsByStatus" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Subject">
 		<qualifier><![CDATA[status = $status]]></qualifier>

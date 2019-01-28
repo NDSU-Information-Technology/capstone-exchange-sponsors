@@ -65,11 +65,11 @@ public class SponsorshipSubmission {
   public void onValidateFromSponsorshipForm() {
     Site site = userInfo.getUser().getSite();
     
-    if(!map.performSponsorshipByStatusSiteQuery(context, Status.PENDING, site).isEmpty()) {
+    if(!map.performSponsorshipByStatusAndSiteQuery(context, Status.PENDING, site).isEmpty()) {
       sponsorshipForm.recordError("Your site already has a pending sponsorship. Please contact a system admin if you want your current sponsorship details to be adjusted.");
       context.rollbackChanges();
     }
-    if(!map.performSponsorshipByStatusSiteQuery(context, Status.APPROVED, site).isEmpty()) {
+    if(!map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, site).isEmpty()) {
       sponsorshipForm.recordError("Your site already has an active sponsorship. Please contact a system admin if you want your current sponsorship details to be adjusted.");
       context.rollbackChanges();
     }

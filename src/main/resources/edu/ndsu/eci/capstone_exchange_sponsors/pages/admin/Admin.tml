@@ -18,11 +18,17 @@
     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
     xmlns:p="tapestry:parameter" t:type="adminlayout" title="Admin Page">
     
- <body>   
- 
-<div>
-	TODO put status information in here like things that need to be acted upon.
-</div>
-   
-</body>  
+	<body>   
+	 
+		<div>
+			<b>Pending Projects:</b> ${pendingProjects}
+		</div>
+		<div>
+			<b>Pending Sponsorships:</b> ${pendingSponsorships}
+		</div>
+		<div>
+			<b>Pending Users:</b> ${pendingUsers}
+		</div>
+		<br/>
+	</body>  
 </html>

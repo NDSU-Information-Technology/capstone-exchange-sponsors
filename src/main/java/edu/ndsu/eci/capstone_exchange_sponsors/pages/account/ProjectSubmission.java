@@ -159,7 +159,7 @@ public class ProjectSubmission {
     Date today = new Date();
     
     Sponsorship sponsorship;
-    List<Sponsorship> sponsorshipList = map.performSponsorshipByStatusSiteQuery(context, Status.APPROVED, userInfo.getUser().getSite());
+    List<Sponsorship> sponsorshipList = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, userInfo.getUser().getSite());
     
     if(sponsorshipList.isEmpty()) {
       return false;

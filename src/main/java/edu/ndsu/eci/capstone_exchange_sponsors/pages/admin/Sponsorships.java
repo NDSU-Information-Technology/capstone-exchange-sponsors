@@ -119,7 +119,7 @@ public class Sponsorships {
     CapstoneDomainMap map = CapstoneDomainMap.getInstance();
     
     for(int i = allSites.size() - 1; i >= 0; i--) {
-      if(map.performSponsorshipByStatusSiteQuery(context, Status.PENDING, allSites.get(i)).isEmpty()) {
+      if(map.performSponsorshipByStatusAndSiteQuery(context, Status.PENDING, allSites.get(i)).isEmpty()) {
         allSites.remove(i);
       }
     }
@@ -171,7 +171,7 @@ public class Sponsorships {
       context.rollbackChanges();
     }
     
-    if(sponsorship.getStatus().equals(Status.APPROVED) && !map.performSponsorshipByStatusSiteQuery(context, Status.APPROVED, site).isEmpty()) {
+    if(sponsorship.getStatus().equals(Status.APPROVED) && !map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, site).isEmpty()) {
       form.recordError("Selected site already has an Approved sponsorship. Make sure to set the other sponsorships to Decommissioned before creating/updating this sponsorship.");
       context.rollbackChanges();
     }

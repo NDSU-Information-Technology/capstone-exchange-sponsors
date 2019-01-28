@@ -13,6 +13,43 @@
 // limitations under the License.
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.admin;
 
+import org.apache.cayenne.ObjectContext;
+import org.apache.tapestry5.ioc.annotations.Inject;
+
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+
 public class Admin {
  
+  /** Cayenne database context */
+  @Inject
+  private ObjectContext context;
+  
+  /** Cayenne data map for querying */
+  private CapstoneDomainMap map = CapstoneDomainMap.getInstance();
+  
+  /**
+   * Get number of pending Projects.
+   * @return Number of pending items.
+   */
+  public int getPendingProjects() {
+    return map.performProjectByStatus(context, ProjectStatus.PENDING).size();
+  }
+  
+  /**
+   * Get number of pending Sponsorships.
+   * @return Number of pending items.
+   */
+  public int getPendingSponsorships() {
+    return map.performSponsorshipByStatusQuery(context, Status.PENDING).size();
+  }
+  
+  /**
+   * Get number of pending Users.
+   * @return Number of pending items.
+   */
+  public int getPendingUsers() {
+    return map.performUsersByStatus(context, Status.PENDING).size();
+  }
 }
