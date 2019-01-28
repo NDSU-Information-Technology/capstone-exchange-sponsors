@@ -1,5 +1,8 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.admin;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
@@ -16,6 +19,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 
+import edu.ndsu.eci.capstone_exchange_sponsors.pages.account.SponsorshipSubmission;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
@@ -60,7 +64,37 @@ public class Sponsorships {
   /** Row selection for Site grid */
   @Property
   private Site siteRow;
+  
+  /** Cayenne data map for querying */
+  private CapstoneDomainMap map = CapstoneDomainMap.getInstance();
 
+  /**
+   * On page load, create a new Sponsorship.
+   */
+  public void setupRender() {
+    if(sponsorship == null) {
+      sponsorship = new Sponsorship();
+      Date today = new Date();
+      sponsorship.setCreated(today);
+      Calendar expiration = new GregorianCalendar();
+      expiration.setTime(today);
+      expiration.set(Calendar.MILLISECOND, 0);
+      expiration.set(Calendar.SECOND, 0);
+      expiration.set(Calendar.MINUTE, 0);
+      expiration.set(Calendar.HOUR_OF_DAY, 0);
+      //FIXME replace sponsorshipLength with a configuration setting
+      expiration.add(Calendar.MONTH, SponsorshipSubmission.sponsorshipLength);
+      sponsorship.setExpires(expiration.getTime());
+    }
+  }
+  
+  /**
+   * Event link to create a new sponsorship.
+   */
+  public void onCreateSponsorship() {
+    sponsorship = null;
+  }
+  
   /**
    * Called when navigated to from another page. Removes persisted Site selection.
    */
@@ -116,6 +150,7 @@ public class Sponsorships {
    */
   public void onPendingSite(Site siteRow) {
     site = siteRow;
+    sponsorship = null;
   }
   
   /**
@@ -124,6 +159,7 @@ public class Sponsorships {
    */
   public void onAllSite(Site siteRow) {
     site = siteRow;
+    sponsorship = null;
   }
   
   /**
@@ -134,6 +170,11 @@ public class Sponsorships {
       form.recordError("Expiration date must be after the creation date.");
       context.rollbackChanges();
     }
+    
+    if(sponsorship.getStatus().equals(Status.APPROVED) && !map.performSponsorshipByStatusSiteQuery(context, Status.APPROVED, site).isEmpty()) {
+      form.recordError("Selected site already has an Approved sponsorship. Make sure to set the other sponsorships to Decommissioned before creating/updating this sponsorship.");
+      context.rollbackChanges();
+    }
   }
   
   /**
@@ -141,7 +182,7 @@ public class Sponsorships {
    */
   @CommitAfter
   public void onSuccessFromForm() {
-    
+    sponsorship.setSite(site);
   }
 
 }

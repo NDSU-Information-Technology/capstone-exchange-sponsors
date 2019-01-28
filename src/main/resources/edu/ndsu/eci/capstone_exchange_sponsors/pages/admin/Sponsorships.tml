@@ -14,14 +14,15 @@
 		
 		<t:if test="site">
 		
-			<t:if test="sponsorship">
-				<t:beaneditform t:id="form" object="sponsorship"
-					add="name"
-					include="status, tier, payment, expires"
-					reorder="name, status, tier, payment, expires">
-					<p:name><h3>${sponsorship.site.name}</h3></p:name>	
-				</t:beaneditform>
-			</t:if>
+			
+			<t:beaneditform t:id="form" object="sponsorship"
+				add="name, new"
+				include="status, tier, payment, expires"
+				reorder="name, status, tier, payment, expires">
+				<p:name><h3>${site.name}</h3></p:name>	
+				<p:new><t:eventlink event="createSponsorship">New Sponsorship</t:eventlink></p:new>
+			</t:beaneditform>
+			
 			
 			<h3>${site.name} Sponsorships</h3>
 			<em>Select a Sponsorship to edit it's details.</em>
