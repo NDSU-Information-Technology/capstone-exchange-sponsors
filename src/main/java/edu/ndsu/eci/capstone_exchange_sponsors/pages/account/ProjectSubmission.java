@@ -43,6 +43,7 @@ import com.googlecode.tapestry5cayenne.annotations.Cayenne;
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
@@ -58,6 +59,7 @@ public class ProjectSubmission {
   /** user info service */
   @Inject
   private UserInfo userInfo;
+  
   /** cayenne context */
   @Inject
   private ObjectContext context;
@@ -189,7 +191,11 @@ public class ProjectSubmission {
     project.setLastModified(new Date());
     project.setProjectStatus(ProjectStatus.PENDING);
     project.setDescription(cleaner.cleanCapstone(project.getDescription()));
-    project.setUser((User) context.localObject(userInfo.getUser().getObjectId(), null));
+    
+    User user = (User) context.localObject(userInfo.getUser().getObjectId(), null);
+    project.setUser(user);
+    Site site = (Site) context.localObject(userInfo.getUser().getSite().getObjectId(), null);
+    project.setSite(site);
     
     fixupSubjects();
     

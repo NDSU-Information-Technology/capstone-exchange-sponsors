@@ -24,6 +24,7 @@
 		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
 		<db-attribute name="potentialStart" type="DATE" isMandatory="true"/>
 		<db-attribute name="projectStatus" type="VARCHAR" isMandatory="true" length="20"/>
+		<db-attribute name="sitePk" type="INTEGER" isMandatory="true"/>
 		<db-attribute name="submittingUser" type="INTEGER" isMandatory="true"/>
 	</db-entity>
 	<db-entity name="roles">
@@ -137,6 +138,9 @@
 	<db-relationship name="subject" source="projectSubjects" target="subjects" toMany="false">
 		<db-attribute-pair source="subjectPk" target="pk"/>
 	</db-relationship>
+	<db-relationship name="site" source="projects" target="sites" toMany="false">
+		<db-attribute-pair source="sitePk" target="pk"/>
+	</db-relationship>
 	<db-relationship name="subjects" source="projects" target="projectSubjects" toDependentPK="true" toMany="true">
 		<db-attribute-pair source="pk" target="projectPk"/>
 	</db-relationship>
@@ -148,6 +152,9 @@
 	</db-relationship>
 	<db-relationship name="country" source="sites" target="countries" toMany="false">
 		<db-attribute-pair source="countryPk" target="pk"/>
+	</db-relationship>
+	<db-relationship name="projects" source="sites" target="projects" toMany="true">
+		<db-attribute-pair source="pk" target="sitePk"/>
 	</db-relationship>
 	<db-relationship name="sponsorships" source="sites" target="sponsorships" toMany="true">
 		<db-attribute-pair source="pk" target="sitePk"/>
@@ -171,24 +178,23 @@
 		<db-attribute-pair source="sitePk" target="pk"/>
 	</db-relationship>
 	<obj-relationship name="sites" source="Country" target="Site" deleteRule="Deny" db-relationship-path="sites"/>
+	<obj-relationship name="site" source="Project" target="Site" deleteRule="Nullify" db-relationship-path="site"/>
 	<obj-relationship name="subjects" source="Project" target="Subject" deleteRule="Nullify" db-relationship-path="subjects.subject"/>
 	<obj-relationship name="user" source="Project" target="User" deleteRule="Nullify" db-relationship-path="user"/>
 	<obj-relationship name="user" source="Role" target="User" deleteRule="Nullify" db-relationship-path="user"/>
 	<obj-relationship name="country" source="Site" target="Country" deleteRule="Nullify" db-relationship-path="country"/>
+	<obj-relationship name="projects" source="Site" target="Project" deleteRule="Deny" db-relationship-path="projects"/>
 	<obj-relationship name="sponsorships" source="Site" target="Sponsorship" deleteRule="Deny" db-relationship-path="sponsorships"/>
 	<obj-relationship name="users" source="Site" target="User" deleteRule="Deny" db-relationship-path="users"/>
 	<obj-relationship name="site" source="Sponsorship" target="Site" deleteRule="Nullify" db-relationship-path="site"/>
-	<obj-relationship name="proposals" source="Subject" target="Project" deleteRule="Deny" db-relationship-path="projects.project"/>
-	<obj-relationship name="projects" source="User" target="Project" deleteRule="Deny" db-relationship-path="projects"/>
 	<obj-relationship name="roles" source="User" target="Role" deleteRule="Deny" db-relationship-path="roles"/>
 	<obj-relationship name="site" source="User" target="Site" deleteRule="Nullify" db-relationship-path="site"/>
 	<query name="Countries" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Country">
 		<qualifier><![CDATA[status = $status]]></qualifier>
 		<ordering><![CDATA[name]]></ordering>
 	</query>
-	<query name="ProjectByStatus" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Project">
-		<qualifier><![CDATA[projectStatus = $status]]></qualifier>
-		<ordering><![CDATA[created]]></ordering>
+	<query name="ProjectByStatusQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Project">
+		<qualifier><![CDATA[projectStatus = $projectStatus]]></qualifier>
 	</query>
 	<query name="RoleByNameQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Role">
 		<qualifier><![CDATA[role = $name]]></qualifier>

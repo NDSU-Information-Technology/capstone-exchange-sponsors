@@ -84,11 +84,14 @@
 					<h2>Projects</h2>
 					<t:grid source="projects" row="projectRow"
 						include="created, name, potentialStart, subjects, description"
-						add="edit, delete">
+						add="createdBy, edit, delete">
 						<p:descriptionCell>
 							<div class="description"><t:outputraw value="projectRow.description"></t:outputraw></div>
 						</p:descriptionCell>
-		
+						
+						<p:createdByCell>
+							${projectRow.user.name}
+						</p:createdByCell>
 						<p:editCell>
 							<t:if test="projectRow.editable">
 								<t:pagelink page="account/projectsubmission"

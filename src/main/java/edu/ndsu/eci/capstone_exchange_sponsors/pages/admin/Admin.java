@@ -34,7 +34,7 @@ public class Admin {
    * @return Number of pending items.
    */
   public int getPendingProjects() {
-    return map.performProjectByStatus(context, ProjectStatus.PENDING).size();
+    return map.performProjectByStatusQuery(context, ProjectStatus.PENDING).size();
   }
   
   /**

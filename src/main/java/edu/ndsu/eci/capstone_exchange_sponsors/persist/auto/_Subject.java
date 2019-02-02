@@ -1,11 +1,9 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.persist.auto;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.cayenne.CayenneDataObject;
 
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -20,7 +18,6 @@ public abstract class _Subject extends CayenneDataObject {
     public static final String DESCRIPTION_PROPERTY = "description";
     public static final String NAME_PROPERTY = "name";
     public static final String STATUS_PROPERTY = "status";
-    public static final String PROPOSALS_PROPERTY = "proposals";
 
     public static final String PK_PK_COLUMN = "pk";
 
@@ -51,17 +48,5 @@ public abstract class _Subject extends CayenneDataObject {
     public Status getStatus() {
         return (Status)readProperty("status");
     }
-
-    public void addToProposals(Project obj) {
-        addToManyTarget("proposals", obj, true);
-    }
-    public void removeFromProposals(Project obj) {
-        removeToManyTarget("proposals", obj, true);
-    }
-    @SuppressWarnings("unchecked")
-    public List<Project> getProposals() {
-        return (List<Project>)readProperty("proposals");
-    }
-
 
 }

@@ -82,7 +82,7 @@ public class Projects {
    * @return List of Project objects.
    */
   public List<Project> getPendingProjects() {
-    return CapstoneDomainMap.getInstance().performProjectByStatus(context, ProjectStatus.PENDING);
+    return CapstoneDomainMap.getInstance().performProjectByStatusQuery(context, ProjectStatus.PENDING);
   }
   
   /**

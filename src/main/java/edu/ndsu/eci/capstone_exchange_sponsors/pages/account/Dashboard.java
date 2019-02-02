@@ -87,7 +87,7 @@ public class Dashboard {
   public void setupRender() {
     user = userInfo.getUser();
     sponsorships = user.getSite().getSponsorships();
-    projects = user.getProjects();
+    projects = user.getSite().getProjects();
   }
   
   /**

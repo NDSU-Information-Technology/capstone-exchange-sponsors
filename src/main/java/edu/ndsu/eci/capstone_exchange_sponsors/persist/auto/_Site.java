@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.cayenne.CayenneDataObject;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 
@@ -26,6 +27,7 @@ public abstract class _Site extends CayenneDataObject {
     public static final String URL_PROPERTY = "url";
     public static final String ZIP_POSTAL_PROPERTY = "zipPostal";
     public static final String COUNTRY_PROPERTY = "country";
+    public static final String PROJECTS_PROPERTY = "projects";
     public static final String SPONSORSHIPS_PROPERTY = "sponsorships";
     public static final String USERS_PROPERTY = "users";
 
@@ -100,6 +102,18 @@ public abstract class _Site extends CayenneDataObject {
 
     public Country getCountry() {
         return (Country)readProperty("country");
+    }
+
+
+    public void addToProjects(Project obj) {
+        addToManyTarget("projects", obj, true);
+    }
+    public void removeFromProjects(Project obj) {
+        removeToManyTarget("projects", obj, true);
+    }
+    @SuppressWarnings("unchecked")
+    public List<Project> getProjects() {
+        return (List<Project>)readProperty("projects");
     }
 
 

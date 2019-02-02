@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.cayenne.CayenneDataObject;
 
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
@@ -25,6 +26,7 @@ public abstract class _Project extends CayenneDataObject {
     public static final String NAME_PROPERTY = "name";
     public static final String POTENTIAL_START_PROPERTY = "potentialStart";
     public static final String PROJECT_STATUS_PROPERTY = "projectStatus";
+    public static final String SITE_PROPERTY = "site";
     public static final String SUBJECTS_PROPERTY = "subjects";
     public static final String USER_PROPERTY = "user";
 
@@ -85,6 +87,15 @@ public abstract class _Project extends CayenneDataObject {
     public ProjectStatus getProjectStatus() {
         return (ProjectStatus)readProperty("projectStatus");
     }
+
+    public void setSite(Site site) {
+        setToOneTarget("site", site, true);
+    }
+
+    public Site getSite() {
+        return (Site)readProperty("site");
+    }
+
 
     public void addToSubjects(Subject obj) {
         addToManyTarget("subjects", obj, true);

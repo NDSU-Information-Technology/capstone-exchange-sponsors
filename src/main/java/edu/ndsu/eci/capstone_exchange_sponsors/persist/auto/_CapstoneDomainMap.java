@@ -26,7 +26,7 @@ public class _CapstoneDomainMap {
 
     public static final String COUNTRIES_QUERYNAME = "Countries";
 
-    public static final String PROJECT_BY_STATUS_QUERYNAME = "ProjectByStatus";
+    public static final String PROJECT_BY_STATUS_QUERY_QUERYNAME = "ProjectByStatusQuery";
 
     public static final String ROLE_BY_NAME_QUERY_QUERYNAME = "RoleByNameQuery";
 
@@ -56,16 +56,16 @@ public class _CapstoneDomainMap {
         return context.performQuery(new NamedQuery("Countries", parameters, values));
     }
 
-    public List<Project> performProjectByStatus(ObjectContext context , ProjectStatus status) {
+    public List<Project> performProjectByStatusQuery(ObjectContext context , ProjectStatus projectStatus) {
         String[] parameters = {
-            "status",
+            "projectStatus",
         };
 
         Object[] values = {
-            status,
+            projectStatus,
         };
 
-        return context.performQuery(new NamedQuery("ProjectByStatus", parameters, values));
+        return context.performQuery(new NamedQuery("ProjectByStatusQuery", parameters, values));
     }
 
     public List<Role> performRoleByNameQuery(ObjectContext context , UserRole name) {
