@@ -5,8 +5,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.SelectQuery;
+import org.apache.log4j.Logger;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.PageActivationContext;
@@ -19,10 +22,10 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 
-import edu.ndsu.eci.capstone_exchange_sponsors.pages.account.SponsorshipSubmission;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -67,6 +70,9 @@ public class Sponsorships {
   
   /** Cayenne data map for querying */
   private CapstoneDomainMap map = CapstoneDomainMap.getInstance();
+  
+  /** Error logger */
+  private static final Logger LOGGER = Logger.getLogger(Sponsorships.class);
 
   /**
    * On page load, create a new Sponsorship.
@@ -82,8 +88,18 @@ public class Sponsorships {
       expiration.set(Calendar.SECOND, 0);
       expiration.set(Calendar.MINUTE, 0);
       expiration.set(Calendar.HOUR_OF_DAY, 0);
-      //FIXME replace sponsorshipLength with a configuration setting
-      expiration.add(Calendar.MONTH, SponsorshipSubmission.sponsorshipLength);
+      //Try to set expiration date with configuration settings in jetty-env.xml file.
+      try {
+        RenewalConfig config = RenewalConfig.getInstance();
+        expiration.add(Calendar.YEAR, config.getYears());
+        expiration.add(Calendar.MONTH, config.getMonths());
+        expiration.add(Calendar.DAY_OF_MONTH, config.getDays());
+      } catch (NamingException e) {
+        //Some reason config parsing failed, so default to 1 month and throw error
+        expiration.add(Calendar.MONTH, 1);
+        alerts.warn("Renewal Configurations could not be properly parsed for newly created sponsorship. Please set expiration date manually.");
+        LOGGER.warn("Renewal Configurations could not be properly parsed for newly created sponsorship.", e);
+      }
       sponsorship.setExpires(expiration.getTime());
     }
   }

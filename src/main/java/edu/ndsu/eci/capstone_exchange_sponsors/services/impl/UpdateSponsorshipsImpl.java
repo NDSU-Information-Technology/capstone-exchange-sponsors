@@ -5,13 +5,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.access.DataContext;
-import org.apache.cayenne.query.SelectQuery;
+import org.apache.log4j.Logger;
 
-import edu.ndsu.eci.capstone_exchange_sponsors.pages.account.SponsorshipSubmission;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UpdateSponsorships;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -20,20 +23,23 @@ import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
  */
 public class UpdateSponsorshipsImpl implements UpdateSponsorships {
 
+  /** Error logger */
+  private static final Logger LOGGER = Logger.getLogger(UpdateSponsorships.class);
+  
   @Override
   public void update() {
     //Create new database context
     ObjectContext context = DataContext.createDataContext();
+    CapstoneDomainMap map = CapstoneDomainMap.getInstance();
     
-    //Get all Sponsorship data
-    @SuppressWarnings("unchecked")
-    List<Sponsorship> sponsorships = context.performQuery(new SelectQuery(Sponsorship.class));
+    //Get all Sponsorships with Approved status
+    List<Sponsorship> sponsorships = map.performSponsorshipByStatusQuery(context, Status.APPROVED);
     
     
     Date today = new Date();
     for(int i = 0; i < sponsorships.size(); i++) {
       Sponsorship sponsorship = sponsorships.get(i);
-      if(sponsorship.getStatus().equals(Status.APPROVED) && sponsorship.getExpires().before(today)) {
+      if(sponsorship.getExpires().before(today)) {
         //Decommission expired sponsorship
         sponsorship.setStatus(Status.DECOMMISSIONED);
         
@@ -50,9 +56,17 @@ public class UpdateSponsorshipsImpl implements UpdateSponsorships {
         expiration.set(Calendar.SECOND, 0);
         expiration.set(Calendar.MINUTE, 0);
         expiration.set(Calendar.HOUR_OF_DAY, 0);
-        //FIXME replace sponsorshipLength with a configuration setting
-        expiration.add(Calendar.MONTH, SponsorshipSubmission.sponsorshipLength);
-        
+        //Try to set expiration date with configuration settings in jetty-env.xml file.
+        try {
+          RenewalConfig config = RenewalConfig.getInstance();
+          expiration.add(Calendar.YEAR, config.getYears());
+          expiration.add(Calendar.MONTH, config.getMonths());
+          expiration.add(Calendar.DAY_OF_MONTH, config.getDays());
+        } catch (NamingException e) {
+          //Some reason config parsing failed, so default to 1 month and throw error
+          expiration.add(Calendar.MONTH, 1);
+          LOGGER.warn("Renewal Configurations could not be properly parsed. Please manually fix the expiration for: " + sponsorship.getSite().getName(), e);
+        }
         renew.setExpires(expiration.getTime());
         
         context.registerNewObject(renew);

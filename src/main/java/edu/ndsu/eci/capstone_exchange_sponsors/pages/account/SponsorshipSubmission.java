@@ -4,7 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.naming.NamingException;
+
 import org.apache.cayenne.ObjectContext;
+import org.apache.log4j.Logger;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Property;
@@ -21,6 +24,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -56,8 +60,9 @@ public class SponsorshipSubmission {
   /** Cayenne data map for querying */
   private CapstoneDomainMap map = CapstoneDomainMap.getInstance();
   
-  /** Number of months a sponsorship lasts */
-  public static final int sponsorshipLength = 1;
+  /** Error logger */
+  private static final Logger LOGGER = Logger.getLogger(SponsorshipSubmission.class);
+  
   
   /**
    * Validation for form.
@@ -93,7 +98,17 @@ public class SponsorshipSubmission {
     expiration.set(Calendar.SECOND, 0);
     expiration.set(Calendar.MINUTE, 0);
     expiration.set(Calendar.HOUR_OF_DAY, 0);
-    expiration.add(Calendar.MONTH, sponsorshipLength);
+    //Try to set expiration date with configuration settings in jetty-env.xml file.
+    try {
+      RenewalConfig config = RenewalConfig.getInstance();
+      expiration.add(Calendar.YEAR, config.getYears());
+      expiration.add(Calendar.MONTH, config.getMonths());
+      expiration.add(Calendar.DAY_OF_MONTH, config.getDays());
+    } catch (NamingException e) {
+      //Some reason config parsing failed, so default to 1 month and throw error
+      expiration.add(Calendar.MONTH, 1);
+      LOGGER.warn("Renewal Configurations could not be properly parsed. Please manually fix the expiration for: " + sponsorship.getSite().getName(), e);
+    }
     
     sponsorship.setCreated(today);
     sponsorship.setExpires(expiration.getTime());
