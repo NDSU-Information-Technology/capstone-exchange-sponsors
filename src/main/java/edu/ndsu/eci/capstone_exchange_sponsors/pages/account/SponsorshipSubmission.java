@@ -128,7 +128,6 @@ public class SponsorshipSubmission {
   private void notifyAdminsSubmit() throws ResourceNotFoundException, ParseErrorException, Exception {
     VelocityContext velContext = new VelocityContext();
     velContext.put("sponsorship", sponsorship);
-    velContext.put("user", userInfo.getUser());
     emailService.sendAdminEmail(velContext, "sponsorship-submitted.vm", "Sponsorship Submission");
   }
   

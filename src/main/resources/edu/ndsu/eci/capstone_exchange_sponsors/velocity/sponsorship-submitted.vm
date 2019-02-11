@@ -12,8 +12,8 @@
 
 New Sponsorship Submitted:
 
-User: $user.name
-Site: $user.site.name
+Site: $sponsorship.site.name
 Sponsorship Tier: $sponsorship.tier
+Creation Date: $sponsorship.created
 
 

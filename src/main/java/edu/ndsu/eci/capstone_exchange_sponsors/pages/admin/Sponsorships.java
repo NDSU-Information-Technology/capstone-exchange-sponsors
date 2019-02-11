@@ -73,42 +73,33 @@ public class Sponsorships {
   
   /** Error logger */
   private static final Logger LOGGER = Logger.getLogger(Sponsorships.class);
-
-  /**
-   * On page load, create a new Sponsorship.
-   */
-  public void setupRender() {
-    if(sponsorship == null) {
-      sponsorship = new Sponsorship();
-      Date today = new Date();
-      sponsorship.setCreated(today);
-      Calendar expiration = new GregorianCalendar();
-      expiration.setTime(today);
-      expiration.set(Calendar.MILLISECOND, 0);
-      expiration.set(Calendar.SECOND, 0);
-      expiration.set(Calendar.MINUTE, 0);
-      expiration.set(Calendar.HOUR_OF_DAY, 0);
-      //Try to set expiration date with configuration settings in jetty-env.xml file.
-      try {
-        RenewalConfig config = RenewalConfig.getInstance();
-        expiration.add(Calendar.YEAR, config.getYears());
-        expiration.add(Calendar.MONTH, config.getMonths());
-        expiration.add(Calendar.DAY_OF_MONTH, config.getDays());
-      } catch (NamingException e) {
-        //Some reason config parsing failed, so default to 1 month and throw error
-        expiration.add(Calendar.MONTH, 1);
-        alerts.warn("Renewal Configurations could not be properly parsed for newly created sponsorship. Please set expiration date manually.");
-        LOGGER.warn("Renewal Configurations could not be properly parsed for newly created sponsorship.", e);
-      }
-      sponsorship.setExpires(expiration.getTime());
-    }
-  }
   
   /**
    * Event link to create a new sponsorship.
    */
   public void onCreateSponsorship() {
-    sponsorship = null;
+    sponsorship = new Sponsorship();
+    Date today = new Date();
+    sponsorship.setCreated(today);
+    Calendar expiration = new GregorianCalendar();
+    expiration.setTime(today);
+    expiration.set(Calendar.MILLISECOND, 0);
+    expiration.set(Calendar.SECOND, 0);
+    expiration.set(Calendar.MINUTE, 0);
+    expiration.set(Calendar.HOUR_OF_DAY, 0);
+    //Try to set expiration date with configuration settings in jetty-env.xml file.
+    try {
+      RenewalConfig config = RenewalConfig.getInstance();
+      expiration.add(Calendar.YEAR, config.getYears());
+      expiration.add(Calendar.MONTH, config.getMonths());
+      expiration.add(Calendar.DAY_OF_MONTH, config.getDays());
+    } catch (NamingException e) {
+      //Some reason config parsing failed, so default to 1 month and throw error
+      expiration.add(Calendar.MONTH, 1);
+      alerts.warn("Renewal Configurations could not be properly parsed for newly created sponsorship. Please set expiration date manually.");
+      LOGGER.warn("Renewal Configurations could not be properly parsed for newly created sponsorship.", e);
+    }
+    sponsorship.setExpires(expiration.getTime());
   }
   
   /**

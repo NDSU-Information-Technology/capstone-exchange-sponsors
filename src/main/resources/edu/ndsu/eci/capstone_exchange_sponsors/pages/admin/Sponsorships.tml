@@ -7,6 +7,10 @@
 			h3 {
 				font-weight: bold;
 			}
+			
+			#newSponsorship {
+				font-size: 18px;
+			}
 		</style>
 	</head>
 
@@ -14,14 +18,14 @@
 		
 		<t:if test="site">
 		
-			
-			<t:beaneditform t:id="form" object="sponsorship"
-				add="name, new"
-				include="status, tier, payment, expires"
-				reorder="name, status, tier, payment, expires">
-				<p:name><h3>${site.name}</h3></p:name>	
-				<p:new><t:eventlink event="createSponsorship">New Sponsorship</t:eventlink></p:new>
-			</t:beaneditform>
+			<t:if test="sponsorship">
+				<t:beaneditform t:id="form" object="sponsorship"
+					add="name"
+					include="status, tier, payment, expires"
+					reorder="name, status, tier, payment, expires">
+					<p:name><h3>${site.name}</h3></p:name>	
+				</t:beaneditform>
+			</t:if>
 			
 			
 			<h3>${site.name} Sponsorships</h3>
@@ -34,6 +38,7 @@
 					<t:pagelink page="admin/sponsorships" context="sponsorshipRow">Select</t:pagelink>
 				</p:selectCell>
 			</t:Grid>
+			<t:eventlink event="createSponsorship" id="newSponsorship">Create New Sponsorship</t:eventlink>
 			
 		</t:if>
 	
