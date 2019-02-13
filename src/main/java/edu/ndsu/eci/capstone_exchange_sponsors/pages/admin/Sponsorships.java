@@ -10,8 +10,10 @@ import javax.naming.NamingException;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.SelectQuery;
 import org.apache.log4j.Logger;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.PageActivationContext;
 import org.apache.tapestry5.annotations.PageReset;
 import org.apache.tapestry5.annotations.Persist;
@@ -22,10 +24,12 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 
+import edu.ndsu.eci.capstone_exchange_sponsors.pages.account.UploadStorePhoto;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.SponsorTier;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 
 /**
@@ -60,6 +64,9 @@ public class Sponsorships {
   @Inject
   private JavaScriptSupport javaScriptSupport;
   
+  @InjectPage
+  private UploadStorePhoto uploadStore;
+  
   /** Row selection for Sponsorship grid */
   @Property
   private Sponsorship sponsorshipRow;
@@ -73,6 +80,7 @@ public class Sponsorships {
   
   /** Error logger */
   private static final Logger LOGGER = Logger.getLogger(Sponsorships.class);
+
   
   /**
    * Event link to create a new sponsorship.
@@ -123,10 +131,21 @@ public class Sponsorships {
    */
   public List<Site> getPendingSites() {
     List <Site> allSites = getAllSites();
-    CapstoneDomainMap map = CapstoneDomainMap.getInstance();
     
     for(int i = allSites.size() - 1; i >= 0; i--) {
       if(map.performSponsorshipByStatusAndSiteQuery(context, Status.PENDING, allSites.get(i)).isEmpty()) {
+        allSites.remove(i);
+      }
+    }
+    
+    return allSites;
+  }
+  
+  public List<Site> getApprovedSites() {
+    List <Site> allSites = getAllSites();
+    
+    for(int i = allSites.size() - 1; i >= 0; i--) {
+      if(map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, allSites.get(i)).isEmpty()) {
         allSites.remove(i);
       }
     }
@@ -156,6 +175,11 @@ public class Sponsorships {
    * @param siteRow Selection from pending Sites grid.
    */
   public void onPendingSite(Site siteRow) {
+    site = siteRow;
+    sponsorship = null;
+  }
+  
+  public void onApprovedSite(Site siteRow) {
     site = siteRow;
     sponsorship = null;
   }
@@ -190,6 +214,20 @@ public class Sponsorships {
   @CommitAfter
   public void onSuccessFromForm() {
     sponsorship.setSite(site);
+  }
+  
+  public Link getUploadedImage() {
+    return uploadStore.getUploadedFile(siteRow);
+  }
+  
+  public Date getExpiration() {
+    Sponsorship s = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, siteRow).get(0);
+    return s.getExpires();
+  }
+  
+  public SponsorTier getSiteTier() {
+    Sponsorship s = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, siteRow).get(0);
+    return s.getTier();
   }
 
 }

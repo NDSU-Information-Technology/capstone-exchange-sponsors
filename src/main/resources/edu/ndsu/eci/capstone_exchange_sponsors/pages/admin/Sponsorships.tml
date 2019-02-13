@@ -50,7 +50,10 @@
 				<a href="#tab1" data-toggle="tab">Pending</a>
 			</li>
 			<li>
-				<a href="#tab2" data-toggle="tab">All</a>
+				<a href="#tab2" data-toggle="tab">Approved</a>
+			</li>
+			<li>
+				<a href="#tab3" data-toggle="tab">All</a>
 			</li>
 		</ul>
 		
@@ -63,6 +66,22 @@
 				</t:Grid>
 			</div>
 			<div id="tab2" class="tab-pane">
+				<t:Grid source="approvedSites" row="siteRow" include="name, url" add="expires, logo, tier">
+					<p:nameCell>
+						<t:eventlink event="approvedSite" context="siteRow">${siteRow.name}</t:eventlink>
+					</p:nameCell>
+					<p:expiresCell>
+						${expiration}
+					</p:expiresCell>
+					<p:tierCell>
+						${siteTier}
+					</p:tierCell>
+					<p:logoCell>
+						<img src="${uploadedImage}" alt="Site Logo" style="width:100px;"/>
+					</p:logoCell>
+				</t:Grid>
+			</div>
+			<div id="tab3" class="tab-pane">
 				<t:Grid source="allSites" row="siteRow" include="name">
 					<p:nameCell>
 						<t:eventlink event="allSite" context="siteRow">${siteRow.name}</t:eventlink>
