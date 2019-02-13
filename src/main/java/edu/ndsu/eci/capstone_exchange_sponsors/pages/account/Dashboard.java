@@ -14,13 +14,16 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
 
+import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
@@ -33,6 +36,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.JPEGInline;
 
 /**
  * User's dashboard to direct them to after login.
@@ -60,6 +64,9 @@ public class Dashboard {
   @Inject
   private AlertManager alerts;
   
+  @InjectPage
+  private UploadStorePhoto uploadStore;
+  
   /** tml row for subjects */
   @Property
   private Subject subjectRow;
@@ -79,6 +86,7 @@ public class Dashboard {
   /** List of projects */
   @Property
   private List<Project> projects;
+  
   
   
   /**
@@ -129,6 +137,10 @@ public class Dashboard {
     } catch (MalformedURLException e) {
       return null;
     }
+  }
+  
+  public Link getUploadedImage() {
+    return uploadStore.getUploadedFile(userInfo.getUser().getSite());
   }
   
 }

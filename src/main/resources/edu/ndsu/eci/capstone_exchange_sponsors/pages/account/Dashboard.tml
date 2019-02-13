@@ -49,8 +49,8 @@
 					
 					<h2>Site Info</h2>
 					<t:Beandisplay object="user.site"
-						include="name, code, phone, email, url, logo"
-						add="address"
+						include="name, code, phone, email, url"
+						add="address, logo"
 						reorder="name, code, address, phone, email, url, logo">
 						<p:address>
 							${user.site.street} <br/>
@@ -60,7 +60,13 @@
 						<p:url>
 							<t:EventLink event="navigate" context="${user.site.url}">${user.site.url}</t:EventLink>
 						</p:url>
+						<p:logo>
+							<img src="${uploadedImage}" alt="Site Logo" style="width:100px;"/>
+						</p:logo>
 					</t:Beandisplay>
+					<div>
+						<t:pagelink page="account/updatesite">Update Site</t:pagelink>
+					</div>
 				</div>
 				
 				<div id="tab2" class="tab-pane">

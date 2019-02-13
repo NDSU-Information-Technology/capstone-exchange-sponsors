@@ -54,11 +54,11 @@ public abstract class _Site extends CayenneDataObject {
         return (String)readProperty("email");
     }
 
-    public void setLogo(String logo) {
+    public void setLogo(byte[] logo) {
         writeProperty("logo", logo);
     }
-    public String getLogo() {
-        return (String)readProperty("logo");
+    public byte[] getLogo() {
+        return (byte[])readProperty("logo");
     }
 
     public void setName(String name) {

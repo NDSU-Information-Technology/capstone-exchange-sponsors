@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+	xmlns:p="tapestry:parameter" t:type="layout" title="Edit Site">
+
+	<t:beaneditform t:id="form" object="site" include="name, street, city, zipPostal, phone, email, url"></t:beaneditform>
+	<b>Logo</b>
+	<t:form t:id="photo">
+		<t:errors />
+		<input t:type="upload" t:id="file" t:value="file" validate="required" />
+		<br />
+		<input type="submit" value="Upload" />
+	</t:form>
+</html>
