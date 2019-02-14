@@ -76,7 +76,7 @@
 						
 					</t:grid>
 					<div>
-						<t:pagelink page="account/sponsorship">Apply for Sponsorship</t:pagelink>
+						<t:pagelink page="account/sponsorshipsubmission">Apply for Sponsorship</t:pagelink>
 					</div>
 				</div>
 
