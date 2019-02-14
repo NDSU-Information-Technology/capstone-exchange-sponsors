@@ -30,14 +30,18 @@
     />
 
   <Resource name="bean/pac4j" auth="Container"
-            type="edu.ndsu.eci.international_capstone_exchange.util.OAuthConfig"
+            type="edu.ndsu.eci.capstone_exchange_sponsors.util.OAuthConfig"
             factory="org.apache.naming.factory.BeanFactory"
             hostname="red.it.ndsu.edu" 
             googleId="something" googleSecret="something" hmac="something"/>
             
-  <Resource name="bean/pac4j" auth="Container"
-            type="edu.ndsu.eci.international_capstone_exchange.util.EmailConfig"
+  <Resource name="bean/emailconf" auth="Container"
+            type="edu.ndsu.eci.capstone_exchange_sponsors.util.EmailConfig"
             factory="org.apache.naming.factory.BeanFactory"
             fromAddress="ndsu.icpe@ndsu.edu" />
-
+  
+  <Resource name="bean/renewalconf" auth="Container"
+            type="edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig"
+            factory="org.apache.naming.factory.BeanFactory"
+            years="0" months="3" days="0" />
 </Context>
