@@ -14,7 +14,7 @@
 	<body>
 
 		<t:beaneditform t:id="form" object="site"
-			include="name, email, phone, url, country, street, city, zipPostal"
+			include="name, email, phone, url, country, street, city, zipPostal, code"
 			add="clear">
 			<p:name>
 				<t:Label for="name">Name</t:Label>
@@ -33,9 +33,25 @@
 				<t:TextField t:id="city" value="site.city"></t:TextField>
 			</p:city>
 			
+			<p:code>
+				<t:Zone t:id="codeZone" id="codeZone">
+					<b>Site Code:</b> ${site.code}
+					<t:If test="newCode">
+						<br/>
+						<b>New Code:</b> ${newCode}
+					</t:If>
+				</t:Zone>
+				<t:EventLink event="newCode" async="true">Generate New Code</t:EventLink>
+				<br/>
+				<i>After generating a new code, select Create/Update to set it as the site's code.</i>
+				<br/> <br/>
+			</p:code>
+			
 			<p:clear>
 				<t:EventLink event="clear">Clear Fields</t:EventLink>
 			</p:clear>
+			
+			
 		</t:beaneditform>
 	
 		<t:Grid source="sites" row="siteRow"

@@ -9,10 +9,15 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Component;
+import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.PageActivationContext;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
+import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -43,6 +48,19 @@ public class Sites {
   @Inject
   private AlertManager alerts;
   
+  @Inject
+  private AjaxResponseRenderer ajaxResponseRenderer;
+  
+  @Inject
+  private Request request;
+  
+  @InjectComponent
+  private Zone codeZone;
+  
+  @Persist
+  @Property
+  private String newCode;
+  
   /** Site row in grid */
   @Property
   private Site siteRow;
@@ -53,6 +71,13 @@ public class Sites {
   
   /** Error logger for page */
   private static final Logger LOGGER = Logger.getLogger(Sites.class);
+  
+  /**
+   * Page load event.
+   */
+  public void setupRender() {
+    newCode = null;
+  }
   
   /**
    * Getter for entire Site list.
@@ -99,6 +124,10 @@ public class Sites {
     if (!EmailValidator.getInstance().isValid(site.getEmail())) {
       form.recordError("Email address is not valid");
     }
+    
+    if(site.getCode() == null && newCode == null) {
+      form.recordError("Please generate a code for the site.");
+    }
   }
   
   /**
@@ -106,8 +135,9 @@ public class Sites {
    */
   @CommitAfter
   public void onSuccessFromForm() {
-    CodeGenerator generator = new CodeGenerator();
-    site.setCode(generator.getCode(context));
+    if(newCode != null) {
+      site.setCode(newCode);
+    }
     alerts.success("Site Created/Updated");
   }
   
@@ -116,6 +146,18 @@ public class Sites {
    */
   public void onClear() {
     site = null;
+    context.rollbackChangesLocally();
+  }
+  
+  /**
+   * Eventlink to generate a new site code.
+   */
+  public void onNewCode() {
+    CodeGenerator generator = new CodeGenerator();
+    newCode = generator.getCode(context);
+    if(request.isXHR()) {
+      ajaxResponseRenderer.addRender(codeZone);
+    }
   }
   
 }
