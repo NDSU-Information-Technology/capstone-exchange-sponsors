@@ -29,10 +29,6 @@
  <t:form t:type="form" t:id="form">
 <t:errors/>
 
-<label t:type="label" for="country"/><span style="color:red;">*</span>
-<select t:type="select" t:id="country" value="country"  model="countries" blankOption="ALWAYS" blankLabel="Choose" zone="institutionZone" validate="required"/>
-<br/>
-
 <label t:type="label" for="name"/>
 <input t:type="textfield" t:id="name" t:placeholder="Name" value="name" t:validate="required"/>
 

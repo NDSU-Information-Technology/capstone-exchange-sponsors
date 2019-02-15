@@ -13,9 +13,6 @@
 // limitations under the License.
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.init;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.cayenne.ObjectContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
@@ -24,14 +21,11 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Request;
-import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -43,7 +37,6 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.pages.Index;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
@@ -82,10 +75,6 @@ public class CreateAccount {
   /** form */
   @Component
   private Form form;
-
-  /** Country */
-  @Property
-  private Country country;
 
   /** logged in user */
   @Property
@@ -131,7 +120,6 @@ public class CreateAccount {
   public void setupRender() {
     user = userInfo.getUser();
     name = user.getName();
-    siteCode = user.getSite().getCode();
     email = user.getEmail();
   } 
 
@@ -149,14 +137,7 @@ public class CreateAccount {
     try {
       number = phoneUtil.parse(phone, null);
       if (!phoneUtil.isValidNumber(number)) {
-        if (country.getName().equals("United States") && !phone.startsWith("+1")) {
-          phone = StringUtils.replace(phone, "+", "+1");
-          onValidateFromForm();
-          return;
-        } else {
-          form.recordError("Phone number format isn't valid, be sure to include country code. For most of North America, this is a 1");
-          LOGGER.warn("Failed to validate number: " + number + " " + country.getName());
-        }  
+        form.recordError("Phone number format isn't valid, be sure to include country code. For most of North America, this is a 1");
       } else {
         phone = phoneUtil.format(number, PhoneNumberFormat.INTERNATIONAL);
       }
@@ -218,14 +199,6 @@ public class CreateAccount {
     VelocityContext velContext = new VelocityContext();
     velContext.put("user", user);
     emailService.sendAdminEmail(velContext, "new-user.vm", "New user signup");
-  }
-
-  /**
-   * List of countries to do initial selection from
-   * @return list of countries
-   */
-  public List<Country> getCountries() {
-    return CapstoneDomainMap.getInstance().performCountries(context, Status.APPROVED);
   }
   
 }
