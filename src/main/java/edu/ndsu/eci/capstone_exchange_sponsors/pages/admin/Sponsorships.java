@@ -202,9 +202,12 @@ public class Sponsorships {
       context.rollbackChanges();
     }
     
-    if(sponsorship.getStatus().equals(Status.APPROVED) && !map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, site).isEmpty()) {
-      form.recordError("Selected site already has an Approved sponsorship. Make sure to set the other sponsorships to Decommissioned before creating/updating this sponsorship.");
-      context.rollbackChanges();
+    List<Sponsorship> approvedList = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, site);
+    if(!approvedList.isEmpty()) {
+      if(sponsorship.getStatus().equals(Status.APPROVED) && sponsorship != approvedList.get(0)) {
+        form.recordError("Selected site already has an Approved sponsorship. Make sure to remove Approved status from the other sponsorship before setting this sponsorship to Approved.");
+        context.rollbackChanges();
+      }
     }
   }
   
