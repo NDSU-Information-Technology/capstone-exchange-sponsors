@@ -137,45 +137,41 @@ public class ProjectSubmission {
       selectedSubjects = new ArrayList<>(project.getSubjects());
     }
   }
+  
+  /**
+   * Validates if user's site has an active Sponsorship of appropriate tier.
+   * @return The dashboard page if invalid, null otherwise.
+   */
+  public Object afterRender() {
+    Sponsorship sponsorship;
+    List<Sponsorship> sponsorshipList = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, userInfo.getUser().getSite());
+    
+    if(sponsorshipList.isEmpty()) {
+      alerts.warn("Site associated to this account does not have an approved sponsorship.");
+      return dashboard;
+    } else {
+      sponsorship = sponsorshipList.get(0);
+    }
+    
+    // Sponsorship is of strategic partner tier
+    if(sponsorship.getTier().equals(SponsorTier.STRATEGIC_PARTNER)) {
+      return null;
+    } else {
+      alerts.warn("Site associated to this account does not have an active sponsorship of Strategic Partner tier.");
+      return dashboard;
+    }
+  }
 
   /**
    * Validate the form
    */
   public void onValidateFromForm() {
-    if(!verifyPartnership()) {
-      form.recordError("Only Strategic Partners are allowed to create Projects. Please check your sponsorship details.");
-      context.rollbackChanges();
-    }
-    
     if (StringUtils.isBlank(project.getDescription())) {
       form.recordError("Must provide a description");
       context.rollbackChanges();
     }
   }
   
-  /**
-   * Check if site has a valid Strategic Partner sponsorship.
-   * @return True if a valid sponsorship, false otherwise.
-   */
-  public boolean verifyPartnership() {
-    Date today = new Date();
-    
-    Sponsorship sponsorship;
-    List<Sponsorship> sponsorshipList = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, userInfo.getUser().getSite());
-    
-    if(sponsorshipList.isEmpty()) {
-      return false;
-    } else {
-      sponsorship = sponsorshipList.get(0);
-    }
-
-    // Sponsorship is of strategic partner tier and today is before expiration date
-    if(sponsorship.getTier().equals(SponsorTier.STRATEGIC_PARTNER) && today.before(sponsorship.getExpires())) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   /**
    * On form success submission
