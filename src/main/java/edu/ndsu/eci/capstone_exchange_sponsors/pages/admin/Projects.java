@@ -33,7 +33,6 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * Manages Projects status.
@@ -99,16 +98,13 @@ public class Projects {
     javaScriptSupport.require("bootstrap/tab");
   }
   
+  /**
+   * Get a list of projects using the given status value.
+   * @param status The status name.
+   * @return List of projects.
+   */
   public List<Project> projectsByStatus(String status) {
     return map.performProjectByStatusQuery(context, ProjectStatus.valueOf(status.toUpperCase()));
-  }
-  
-  /**
-   * Get list of Projects with pending ProjectStatus.
-   * @return List of Project objects.
-   */
-  public List<Project> getPendingProjects() {
-    return map.performProjectByStatusQuery(context, ProjectStatus.PENDING);
   }
   
   /**
@@ -136,6 +132,10 @@ public class Projects {
     }
   }
   
+  /**
+   * Active eventlink for approved grid. Verifies site sponsorship status.
+   * @param row The Project being updated.
+   */
   @CommitAfter
   public void onActive(Project row) {
     if(map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, row.getSite()).isEmpty()) {
@@ -153,6 +153,10 @@ public class Projects {
     }
   }
   
+  /**
+   * Awarded eventlink for active grid.
+   * @param row The Project being updated.
+   */
   @CommitAfter
   public void onAwarded(Project row) {
     row.setProjectStatus(ProjectStatus.AWARDED);

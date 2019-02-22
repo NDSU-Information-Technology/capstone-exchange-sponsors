@@ -1,10 +1,6 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import org.apache.cayenne.ObjectContext;
 import org.apache.commons.io.IOUtils;

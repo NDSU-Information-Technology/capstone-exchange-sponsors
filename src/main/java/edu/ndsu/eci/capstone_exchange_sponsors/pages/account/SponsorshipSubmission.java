@@ -26,7 +26,6 @@ import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * Create new sponsorship associated to the logged in user.
