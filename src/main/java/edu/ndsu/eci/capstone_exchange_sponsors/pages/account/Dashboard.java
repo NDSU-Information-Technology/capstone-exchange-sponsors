@@ -35,8 +35,8 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.JPEGInline;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * User's dashboard to direct them to after login.

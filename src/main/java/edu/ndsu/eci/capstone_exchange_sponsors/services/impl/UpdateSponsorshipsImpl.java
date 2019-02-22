@@ -15,7 +15,8 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UpdateSponsorships;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * Implementation of UpdateSponsorships.
@@ -33,7 +34,7 @@ public class UpdateSponsorshipsImpl implements UpdateSponsorships {
     CapstoneDomainMap map = CapstoneDomainMap.getInstance();
     
     //Get all Sponsorships with Approved status
-    List<Sponsorship> sponsorships = map.performSponsorshipByStatusQuery(context, Status.APPROVED);
+    List<Sponsorship> sponsorships = map.performSponsorshipByStatusQuery(context, SponsorshipStatus.ACTIVE);
     
     
     Date today = new Date();
@@ -41,14 +42,14 @@ public class UpdateSponsorshipsImpl implements UpdateSponsorships {
       Sponsorship sponsorship = sponsorships.get(i);
       if(sponsorship.getExpires().before(today)) {
         //Decommission expired sponsorship
-        sponsorship.setStatus(Status.DECOMMISSIONED);
+        sponsorship.setStatus(SponsorshipStatus.EXPIRED);
         
         Sponsorship renew = new Sponsorship();
         renew.setCreated(today);
         renew.setPayment(sponsorship.getPayment());
         renew.setSite(sponsorship.getSite());
         renew.setTier(sponsorship.getTier());
-        renew.setStatus(Status.APPROVED);
+        renew.setStatus(SponsorshipStatus.ACTIVE);
         
         Calendar expiration = new GregorianCalendar();
         expiration.setTime(today);

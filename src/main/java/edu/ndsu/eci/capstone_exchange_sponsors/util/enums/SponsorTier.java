@@ -1,4 +1,4 @@
-package edu.ndsu.eci.capstone_exchange_sponsors.util;
+package edu.ndsu.eci.capstone_exchange_sponsors.util.enums;
 
 import org.apache.cayenne.ExtendedEnumeration;
 

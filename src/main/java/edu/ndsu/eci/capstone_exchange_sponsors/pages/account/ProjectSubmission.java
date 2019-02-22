@@ -50,9 +50,10 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.HtmlCleaner;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.SponsorTier;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorTier;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 public class ProjectSubmission {
 
@@ -144,7 +145,7 @@ public class ProjectSubmission {
    */
   public Object afterRender() {
     Sponsorship sponsorship;
-    List<Sponsorship> sponsorshipList = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, userInfo.getUser().getSite());
+    List<Sponsorship> sponsorshipList = map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, userInfo.getUser().getSite());
     
     if(sponsorshipList.isEmpty()) {
       alerts.warn("Site associated to this account does not have an approved sponsorship.");

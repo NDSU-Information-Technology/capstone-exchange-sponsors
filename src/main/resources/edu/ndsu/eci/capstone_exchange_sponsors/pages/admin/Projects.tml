@@ -26,7 +26,16 @@
 				<a href="#tab1" data-toggle="tab">Pending</a>
 			</li>
 			<li>
-				<a href="#tab2" data-toggle="tab">All</a>
+				<a href="#tab2" data-toggle="tab">Approved</a>
+			</li>
+			<li>
+				<a href="#tab3" data-toggle="tab">Active</a>
+			</li>
+			<li>
+				<a href="#tab4" data-toggle="tab">Awarded</a>
+			</li>
+			<li>
+				<a href="#tab5" data-toggle="tab">All</a>
 			</li>
 		</ul>
 
@@ -34,10 +43,10 @@
 			<div id="tab1" class="tab-pane active">
 				<h3>Pending Projects</h3>
 				<t:zone t:id="pendingZone">
-					<t:grid source="pendingProjects" row="row"
+					<t:grid source="projectsByStatus('PENDING')" row="row"
 						exclude="editable, projectStatus, deletable, user" 
-						add="approve, deny, country"
-						reorder="approve, deny, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
+						add="approve, country"
+						reorder="approve, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
 						<p:descriptionCell>
 							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
 						</p:descriptionCell>
@@ -51,14 +60,79 @@
 						<p:approveCell>
 							<t:eventlink event="approve" context="row" async="true">Approve</t:eventlink>
 						</p:approveCell>
-						<p:denyCell>
-							<t:eventlink event="deny" context="row" async="true">Deny</t:eventlink>
-						</p:denyCell>
 					</t:grid>
 				</t:zone>
 			</div>
 
 			<div id="tab2" class="tab-pane">
+				<h3>Approved Projects</h3>
+				<t:zone t:id="approvedZone">
+					<t:grid source="projectsByStatus('APPROVED')" row="row"
+						exclude="editable, projectStatus, deletable, user" 
+						add="activate, country"
+						reorder="activate, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
+						<p:descriptionCell>
+							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
+						</p:descriptionCell>
+						<p:siteCell>
+							${row.site.name}
+						</p:siteCell>
+						<p:countryCell>
+							${row.site.country.name}
+						</p:countryCell>
+						
+						<p:activateCell>
+							<t:eventlink event="active" context="row" async="true">Activate</t:eventlink>
+						</p:activateCell>
+					</t:grid>
+				</t:zone>
+			</div>
+			
+			<div id="tab3" class="tab-pane">
+				<h3>Active Projects</h3>
+				<t:zone t:id="activeZone">
+					<t:grid source="projectsByStatus('ACTIVE')" row="row"
+						exclude="editable, projectStatus, deletable, user" 
+						add="awarded, country"
+						reorder="awarded, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
+						<p:descriptionCell>
+							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
+						</p:descriptionCell>
+						<p:siteCell>
+							${row.site.name}
+						</p:siteCell>
+						<p:countryCell>
+							${row.site.country.name}
+						</p:countryCell>
+						
+						<p:awardedCell>
+							<t:eventlink event="awarded" context="row" async="true">Awarded</t:eventlink>
+						</p:awardedCell>
+					</t:grid>
+				</t:zone>
+			</div>
+
+			<div id="tab4" class="tab-pane">
+				<h3>Awarded Projects</h3>
+				<t:zone t:id="awardedZone">
+					<t:grid source="projectsByStatus('AWARDED')" row="row"
+						exclude="editable, projectStatus, deletable, user" 
+						add="country"
+						reorder="site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
+						<p:descriptionCell>
+							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
+						</p:descriptionCell>
+						<p:siteCell>
+							${row.site.name}
+						</p:siteCell>
+						<p:countryCell>
+							${row.site.country.name}
+						</p:countryCell>
+					</t:grid>
+				</t:zone>
+			</div>
+
+			<div id="tab5" class="tab-pane">
 				<h3>All Projects</h3>
 				<t:zone t:id="allZone">
 					<t:grid source="allProjects" row="row"

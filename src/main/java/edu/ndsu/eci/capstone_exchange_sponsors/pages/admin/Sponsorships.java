@@ -29,8 +29,9 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.SponsorTier;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorTier;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * Manages Sponsorship data.
@@ -133,7 +134,7 @@ public class Sponsorships {
     List <Site> allSites = getAllSites();
     
     for(int i = allSites.size() - 1; i >= 0; i--) {
-      if(map.performSponsorshipByStatusAndSiteQuery(context, Status.PENDING, allSites.get(i)).isEmpty()) {
+      if(map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.PENDING, allSites.get(i)).isEmpty()) {
         allSites.remove(i);
       }
     }
@@ -145,7 +146,7 @@ public class Sponsorships {
     List <Site> allSites = getAllSites();
     
     for(int i = allSites.size() - 1; i >= 0; i--) {
-      if(map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, allSites.get(i)).isEmpty()) {
+      if(map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, allSites.get(i)).isEmpty()) {
         allSites.remove(i);
       }
     }
@@ -202,7 +203,7 @@ public class Sponsorships {
       context.rollbackChanges();
     }
     
-    List<Sponsorship> approvedList = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, site);
+    List<Sponsorship> approvedList = map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, site);
     if(!approvedList.isEmpty()) {
       if(sponsorship.getStatus().equals(Status.APPROVED) && sponsorship != approvedList.get(0)) {
         form.recordError("Selected site already has an Approved sponsorship. Make sure to remove Approved status from the other sponsorship before setting this sponsorship to Approved.");
@@ -224,12 +225,12 @@ public class Sponsorships {
   }
   
   public Date getExpiration() {
-    Sponsorship s = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, siteRow).get(0);
+    Sponsorship s = map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, siteRow).get(0);
     return s.getExpires();
   }
   
   public SponsorTier getSiteTier() {
-    Sponsorship s = map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, siteRow).get(0);
+    Sponsorship s = map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, siteRow).get(0);
     return s.getTier();
   }
 

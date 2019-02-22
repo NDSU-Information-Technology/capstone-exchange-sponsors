@@ -23,7 +23,7 @@ import org.tynamo.security.federatedaccounts.FederatedAccount;
 import com.googlecode.tapestry5cayenne.annotations.Label;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.auto._User;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 public class User extends _User implements FederatedAccount {
 	

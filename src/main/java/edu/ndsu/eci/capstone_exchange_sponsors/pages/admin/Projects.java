@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.SelectQuery;
+import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
@@ -30,7 +31,9 @@ import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * Manages Projects status.
@@ -45,6 +48,10 @@ public class Projects {
   /** JavaScript Support */
   @Inject
   private JavaScriptSupport javaScriptSupport;
+  
+  /** Alert manager */
+  @Inject
+  private AlertManager alerts;
   
   /** Project row selection for either grid */
   @Property
@@ -62,6 +69,18 @@ public class Projects {
   @Component
   private Zone pendingZone;
   
+  /** Zone surrounding approved projects grid */
+  @Component
+  private Zone approvedZone;
+  
+  /** Zone surrounding active projects grid */
+  @Component
+  private Zone activeZone;
+  
+  /** Zone surrounding awarded projects grid */
+  @Component
+  private Zone awardedZone;
+  
   /** Request for Zone notification */
   @Inject
   private Request request;
@@ -70,6 +89,9 @@ public class Projects {
   @Inject
   private AjaxResponseRenderer ajaxResponseRenderer;
   
+  /** Map reference for queries */
+  private CapstoneDomainMap map = CapstoneDomainMap.getInstance();
+  
   /**
    * After render to include JS files.
    */
@@ -77,12 +99,16 @@ public class Projects {
     javaScriptSupport.require("bootstrap/tab");
   }
   
+  public List<Project> projectsByStatus(String status) {
+    return map.performProjectByStatusQuery(context, ProjectStatus.valueOf(status.toUpperCase()));
+  }
+  
   /**
    * Get list of Projects with pending ProjectStatus.
    * @return List of Project objects.
    */
   public List<Project> getPendingProjects() {
-    return CapstoneDomainMap.getInstance().performProjectByStatusQuery(context, ProjectStatus.PENDING);
+    return map.performProjectByStatusQuery(context, ProjectStatus.PENDING);
   }
   
   /**
@@ -106,23 +132,39 @@ public class Projects {
     if (request.isXHR()) {
       ajaxResponseRenderer.addRender(allZone);
       ajaxResponseRenderer.addRender(pendingZone);
+      ajaxResponseRenderer.addRender(approvedZone);
     }
   }
   
-  /**
-   * Denial eventlink for pending grid.
-   * @param row The Project being updated.
-   */
   @CommitAfter
-  public void onDeny(Project row) {
-    row.setProjectStatus(ProjectStatus.DECLINED);
+  public void onActive(Project row) {
+    if(map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, row.getSite()).isEmpty()) {
+      alerts.warn("Project does not belong to a site with an active sponsorship.");
+      return;
+    }
+    
+    row.setProjectStatus(ProjectStatus.ACTIVE);
     row.setLastModified(new Date());
     
     if (request.isXHR()) {
       ajaxResponseRenderer.addRender(allZone);
-      ajaxResponseRenderer.addRender(pendingZone);
+      ajaxResponseRenderer.addRender(approvedZone);
+      ajaxResponseRenderer.addRender(activeZone);
     }
   }
+  
+  @CommitAfter
+  public void onAwarded(Project row) {
+    row.setProjectStatus(ProjectStatus.AWARDED);
+    row.setLastModified(new Date());
+    
+    if (request.isXHR()) {
+      ajaxResponseRenderer.addRender(allZone);
+      ajaxResponseRenderer.addRender(activeZone);
+      ajaxResponseRenderer.addRender(awardedZone);
+    }
+  }
+  
   
   /**
    * General ProjectStatus updating for all grid.
@@ -136,6 +178,9 @@ public class Projects {
     if (request.isXHR()) {
       ajaxResponseRenderer.addRender(allZone);
       ajaxResponseRenderer.addRender(pendingZone);
+      ajaxResponseRenderer.addRender(approvedZone);
+      ajaxResponseRenderer.addRender(activeZone);
+      ajaxResponseRenderer.addRender(awardedZone);
     }
   }
 }

@@ -40,7 +40,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * Create account from SSO provided information

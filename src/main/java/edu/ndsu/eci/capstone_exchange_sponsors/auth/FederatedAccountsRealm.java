@@ -27,7 +27,7 @@ import org.tynamo.security.federatedaccounts.oauth.tokens.OauthAccessToken;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Role;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 public class FederatedAccountsRealm extends AuthorizingRealm {
 

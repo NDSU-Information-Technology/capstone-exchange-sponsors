@@ -78,7 +78,7 @@
 	<obj-entity name="Country" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Country" dbEntityName="countries">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
-		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Status" db-attribute-path="status"/>
+		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status" db-attribute-path="status"/>
 	</obj-entity>
 	<obj-entity name="Project" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Project" dbEntityName="projects">
 		<obj-attribute name="budget" type="java.lang.Double" db-attribute-path="budget"/>
@@ -88,10 +88,10 @@
 		<obj-attribute name="lastModified" type="java.util.Date" db-attribute-path="lastModified"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
 		<obj-attribute name="potentialStart" type="java.util.Date" db-attribute-path="potentialStart"/>
-		<obj-attribute name="projectStatus" type="edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus" db-attribute-path="projectStatus"/>
+		<obj-attribute name="projectStatus" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus" db-attribute-path="projectStatus"/>
 	</obj-entity>
 	<obj-entity name="Role" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Role" dbEntityName="roles">
-		<obj-attribute name="role" type="edu.ndsu.eci.capstone_exchange_sponsors.util.UserRole" db-attribute-path="role"/>
+		<obj-attribute name="role" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.UserRole" db-attribute-path="role"/>
 	</obj-entity>
 	<obj-entity name="Site" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Site" dbEntityName="sites">
 		<obj-attribute name="city" type="java.lang.String" db-attribute-path="city"/>
@@ -107,15 +107,15 @@
 	<obj-entity name="Sponsorship" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship" dbEntityName="sponsorships">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
 		<obj-attribute name="expires" type="java.util.Date" db-attribute-path="expires"/>
-		<obj-attribute name="payment" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Payment" db-attribute-path="payment"/>
-		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Status" db-attribute-path="status"/>
-		<obj-attribute name="tier" type="edu.ndsu.eci.capstone_exchange_sponsors.util.SponsorTier" db-attribute-path="tier"/>
+		<obj-attribute name="payment" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Payment" db-attribute-path="payment"/>
+		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus" db-attribute-path="status"/>
+		<obj-attribute name="tier" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorTier" db-attribute-path="tier"/>
 	</obj-entity>
 	<obj-entity name="Subject" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject" dbEntityName="subjects">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
 		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
-		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Status" db-attribute-path="status"/>
+		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status" db-attribute-path="status"/>
 	</obj-entity>
 	<obj-entity name="User" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.User" dbEntityName="users">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
@@ -125,7 +125,7 @@
 		<obj-attribute name="source" type="java.lang.String" db-attribute-path="source"/>
 		<obj-attribute name="ssoEmail" type="java.lang.String" db-attribute-path="ssoEmail"/>
 		<obj-attribute name="ssoName" type="java.lang.String" db-attribute-path="ssoName"/>
-		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.Status" db-attribute-path="status"/>
+		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status" db-attribute-path="status"/>
 		<obj-attribute name="url" type="java.lang.String" db-attribute-path="url"/>
 		<obj-attribute name="workPhone" type="java.lang.String" db-attribute-path="workPhone"/>
 	</obj-entity>

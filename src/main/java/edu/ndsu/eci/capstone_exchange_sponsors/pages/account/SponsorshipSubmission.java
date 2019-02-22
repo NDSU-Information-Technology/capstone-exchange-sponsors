@@ -25,7 +25,8 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * Create new sponsorship associated to the logged in user.
@@ -70,11 +71,11 @@ public class SponsorshipSubmission {
   public void onValidateFromSponsorshipForm() {
     Site site = userInfo.getUser().getSite();
     
-    if(!map.performSponsorshipByStatusAndSiteQuery(context, Status.PENDING, site).isEmpty()) {
+    if(!map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.PENDING, site).isEmpty()) {
       sponsorshipForm.recordError("Your site already has a pending sponsorship. Please contact a system admin if you want your current sponsorship details to be adjusted.");
       context.rollbackChanges();
     }
-    if(!map.performSponsorshipByStatusAndSiteQuery(context, Status.APPROVED, site).isEmpty()) {
+    if(!map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, site).isEmpty()) {
       sponsorshipForm.recordError("Your site already has an active sponsorship. Please contact a system admin if you want your current sponsorship details to be adjusted.");
       context.rollbackChanges();
     }
@@ -89,7 +90,7 @@ public class SponsorshipSubmission {
   @CommitAfter
   public void onSuccess() throws ResourceNotFoundException, ParseErrorException, Exception {
     sponsorship.setSite((Site) context.localObject(userInfo.getUser().getSite().getObjectId(), null));
-    sponsorship.setStatus(Status.PENDING);
+    sponsorship.setStatus(SponsorshipStatus.PENDING);
     
     Date today = new Date();
     Calendar expiration = new GregorianCalendar();

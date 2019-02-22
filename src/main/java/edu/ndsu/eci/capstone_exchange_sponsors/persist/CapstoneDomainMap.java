@@ -18,7 +18,7 @@ import java.util.List;
 import org.apache.cayenne.ObjectContext;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.auto._CapstoneDomainMap;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.UserRole;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.UserRole;
 
 public class CapstoneDomainMap extends _CapstoneDomainMap {
 

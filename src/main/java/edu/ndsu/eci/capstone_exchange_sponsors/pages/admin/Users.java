@@ -32,8 +32,8 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.Role;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.UserRole;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.UserRole;
 
 // FIXME A lot remains to be done here.
 public class Users {

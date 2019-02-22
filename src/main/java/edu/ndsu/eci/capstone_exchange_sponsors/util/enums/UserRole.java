@@ -11,26 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package edu.ndsu.eci.capstone_exchange_sponsors.util;
+package edu.ndsu.eci.capstone_exchange_sponsors.util.enums;
 
 import org.apache.cayenne.ExtendedEnumeration;
 
-/**
- * Status of a proposal
- *
- */
-public enum ProjectStatus implements ExtendedEnumeration {
-
-  /** indicates that the item has been declined / rejected */
-  DECLINED,
-  /** item has been approved for use FIXME remove after upgrade and conversion to PAIRED */
-  APPROVED,
-  /** item is pending approval */
-  PENDING,
-  /** item was approved but is now decommissioned */
-  DECOMMISSIONED,
-  /** proposal has been paired */
-  PAIRED;
+public enum UserRole implements ExtendedEnumeration {
+  ADMIN;
 
   @Override
   public Object getDatabaseValue() {

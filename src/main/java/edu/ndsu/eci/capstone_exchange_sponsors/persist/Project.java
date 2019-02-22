@@ -3,7 +3,7 @@ package edu.ndsu.eci.capstone_exchange_sponsors.persist;
 import com.googlecode.tapestry5cayenne.annotations.Label;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.auto._Project;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus;
 
 public class Project extends _Project {
 

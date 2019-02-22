@@ -37,7 +37,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.services.EmailService;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityEmailService;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.VelocityService;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.UserRole;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.UserRole;
 
 
 public class VelocityEmailServiceImpl implements VelocityEmailService {

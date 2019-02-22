@@ -17,8 +17,9 @@ import org.apache.cayenne.ObjectContext;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.ProjectStatus;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.Status;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 public class Admin {
  
@@ -42,7 +43,7 @@ public class Admin {
    * @return Number of pending items.
    */
   public int getPendingSponsorships() {
-    return map.performSponsorshipByStatusQuery(context, Status.PENDING).size();
+    return map.performSponsorshipByStatusQuery(context, SponsorshipStatus.PENDING).size();
   }
   
   /**
