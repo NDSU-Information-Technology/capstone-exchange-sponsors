@@ -14,7 +14,6 @@
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
 
-import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -35,7 +34,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.JPEGInline;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
@@ -114,15 +113,15 @@ public class Dashboard {
   }
 
   /**
-   * Delete a given project.
-   * @param project Project to delete.
+   * Withdraw a given project.
+   * @param project Project to withdraw.
    */
   @RequiresPermissions(ILACRealm.PROJECT_EDIT_INSTANCE)
-  public void onDelete(Project project) {
+  public void onWithdraw(Project project) {
     if (!project.isDeletable()) {
       return;
     }
-    context.deleteObject(project);
+    project.setProjectStatus(ProjectStatus.WITHDRAWN);
     context.commitChanges();
   }
   
