@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.cayenne.CayenneDataObject;
 
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.ProjectNote;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Role;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
@@ -27,6 +29,8 @@ public abstract class _User extends CayenneDataObject {
     public static final String STATUS_PROPERTY = "status";
     public static final String URL_PROPERTY = "url";
     public static final String WORK_PHONE_PROPERTY = "workPhone";
+    public static final String PROJECT_NOTES_PROPERTY = "projectNotes";
+    public static final String PROJECTS_PROPERTY = "projects";
     public static final String ROLES_PROPERTY = "roles";
     public static final String SITE_PROPERTY = "site";
 
@@ -101,6 +105,30 @@ public abstract class _User extends CayenneDataObject {
     public String getWorkPhone() {
         return (String)readProperty("workPhone");
     }
+
+    public void addToProjectNotes(ProjectNote obj) {
+        addToManyTarget("projectNotes", obj, true);
+    }
+    public void removeFromProjectNotes(ProjectNote obj) {
+        removeToManyTarget("projectNotes", obj, true);
+    }
+    @SuppressWarnings("unchecked")
+    public List<ProjectNote> getProjectNotes() {
+        return (List<ProjectNote>)readProperty("projectNotes");
+    }
+
+
+    public void addToProjects(Project obj) {
+        addToManyTarget("projects", obj, true);
+    }
+    public void removeFromProjects(Project obj) {
+        removeToManyTarget("projects", obj, true);
+    }
+    @SuppressWarnings("unchecked")
+    public List<Project> getProjects() {
+        return (List<Project>)readProperty("projects");
+    }
+
 
     public void addToRoles(Role obj) {
         addToManyTarget("roles", obj, true);

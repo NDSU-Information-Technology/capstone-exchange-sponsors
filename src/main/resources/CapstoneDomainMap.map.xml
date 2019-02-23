@@ -10,6 +10,13 @@
 		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
 		<db-attribute name="status" type="VARCHAR" isMandatory="true" length="20"/>
 	</db-entity>
+	<db-entity name="projectNotes">
+		<db-attribute name="created" type="TIMESTAMP" isMandatory="true"/>
+		<db-attribute name="note" type="CLOB" isMandatory="true"/>
+		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="projectPk" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="userPk" type="INTEGER" isMandatory="true"/>
+	</db-entity>
 	<db-entity name="projectSubjects">
 		<db-attribute name="projectPk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
 		<db-attribute name="subjectPk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
@@ -90,6 +97,10 @@
 		<obj-attribute name="potentialStart" type="java.util.Date" db-attribute-path="potentialStart"/>
 		<obj-attribute name="projectStatus" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus" db-attribute-path="projectStatus"/>
 	</obj-entity>
+	<obj-entity name="ProjectNote" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.ProjectNote" dbEntityName="projectNotes">
+		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
+		<obj-attribute name="note" type="java.lang.String" db-attribute-path="note"/>
+	</obj-entity>
 	<obj-entity name="Role" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Role" dbEntityName="roles">
 		<obj-attribute name="role" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.UserRole" db-attribute-path="role"/>
 	</obj-entity>
@@ -132,11 +143,20 @@
 	<db-relationship name="sites" source="countries" target="sites" toMany="true">
 		<db-attribute-pair source="pk" target="countryPk"/>
 	</db-relationship>
+	<db-relationship name="project" source="projectNotes" target="projects" toMany="false">
+		<db-attribute-pair source="projectPk" target="pk"/>
+	</db-relationship>
+	<db-relationship name="user" source="projectNotes" target="users" toMany="false">
+		<db-attribute-pair source="userPk" target="pk"/>
+	</db-relationship>
 	<db-relationship name="project" source="projectSubjects" target="projects" toMany="false">
 		<db-attribute-pair source="projectPk" target="pk"/>
 	</db-relationship>
 	<db-relationship name="subject" source="projectSubjects" target="subjects" toMany="false">
 		<db-attribute-pair source="subjectPk" target="pk"/>
+	</db-relationship>
+	<db-relationship name="projectNotes" source="projects" target="projectNotes" toMany="true">
+		<db-attribute-pair source="pk" target="projectPk"/>
 	</db-relationship>
 	<db-relationship name="site" source="projects" target="sites" toMany="false">
 		<db-attribute-pair source="sitePk" target="pk"/>
@@ -168,6 +188,9 @@
 	<db-relationship name="projects" source="subjects" target="projectSubjects" toDependentPK="true" toMany="true">
 		<db-attribute-pair source="pk" target="subjectPk"/>
 	</db-relationship>
+	<db-relationship name="projectNotes" source="users" target="projectNotes" toMany="true">
+		<db-attribute-pair source="pk" target="userPk"/>
+	</db-relationship>
 	<db-relationship name="projects" source="users" target="projects" toMany="true">
 		<db-attribute-pair source="pk" target="submittingUser"/>
 	</db-relationship>
@@ -178,15 +201,20 @@
 		<db-attribute-pair source="sitePk" target="pk"/>
 	</db-relationship>
 	<obj-relationship name="sites" source="Country" target="Site" deleteRule="Deny" db-relationship-path="sites"/>
+	<obj-relationship name="projectNotes" source="Project" target="ProjectNote" deleteRule="Deny" db-relationship-path="projectNotes"/>
 	<obj-relationship name="site" source="Project" target="Site" deleteRule="Nullify" db-relationship-path="site"/>
 	<obj-relationship name="subjects" source="Project" target="Subject" deleteRule="Nullify" db-relationship-path="subjects.subject"/>
 	<obj-relationship name="user" source="Project" target="User" deleteRule="Nullify" db-relationship-path="user"/>
+	<obj-relationship name="project" source="ProjectNote" target="Project" deleteRule="Nullify" db-relationship-path="project"/>
+	<obj-relationship name="user" source="ProjectNote" target="User" deleteRule="Nullify" db-relationship-path="user"/>
 	<obj-relationship name="user" source="Role" target="User" deleteRule="Nullify" db-relationship-path="user"/>
 	<obj-relationship name="country" source="Site" target="Country" deleteRule="Nullify" db-relationship-path="country"/>
 	<obj-relationship name="projects" source="Site" target="Project" deleteRule="Deny" db-relationship-path="projects"/>
 	<obj-relationship name="sponsorships" source="Site" target="Sponsorship" deleteRule="Deny" db-relationship-path="sponsorships"/>
 	<obj-relationship name="users" source="Site" target="User" deleteRule="Deny" db-relationship-path="users"/>
 	<obj-relationship name="site" source="Sponsorship" target="Site" deleteRule="Nullify" db-relationship-path="site"/>
+	<obj-relationship name="projectNotes" source="User" target="ProjectNote" deleteRule="Deny" db-relationship-path="projectNotes"/>
+	<obj-relationship name="projects" source="User" target="Project" deleteRule="Deny" db-relationship-path="projects"/>
 	<obj-relationship name="roles" source="User" target="Role" deleteRule="Deny" db-relationship-path="roles"/>
 	<obj-relationship name="site" source="User" target="Site" deleteRule="Nullify" db-relationship-path="site"/>
 	<query name="Countries" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Country">
@@ -195,6 +223,10 @@
 	</query>
 	<query name="ProjectByStatusQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Project">
 		<qualifier><![CDATA[projectStatus = $projectStatus]]></qualifier>
+	</query>
+	<query name="ProjectNotesQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="ProjectNote">
+		<qualifier><![CDATA[project = $project]]></qualifier>
+		<ordering descending="true"><![CDATA[created]]></ordering>
 	</query>
 	<query name="RoleByNameQuery" factory="org.apache.cayenne.map.SelectQueryBuilder" root="obj-entity" root-name="Role">
 		<qualifier><![CDATA[role = $name]]></qualifier>

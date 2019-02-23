@@ -21,7 +21,6 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberFormat;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
-import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 
 public class UpdateSite {
@@ -32,14 +31,12 @@ public class UpdateSite {
   /** user info service */
   @Inject
   private UserInfo userInfo;
-
-  /** logged in user */
-  @Property
-  private User user;
   
+  /** The data for the site editing */
   @Property
   private Site site;
   
+  /** Holds data of uploaded image */
   @Property
   private UploadedFile file;
   
@@ -55,6 +52,7 @@ public class UpdateSite {
   @Inject
   private AlertManager alerts;
   
+  /** Page reference for redirect */
   @InjectPage
   private Dashboard index;
   
@@ -62,8 +60,7 @@ public class UpdateSite {
    * Setup render, get logged in user
    */
   public void setupRender() {
-    user = userInfo.getUser();
-    site = user.getSite();
+    site = userInfo.getUser().getSite();
   }
   
   /**
@@ -114,19 +111,24 @@ public class UpdateSite {
     return index;
   }
   
+  /**
+   * Uploads given photo and returns to dashboard.
+   * @return Redirect to dashboard.
+   */
   public Object onSuccessFromPhoto() {
     Site siteEdit = userInfo.getUser().getSite();
     
+    //Get bytes of photo and set to Logo attribute
     try {
       byte[] bytes = IOUtils.toByteArray(file.getStream());
       siteEdit.setLogo(bytes);
+      siteEdit.getObjectContext().commitChanges();
+      alerts.success("Updated Site Logo");
     } catch (IOException e) {
-      e.printStackTrace();
+      LOGGER.error("Failed to upload image.", e);
+      alerts.error("Failed to uplaod image. Please contact a system admin.");
     }
     
-    
-    siteEdit.getObjectContext().commitChanges();
-    alerts.success("Updated Site Logo");
     return index;
   }
 }

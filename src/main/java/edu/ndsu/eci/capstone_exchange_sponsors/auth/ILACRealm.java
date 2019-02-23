@@ -47,7 +47,7 @@ public class ILACRealm extends BaseILACRealm {
       return true;
     }
 
-    return StringUtils.equals(project.getUser().getFederatedId(), userInfo.getUser().getFederatedId());
+    return StringUtils.equals(project.getSite().getCode(), userInfo.getUser().getSite().getCode());
 
   }
 

@@ -7,6 +7,7 @@ import org.apache.cayenne.query.NamedQuery;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.ProjectNote;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Role;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
@@ -28,6 +29,8 @@ public class _CapstoneDomainMap {
     public static final String COUNTRIES_QUERYNAME = "Countries";
 
     public static final String PROJECT_BY_STATUS_QUERY_QUERYNAME = "ProjectByStatusQuery";
+
+    public static final String PROJECT_NOTES_QUERY_QUERYNAME = "ProjectNotesQuery";
 
     public static final String ROLE_BY_NAME_QUERY_QUERYNAME = "RoleByNameQuery";
 
@@ -67,6 +70,18 @@ public class _CapstoneDomainMap {
         };
 
         return context.performQuery(new NamedQuery("ProjectByStatusQuery", parameters, values));
+    }
+
+    public List<ProjectNote> performProjectNotesQuery(ObjectContext context , Project project) {
+        String[] parameters = {
+            "project",
+        };
+
+        Object[] values = {
+            project,
+        };
+
+        return context.performQuery(new NamedQuery("ProjectNotesQuery", parameters, values));
     }
 
     public List<Role> performRoleByNameQuery(ObjectContext context , UserRole name) {

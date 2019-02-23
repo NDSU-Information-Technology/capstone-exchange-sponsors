@@ -90,7 +90,7 @@
 					<h2>Projects</h2>
 					<t:grid source="projects" row="projectRow"
 						include="created, name, projectStatus, potentialStart, subjects, description"
-						add="createdBy, edit, withdraw">
+						add="createdBy, edit, withdraw, notes">
 						<p:descriptionCell>
 							<div class="description"><t:outputraw value="projectRow.description"></t:outputraw></div>
 						</p:descriptionCell>
@@ -109,6 +109,9 @@
 								<t:eventlink event="withdraw" context="projectRow">Withdraw ${projectRow.name}</t:eventlink>
 							</t:if>
 						</p:withdrawCell>
+						<p:notesCell>
+							<t:PageLink page="account/projectnotes" context="projectRow">View Notes</t:PageLink>
+						</p:notesCell>
 					</t:grid>
 					<div>
 						<t:pagelink page="account/projectsubmission">Create Project</t:pagelink>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+	xmlns:p="tapestry:parameter" t:type="layout" title="Project Notes Page">
+    
+    <h3>${project.name} Notes</h3>
+    
+    <t:Zone t:id="newNoteZone">
+    	<t:if test="makeNewNote">
+	    	<t:BeanEditForm t:id="form" object="newNote" include="note" submitLabel="Create Note">
+	    		<p:note>
+	    			<t:label for="note">Note</t:label>
+					<t:textarea t:id="note" t:mixins="summernote" value="newNote.note" t:validate="required"></t:textarea>
+	    			<br/>
+	    		</p:note>
+	    	</t:BeanEditForm>
+    	</t:if>
+    </t:Zone>
+    
+    <t:EventLink event="createNote" async="true">Create New Note</t:EventLink>
+    <br/> <br/>
+   	<t:grid source="notes" row="noteRow" include="user, note, created">
+   		<p:userCell>
+   			${noteRow.user.name}
+   		</p:userCell>
+   		<p:noteCell>
+			<t:outputraw value="noteRow.note"></t:outputraw>
+		</p:noteCell>
+   	</t:grid>
+    
+</html>
