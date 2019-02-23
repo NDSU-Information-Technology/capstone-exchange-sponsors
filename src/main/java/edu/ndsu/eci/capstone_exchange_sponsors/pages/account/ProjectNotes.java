@@ -9,7 +9,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.tapestry5.alerts.AlertManager;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Request;
@@ -55,10 +54,6 @@ public class ProjectNotes {
   /** New note zone reference */
   @Component
   private Zone newNoteZone;
-  
-  /** Form reference */
-  @Component
-  private BeanEditForm form;
   
   /** Project reference */
   @Property
@@ -111,7 +106,7 @@ public class ProjectNotes {
    */
   public void onValidateFromForm() {
     if(StringUtils.isBlank(newNote.getNote())) {
-      form.recordError("Note must contain a message.");
+      alerts.warn("Note must contain a message.");
       context.rollbackChanges();
     }
   }
@@ -126,7 +121,6 @@ public class ProjectNotes {
     newNote.setProject(project);
     context.registerNewObject(newNote);
     context.commitChanges();
-    
   }
   
   /**

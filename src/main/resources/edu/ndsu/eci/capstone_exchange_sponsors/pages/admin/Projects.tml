@@ -56,6 +56,9 @@
 						<p:countryCell>
 							${row.site.country.name}
 						</p:countryCell>
+						<p:projectNotesCell>
+							<t:PageLink page="account/projectnotes" context="row">View Notes</t:PageLink>
+						</p:projectNotesCell>
 						
 						<p:approveCell>
 							<t:eventlink event="approve" context="row" async="true">Approve</t:eventlink>
@@ -80,6 +83,9 @@
 						<p:countryCell>
 							${row.site.country.name}
 						</p:countryCell>
+						<p:projectNotesCell>
+							<t:PageLink page="account/projectnotes" context="row">View Notes</t:PageLink>
+						</p:projectNotesCell>
 						
 						<p:activateCell>
 							<t:eventlink event="active" context="row" async="true">Activate</t:eventlink>
@@ -104,6 +110,9 @@
 						<p:countryCell>
 							${row.site.country.name}
 						</p:countryCell>
+						<p:projectNotesCell>
+							<t:PageLink page="account/projectnotes" context="row">View Notes</t:PageLink>
+						</p:projectNotesCell>
 						
 						<p:awardedCell>
 							<t:eventlink event="awarded" context="row" async="true">Awarded</t:eventlink>
@@ -128,6 +137,9 @@
 						<p:countryCell>
 							${row.site.country.name}
 						</p:countryCell>
+						<p:projectNotesCell>
+							<t:PageLink page="account/projectnotes" context="row">View Notes</t:PageLink>
+						</p:projectNotesCell>
 					</t:grid>
 				</t:zone>
 			</div>
@@ -148,6 +160,9 @@
 						<p:countryCell>
 							${row.site.country.name}
 						</p:countryCell>
+						<p:projectNotesCell>
+							<t:PageLink page="account/projectnotes" context="row">View Notes</t:PageLink>
+						</p:projectNotesCell>
 						<p:changeStatusCell>
 							<t:form t:id="statusForm" context="row" async="true">
 								<t:select t:id="status" validate="required" style="min-width: 180px;"></t:select>

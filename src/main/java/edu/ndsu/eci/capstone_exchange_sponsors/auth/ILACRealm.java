@@ -20,6 +20,7 @@ import org.apache.tapestry5.services.Environment;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.UserRole;
 
 public class ILACRealm extends BaseILACRealm {
 
@@ -44,6 +45,10 @@ public class ILACRealm extends BaseILACRealm {
     Project project = (Project) invocation.getParameter(0);
 
     if (project.getPersistenceState() == PersistenceState.TRANSIENT) {
+      return true;
+    }
+    
+    if(userInfo.getUser().getRoles().contains(UserRole.ADMIN)) {
       return true;
     }
 
