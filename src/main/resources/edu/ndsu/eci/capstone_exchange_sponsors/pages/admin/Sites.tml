@@ -14,7 +14,7 @@
 	<body>
 
 		<t:beaneditform t:id="form" object="site"
-			include="name, email, phone, url, country, street, city, zipPostal, code"
+			include="name, email, phone, url, country, street, city, zipPostal, description, code"
 			add="clear">
 			<p:name>
 				<t:Label for="name">Name</t:Label>
@@ -32,6 +32,10 @@
 				<t:Label for="city">City</t:Label>
 				<t:TextField t:id="city" value="site.city"></t:TextField>
 			</p:city>
+			<p:description>
+				<t:label for="description">Description</t:label>
+				<t:textarea t:id="description" t:mixins="summernote" value="site.description"></t:textarea>
+			</p:description>
 			
 			<p:code>
 				<t:Zone t:id="codeZone" id="codeZone">

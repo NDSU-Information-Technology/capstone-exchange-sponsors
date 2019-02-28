@@ -63,6 +63,7 @@ public class Dashboard {
   @Inject
   private AlertManager alerts;
   
+  /** Used to display a Site's logo */
   @InjectPage
   private UploadStorePhoto uploadStore;
   
@@ -138,6 +139,10 @@ public class Dashboard {
     }
   }
   
+  /**
+   * Used to display the Site's logo on page.
+   * @return The Site's logo information.
+   */
   public Link getUploadedImage() {
     return uploadStore.getUploadedFile(userInfo.getUser().getSite());
   }

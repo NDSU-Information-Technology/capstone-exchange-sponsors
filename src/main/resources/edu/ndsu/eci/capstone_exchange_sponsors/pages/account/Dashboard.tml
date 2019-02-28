@@ -49,9 +49,9 @@
 					
 					<h2>Site Info</h2>
 					<t:Beandisplay object="user.site"
-						include="name, code, phone, email, url"
+						include="name, code, phone, email, url, description"
 						add="address, logo"
-						reorder="name, code, address, phone, email, url, logo">
+						reorder="name, code, address, phone, email, url, logo, description">
 						<p:address>
 							${user.site.street} <br/>
 							${user.site.city}, ${user.site.country.name} <br/>
@@ -63,6 +63,9 @@
 						<p:logo>
 							<img src="${uploadedImage}" alt="Site Logo" style="width:100px;"/>
 						</p:logo>
+						<p:description>
+							<div class="description"><t:outputraw value="user.site.description"></t:outputraw></div>
+						</p:description>
 					</t:Beandisplay>
 					<div>
 						<t:pagelink page="account/updatesite">Update Site</t:pagelink>

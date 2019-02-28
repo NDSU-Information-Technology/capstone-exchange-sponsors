@@ -2,11 +2,40 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
 	xmlns:p="tapestry:parameter" t:type="layout" title="Edit Site">
 
-	<t:beaneditform t:id="form" object="site" include="name, street, city, zipPostal, phone, email, url"></t:beaneditform>
+	<style>
+		#file {
+			min-height: 50px;
+		}
+	</style>
+
+	<t:beaneditform t:id="form" object="site" 
+		include="name, street, city, zipPostal, phone, email, url, description">
+		
+		<p:name>
+			<t:Label for="name">Name</t:Label>
+			<t:TextField t:id="name" value="site.name"></t:TextField>
+		</p:name>
+		<p:email>
+			<t:Label for="email">Email</t:Label>
+			<t:TextField t:id="email" type="email" value="site.email"></t:TextField>
+		</p:email>
+		<p:url>
+			<t:Label for="url">Website</t:Label>
+			<t:TextField t:id="url" type="url" value="site.url"></t:TextField>
+		</p:url>
+		<p:city>
+			<t:Label for="city">City</t:Label>
+			<t:TextField t:id="city" value="site.city"></t:TextField>
+		</p:city>
+		<p:description>
+			<t:label for="description">Description</t:label>
+			<t:textarea t:id="description" t:mixins="summernote" value="site.description"></t:textarea>
+		</p:description>
+	</t:beaneditform>
 	<b>Logo</b>
 	<t:form t:id="photo">
 		<t:errors />
-		<input t:type="upload" t:id="file" t:value="file" validate="required" />
+		<input t:type="upload" t:id="file" id="file" t:value="file" validate="required" />
 		<br />
 		<input type="submit" value="Upload" />
 	</t:form>

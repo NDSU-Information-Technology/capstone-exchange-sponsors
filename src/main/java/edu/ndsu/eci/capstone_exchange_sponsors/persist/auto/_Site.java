@@ -19,6 +19,7 @@ public abstract class _Site extends CayenneDataObject {
 
     public static final String CITY_PROPERTY = "city";
     public static final String CODE_PROPERTY = "code";
+    public static final String DESCRIPTION_PROPERTY = "description";
     public static final String EMAIL_PROPERTY = "email";
     public static final String LOGO_PROPERTY = "logo";
     public static final String NAME_PROPERTY = "name";
@@ -45,6 +46,13 @@ public abstract class _Site extends CayenneDataObject {
     }
     public String getCode() {
         return (String)readProperty("code");
+    }
+
+    public void setDescription(String description) {
+        writeProperty("description", description);
+    }
+    public String getDescription() {
+        return (String)readProperty("description");
     }
 
     public void setEmail(String email) {

@@ -43,6 +43,7 @@
 		<db-attribute name="city" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="code" type="VARCHAR" isMandatory="true" length="50"/>
 		<db-attribute name="countryPk" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="description" type="CLOB"/>
 		<db-attribute name="email" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="logo" type="BLOB"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="255"/>
@@ -107,6 +108,7 @@
 	<obj-entity name="Site" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Site" dbEntityName="sites">
 		<obj-attribute name="city" type="java.lang.String" db-attribute-path="city"/>
 		<obj-attribute name="code" type="java.lang.String" db-attribute-path="code"/>
+		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
 		<obj-attribute name="email" type="java.lang.String" db-attribute-path="email"/>
 		<obj-attribute name="logo" type="byte[]" db-attribute-path="logo"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>

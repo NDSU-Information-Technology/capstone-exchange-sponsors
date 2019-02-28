@@ -48,15 +48,19 @@ public class Sites {
   @Inject
   private AlertManager alerts;
   
+  /** AJAX updating */
   @Inject
   private AjaxResponseRenderer ajaxResponseRenderer;
   
+  /** Request for AJAX updating */
   @Inject
   private Request request;
   
+  /** Zone surrounding code generator to display generation */
   @InjectComponent
   private Zone codeZone;
   
+  /** Value of a generated code */
   @Persist
   @Property
   private String newCode;

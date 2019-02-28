@@ -23,6 +23,10 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
 
+/**
+ * Users can update their Site's information through this page.
+ *
+ */
 public class UpdateSite {
 
   /** logger */
@@ -106,6 +110,7 @@ public class UpdateSite {
     siteEdit.setPhone(site.getPhone());
     siteEdit.setEmail(site.getEmail());
     siteEdit.setUrl(site.getUrl());
+    siteEdit.setDescription(site.getDescription());
     siteEdit.getObjectContext().commitChanges();
     alerts.success("Updated Site Info");
     return index;
