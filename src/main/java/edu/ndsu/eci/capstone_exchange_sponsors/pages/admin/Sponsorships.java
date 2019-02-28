@@ -31,7 +31,6 @@ import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.RenewalConfig;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorTier;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 /**
  * Manages Sponsorship data.
@@ -142,6 +141,10 @@ public class Sponsorships {
     return allSites;
   }
   
+  /**
+   * Gets a list of Sites with a approved sponsorship.
+   * @return List of Site objects.
+   */
   public List<Site> getApprovedSites() {
     List <Site> allSites = getAllSites();
     
@@ -173,23 +176,9 @@ public class Sponsorships {
   
   /**
    * Set persisted Site object.
-   * @param siteRow Selection from pending Sites grid.
+   * @param siteRow Selection from Sites grid.
    */
-  public void onPendingSite(Site siteRow) {
-    site = siteRow;
-    sponsorship = null;
-  }
-  
-  public void onApprovedSite(Site siteRow) {
-    site = siteRow;
-    sponsorship = null;
-  }
-  
-  /**
-   * Set persisted Site object.
-   * @param siteRow Selection from all Sites grid.
-   */
-  public void onAllSite(Site siteRow) {
+  public void onSelectSite(Site siteRow) {
     site = siteRow;
     sponsorship = null;
   }
@@ -198,15 +187,20 @@ public class Sponsorships {
    * Validation for form submission.
    */
   public void onValidateFromForm() {
+    //Check to make sure expiration is set after creation date
     if(sponsorship.getExpires().before(sponsorship.getCreated())) {
       form.recordError("Expiration date must be after the creation date.");
       context.rollbackChanges();
     }
     
-    List<Sponsorship> approvedList = map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, site);
-    if(!approvedList.isEmpty()) {
-      if(sponsorship.getStatus().equals(Status.APPROVED) && sponsorship != approvedList.get(0)) {
-        form.recordError("Selected site already has an Approved sponsorship. Make sure to remove Approved status from the other sponsorship before setting this sponsorship to Approved.");
+    //Check to make sure there's not two Active sponsorships associated to a site
+    List<Sponsorship> activeList = map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, site);
+    //Check if there's a Active sponsorship we might have to worry about
+    if(!activeList.isEmpty()) {
+      //Check if sponsorship being edited is set as Active and if so whether
+      //it's not the same sponsorship from the general search for an active sponsorship
+      if(sponsorship.getStatus().equals(SponsorshipStatus.ACTIVE) && sponsorship != activeList.get(0)) {
+        form.recordError("Selected site already has an Active sponsorship. Make sure to remove Active status from the other sponsorship before setting this sponsorship to Active.");
         context.rollbackChanges();
       }
     }
@@ -220,15 +214,27 @@ public class Sponsorships {
     sponsorship.setSite(site);
   }
   
+  /**
+   * Used to display the site logo.
+   * @return Image content.
+   */
   public Link getUploadedImage() {
     return uploadStore.getUploadedFile(siteRow);
   }
   
+  /**
+   * Gets the current row's expiration for the active sponsorship.
+   * @return Active sponsorship's expiration.
+   */
   public Date getExpiration() {
     Sponsorship s = map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, siteRow).get(0);
     return s.getExpires();
   }
   
+  /**
+   * Gets the current row's tier for the active sponsorship.
+   * @return Active sponsorship's tier.
+   */
   public SponsorTier getSiteTier() {
     Sponsorship s = map.performSponsorshipByStatusAndSiteQuery(context, SponsorshipStatus.ACTIVE, siteRow).get(0);
     return s.getTier();

@@ -61,14 +61,14 @@
 			<div id="tab1" class="tab-pane active">
 				<t:Grid source="pendingSites" row="siteRow" include="name">
 					<p:nameCell>
-						<t:eventlink event="pendingSite" context="siteRow">${siteRow.name}</t:eventlink>
+						<t:eventlink event="selectSite" context="siteRow">${siteRow.name}</t:eventlink>
 					</p:nameCell>
 				</t:Grid>
 			</div>
 			<div id="tab2" class="tab-pane">
 				<t:Grid source="approvedSites" row="siteRow" include="name, url" add="expires, logo, tier">
 					<p:nameCell>
-						<t:eventlink event="approvedSite" context="siteRow">${siteRow.name}</t:eventlink>
+						<t:eventlink event="selectSite" context="siteRow">${siteRow.name}</t:eventlink>
 					</p:nameCell>
 					<p:expiresCell>
 						${expiration}
@@ -84,7 +84,7 @@
 			<div id="tab3" class="tab-pane">
 				<t:Grid source="allSites" row="siteRow" include="name">
 					<p:nameCell>
-						<t:eventlink event="allSite" context="siteRow">${siteRow.name}</t:eventlink>
+						<t:eventlink event="selectSite" context="siteRow">${siteRow.name}</t:eventlink>
 					</p:nameCell>
 				</t:Grid>
 			</div>
