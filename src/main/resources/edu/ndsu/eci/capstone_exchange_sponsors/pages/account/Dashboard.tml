@@ -92,11 +92,11 @@
 				<div id="tab3" class="tab-pane">
 					<h2>Projects</h2>
 					<t:grid source="projects" row="projectRow"
-						include="created, name, projectStatus, potentialStart, subjects, description"
+						include="created, name, projectStatus, potentialStart, subjects, background"
 						add="createdBy, edit, withdraw, notes">
-						<p:descriptionCell>
-							<div class="description"><t:outputraw value="projectRow.description"></t:outputraw></div>
-						</p:descriptionCell>
+						<p:backgroundCell>
+							<div class="description"><t:outputraw value="projectRow.background"></t:outputraw></div>
+						</p:backgroundCell>
 						
 						<p:createdByCell>
 							${projectRow.user.name}

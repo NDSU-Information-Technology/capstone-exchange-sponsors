@@ -22,17 +22,25 @@
 		<db-attribute name="subjectPk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
 	</db-entity>
 	<db-entity name="projects">
+		<db-attribute name="background" type="CLOB"/>
 		<db-attribute name="budget" type="DOUBLE" isMandatory="true"/>
+		<db-attribute name="completion" type="DATE" isMandatory="true"/>
+		<db-attribute name="contactInfo" type="CLOB"/>
 		<db-attribute name="created" type="TIMESTAMP" isMandatory="true"/>
-		<db-attribute name="description" type="CLOB" isMandatory="true"/>
 		<db-attribute name="durationInWeeks" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="goals" type="CLOB"/>
+		<db-attribute name="ipInfo" type="CLOB"/>
 		<db-attribute name="lastModified" type="TIMESTAMP" isMandatory="true"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
 		<db-attribute name="potentialStart" type="DATE" isMandatory="true"/>
 		<db-attribute name="projectStatus" type="VARCHAR" isMandatory="true" length="20"/>
 		<db-attribute name="sitePk" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="skills" type="CLOB"/>
+		<db-attribute name="submission" type="DATE" isMandatory="true"/>
 		<db-attribute name="submittingUser" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="technologies" type="CLOB"/>
+		<db-attribute name="url" type="VARCHAR" length="255"/>
 	</db-entity>
 	<db-entity name="roles">
 		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
@@ -89,14 +97,22 @@
 		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status" db-attribute-path="status"/>
 	</obj-entity>
 	<obj-entity name="Project" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Project" dbEntityName="projects">
+		<obj-attribute name="background" type="java.lang.String" db-attribute-path="background"/>
 		<obj-attribute name="budget" type="java.lang.Double" db-attribute-path="budget"/>
+		<obj-attribute name="completion" type="java.util.Date" db-attribute-path="completion"/>
+		<obj-attribute name="contactInfo" type="java.lang.String" db-attribute-path="contactInfo"/>
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
-		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
 		<obj-attribute name="durationInWeeks" type="java.lang.Integer" db-attribute-path="durationInWeeks"/>
+		<obj-attribute name="goals" type="java.lang.String" db-attribute-path="goals"/>
+		<obj-attribute name="ipInfo" type="java.lang.String" db-attribute-path="ipInfo"/>
 		<obj-attribute name="lastModified" type="java.util.Date" db-attribute-path="lastModified"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
 		<obj-attribute name="potentialStart" type="java.util.Date" db-attribute-path="potentialStart"/>
 		<obj-attribute name="projectStatus" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus" db-attribute-path="projectStatus"/>
+		<obj-attribute name="skills" type="java.lang.String" db-attribute-path="skills"/>
+		<obj-attribute name="submission" type="java.util.Date" db-attribute-path="submission"/>
+		<obj-attribute name="technologies" type="java.lang.String" db-attribute-path="technologies"/>
+		<obj-attribute name="url" type="java.lang.String" db-attribute-path="url"/>
 	</obj-entity>
 	<obj-entity name="ProjectNote" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.ProjectNote" dbEntityName="projectNotes">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
@@ -205,7 +221,7 @@
 	<obj-relationship name="sites" source="Country" target="Site" deleteRule="Deny" db-relationship-path="sites"/>
 	<obj-relationship name="projectNotes" source="Project" target="ProjectNote" deleteRule="Deny" db-relationship-path="projectNotes"/>
 	<obj-relationship name="site" source="Project" target="Site" deleteRule="Nullify" db-relationship-path="site"/>
-	<obj-relationship name="subjects" source="Project" target="Subject" deleteRule="Nullify" db-relationship-path="subjects.subject"/>
+	<obj-relationship name="subjects" source="Project" target="Subject" deleteRule="Deny" db-relationship-path="subjects.subject"/>
 	<obj-relationship name="user" source="Project" target="User" deleteRule="Nullify" db-relationship-path="user"/>
 	<obj-relationship name="project" source="ProjectNote" target="Project" deleteRule="Nullify" db-relationship-path="project"/>
 	<obj-relationship name="user" source="ProjectNote" target="User" deleteRule="Nullify" db-relationship-path="user"/>

@@ -13,6 +13,7 @@
 // limitations under the License.
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -167,7 +168,7 @@ public class ProjectSubmission {
    * Validate the form
    */
   public void onValidateFromForm() {
-    if (StringUtils.isBlank(project.getDescription())) {
+    if (StringUtils.isBlank(project.getBackground())) {
       form.recordError("Must provide a description");
       context.rollbackChanges();
     }
@@ -187,12 +188,16 @@ public class ProjectSubmission {
     }
     project.setLastModified(new Date());
     project.setProjectStatus(ProjectStatus.PENDING);
-    project.setDescription(cleaner.cleanCapstone(project.getDescription()));
+    project.setBackground(cleaner.cleanCapstone(project.getBackground()));
     
     User user = (User) context.localObject(userInfo.getUser().getObjectId(), null);
     project.setUser(user);
     Site site = (Site) context.localObject(userInfo.getUser().getSite().getObjectId(), null);
     project.setSite(site);
+    
+    long days = ChronoUnit.DAYS.between(project.getPotentialStart().toInstant(), project.getCompletion().toInstant());
+    int weeks = (int) Math.ceil((days / 7.0));
+    project.setDurationInWeeks(weeks);
     
     fixupSubjects();
     

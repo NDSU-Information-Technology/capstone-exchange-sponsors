@@ -44,12 +44,15 @@
 				<h3>Pending Projects</h3>
 				<t:zone t:id="pendingZone">
 					<t:grid source="projectsByStatus('PENDING')" row="row"
-						exclude="editable, projectStatus, deletable, user" 
-						add="approve, country"
-						reorder="approve, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
-						<p:descriptionCell>
-							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
-						</p:descriptionCell>
+						exclude="editable, projectStatus, deletable, user, goals, ipInfo, skills, technologies, url, submission, completion, durationInWeeks, lastModified" 
+						add="approve, country, details"
+						reorder="approve, site, country, name, potentialStart, subjects, background, budget, created">
+						<p:backgroundCell>
+							<div class="description"><t:outputraw value="row.background"></t:outputraw></div>
+						</p:backgroundCell>
+						<p:contactInfoCell>
+							<div class="description"><t:outputraw value="row.contactInfo"></t:outputraw></div>
+						</p:contactInfoCell>
 						<p:siteCell>
 							${row.site.name}
 						</p:siteCell>
@@ -63,6 +66,9 @@
 						<p:approveCell>
 							<t:eventlink event="approve" context="row" async="true">Approve</t:eventlink>
 						</p:approveCell>
+						<p:detailsCell>
+							<t:PageLink page="admin/ProjectDetails" context="row">View Details</t:PageLink>
+						</p:detailsCell>
 					</t:grid>
 				</t:zone>
 			</div>
@@ -71,12 +77,15 @@
 				<h3>Approved Projects</h3>
 				<t:zone t:id="approvedZone">
 					<t:grid source="projectsByStatus('APPROVED')" row="row"
-						exclude="editable, projectStatus, deletable, user" 
-						add="activate, country"
-						reorder="activate, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
-						<p:descriptionCell>
-							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
-						</p:descriptionCell>
+						exclude="editable, projectStatus, deletable, user, goals, ipInfo, skills, technologies, url, submission, completion, durationInWeeks, lastModified" 
+						add="activate, country, details"
+						reorder="activate, site, country, name, potentialStart, subjects, background, budget, created">
+						<p:backgroundCell>
+							<div class="description"><t:outputraw value="row.background"></t:outputraw></div>
+						</p:backgroundCell>
+						<p:contactInfoCell>
+							<div class="description"><t:outputraw value="row.contactInfo"></t:outputraw></div>
+						</p:contactInfoCell>
 						<p:siteCell>
 							${row.site.name}
 						</p:siteCell>
@@ -90,6 +99,9 @@
 						<p:activateCell>
 							<t:eventlink event="active" context="row" async="true">Activate</t:eventlink>
 						</p:activateCell>
+						<p:detailsCell>
+							<t:PageLink page="admin/ProjectDetails" context="row">View Details</t:PageLink>
+						</p:detailsCell>
 					</t:grid>
 				</t:zone>
 			</div>
@@ -98,12 +110,15 @@
 				<h3>Active Projects</h3>
 				<t:zone t:id="activeZone">
 					<t:grid source="projectsByStatus('ACTIVE')" row="row"
-						exclude="editable, projectStatus, deletable, user" 
-						add="awarded, country"
-						reorder="awarded, site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
-						<p:descriptionCell>
-							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
-						</p:descriptionCell>
+						exclude="editable, projectStatus, deletable, user, goals, ipInfo, skills, technologies, url, submission, completion, durationInWeeks, lastModified" 
+						add="awarded, country, details"
+						reorder="awarded, site, country, name, potentialStart, subjects, background, budget, created">
+						<p:backgroundCell>
+							<div class="description"><t:outputraw value="row.background"></t:outputraw></div>
+						</p:backgroundCell>
+						<p:contactInfoCell>
+							<div class="description"><t:outputraw value="row.contactInfo"></t:outputraw></div>
+						</p:contactInfoCell>
 						<p:siteCell>
 							${row.site.name}
 						</p:siteCell>
@@ -117,6 +132,9 @@
 						<p:awardedCell>
 							<t:eventlink event="awarded" context="row" async="true">Awarded</t:eventlink>
 						</p:awardedCell>
+						<p:detailsCell>
+							<t:PageLink page="admin/ProjectDetails" context="row">View Details</t:PageLink>
+						</p:detailsCell>
 					</t:grid>
 				</t:zone>
 			</div>
@@ -125,12 +143,15 @@
 				<h3>Awarded Projects</h3>
 				<t:zone t:id="awardedZone">
 					<t:grid source="projectsByStatus('AWARDED')" row="row"
-						exclude="editable, projectStatus, deletable, user" 
-						add="country"
-						reorder="site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
-						<p:descriptionCell>
-							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
-						</p:descriptionCell>
+						exclude="editable, projectStatus, deletable, user, goals, ipInfo, skills, technologies, url, submission, completion, durationInWeeks, lastModified" 
+						add="country, details"
+						reorder="site, country, name, potentialStart, subjects, background, budget, created">
+						<p:backgroundCell>
+							<div class="description"><t:outputraw value="row.background"></t:outputraw></div>
+						</p:backgroundCell>
+						<p:contactInfoCell>
+							<div class="description"><t:outputraw value="row.contactInfo"></t:outputraw></div>
+						</p:contactInfoCell>
 						<p:siteCell>
 							${row.site.name}
 						</p:siteCell>
@@ -140,6 +161,9 @@
 						<p:projectNotesCell>
 							<t:PageLink page="account/projectnotes" context="row">View Notes</t:PageLink>
 						</p:projectNotesCell>
+						<p:detailsCell>
+							<t:PageLink page="admin/ProjectDetails" context="row">View Details</t:PageLink>
+						</p:detailsCell>
 					</t:grid>
 				</t:zone>
 			</div>
@@ -148,12 +172,15 @@
 				<h3>All Projects</h3>
 				<t:zone t:id="allZone">
 					<t:grid source="allProjects" row="row"
-						exclude="editable, deletable, user"
-						add="country, changeStatus"
-						reorder="site, country, name, subjects, description, potentialStart, budget, created, durationInWeeks">
-						<p:descriptionCell>
-							<div class="description"><t:outputraw value="row.description"></t:outputraw></div>
-						</p:descriptionCell>
+						exclude="editable, deletable, user, goals, ipInfo, skills, technologies, url, submission, completion, durationInWeeks, lastModified"
+						add="country, changeStatus, details"
+						reorder="site, country, name, potentialStart, subjects, background, budget, created, contactInfo, projectStatus, changeStatus">
+						<p:backgroundCell>
+							<div class="description"><t:outputraw value="row.background"></t:outputraw></div>
+						</p:backgroundCell>
+						<p:contactInfoCell>
+							<div class="description"><t:outputraw value="row.contactInfo"></t:outputraw></div>
+						</p:contactInfoCell>
 						<p:siteCell>
 							${row.site.name}
 						</p:siteCell>
@@ -163,6 +190,9 @@
 						<p:projectNotesCell>
 							<t:PageLink page="account/projectnotes" context="row">View Notes</t:PageLink>
 						</p:projectNotesCell>
+						<p:detailsCell>
+							<t:PageLink page="admin/ProjectDetails" context="row">View Details</t:PageLink>
+						</p:detailsCell>
 						<p:changeStatusCell>
 							<t:form t:id="statusForm" context="row" async="true">
 								<t:select t:id="status" validate="required" style="min-width: 180px;"></t:select>

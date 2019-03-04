@@ -19,14 +19,22 @@ import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.ProjectStatus;
  */
 public abstract class _Project extends CayenneDataObject {
 
+    public static final String BACKGROUND_PROPERTY = "background";
     public static final String BUDGET_PROPERTY = "budget";
+    public static final String COMPLETION_PROPERTY = "completion";
+    public static final String CONTACT_INFO_PROPERTY = "contactInfo";
     public static final String CREATED_PROPERTY = "created";
-    public static final String DESCRIPTION_PROPERTY = "description";
     public static final String DURATION_IN_WEEKS_PROPERTY = "durationInWeeks";
+    public static final String GOALS_PROPERTY = "goals";
+    public static final String IP_INFO_PROPERTY = "ipInfo";
     public static final String LAST_MODIFIED_PROPERTY = "lastModified";
     public static final String NAME_PROPERTY = "name";
     public static final String POTENTIAL_START_PROPERTY = "potentialStart";
     public static final String PROJECT_STATUS_PROPERTY = "projectStatus";
+    public static final String SKILLS_PROPERTY = "skills";
+    public static final String SUBMISSION_PROPERTY = "submission";
+    public static final String TECHNOLOGIES_PROPERTY = "technologies";
+    public static final String URL_PROPERTY = "url";
     public static final String PROJECT_NOTES_PROPERTY = "projectNotes";
     public static final String SITE_PROPERTY = "site";
     public static final String SUBJECTS_PROPERTY = "subjects";
@@ -34,11 +42,32 @@ public abstract class _Project extends CayenneDataObject {
 
     public static final String PK_PK_COLUMN = "pk";
 
+    public void setBackground(String background) {
+        writeProperty("background", background);
+    }
+    public String getBackground() {
+        return (String)readProperty("background");
+    }
+
     public void setBudget(Double budget) {
         writeProperty("budget", budget);
     }
     public Double getBudget() {
         return (Double)readProperty("budget");
+    }
+
+    public void setCompletion(Date completion) {
+        writeProperty("completion", completion);
+    }
+    public Date getCompletion() {
+        return (Date)readProperty("completion");
+    }
+
+    public void setContactInfo(String contactInfo) {
+        writeProperty("contactInfo", contactInfo);
+    }
+    public String getContactInfo() {
+        return (String)readProperty("contactInfo");
     }
 
     public void setCreated(Date created) {
@@ -48,18 +77,25 @@ public abstract class _Project extends CayenneDataObject {
         return (Date)readProperty("created");
     }
 
-    public void setDescription(String description) {
-        writeProperty("description", description);
-    }
-    public String getDescription() {
-        return (String)readProperty("description");
-    }
-
     public void setDurationInWeeks(Integer durationInWeeks) {
         writeProperty("durationInWeeks", durationInWeeks);
     }
     public Integer getDurationInWeeks() {
         return (Integer)readProperty("durationInWeeks");
+    }
+
+    public void setGoals(String goals) {
+        writeProperty("goals", goals);
+    }
+    public String getGoals() {
+        return (String)readProperty("goals");
+    }
+
+    public void setIpInfo(String ipInfo) {
+        writeProperty("ipInfo", ipInfo);
+    }
+    public String getIpInfo() {
+        return (String)readProperty("ipInfo");
     }
 
     public void setLastModified(Date lastModified) {
@@ -88,6 +124,34 @@ public abstract class _Project extends CayenneDataObject {
     }
     public ProjectStatus getProjectStatus() {
         return (ProjectStatus)readProperty("projectStatus");
+    }
+
+    public void setSkills(String skills) {
+        writeProperty("skills", skills);
+    }
+    public String getSkills() {
+        return (String)readProperty("skills");
+    }
+
+    public void setSubmission(Date submission) {
+        writeProperty("submission", submission);
+    }
+    public Date getSubmission() {
+        return (Date)readProperty("submission");
+    }
+
+    public void setTechnologies(String technologies) {
+        writeProperty("technologies", technologies);
+    }
+    public String getTechnologies() {
+        return (String)readProperty("technologies");
+    }
+
+    public void setUrl(String url) {
+        writeProperty("url", url);
+    }
+    public String getUrl() {
+        return (String)readProperty("url");
     }
 
     public void addToProjectNotes(ProjectNote obj) {

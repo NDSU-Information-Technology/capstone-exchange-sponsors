@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+	xmlns:p="tapestry:parameter" t:type="adminlayout" title="Project Details">
+    
+    <t:PageLink page="admin/projects">Return to Projects</t:PageLink>
+    <t:BeanDisplay object="project"
+    	add="country"
+    	reorder="name, budget, site, country, projectStatus, created, lastModified, user, subjects, submission,
+    		potentialStart, completion, durationInWeeks, background, goals, technologies, skills,
+    		ipInfo, contactInfo, url, projectNotes, editable, deletable">
+    	<p:site>${project.site.name}</p:site>
+    	<p:country>${project.site.country.name}</p:country>
+    	<p:projectNotes>
+			<t:PageLink page="account/projectnotes" context="project">View Notes</t:PageLink>
+		</p:projectNotes>
+		<p:background>
+			<t:outputraw value="project.background"/>
+		</p:background>
+		<p:goals>
+			<t:outputraw value="project.goals"/>
+		</p:goals>
+		<p:technologies>
+			<t:outputraw value="project.technologies"/>
+		</p:technologies>
+		<p:skills>
+			<t:outputraw value="project.skills"/>
+		</p:skills>
+		<p:ipInfo>
+			<t:outputraw value="project.ipInfo"/>
+		</p:ipInfo>
+		<p:contactInfo>
+			<t:outputraw value="project.contactInfo"/>
+		</p:contactInfo>
+    </t:BeanDisplay>
+    
+</html>

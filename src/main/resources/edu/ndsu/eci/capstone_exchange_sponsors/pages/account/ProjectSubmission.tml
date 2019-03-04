@@ -15,9 +15,6 @@
 			#budget {
 				width: 200px;
 			}
-			#durationInWeeks {
-				width: 60px;
-			}
 		</style>
 	</head>
 
@@ -25,28 +22,56 @@
 		<h2>Enter Project Details</h2>
 		<t:beaneditform t:id="form" object="project"
 			add="subjects" submitLabel="Save"
-			include="name, budget, potentialStart, durationInWeeks, description"
-			reorder="name, budget, potentialStart, durationInWeeks, subjects, description">
+			include="name, url, budget, submission, potentialStart, completion, background, goals, technologies, skills, ipInfo, contactInfo">
 			<p:name>
 				<t:Label for="name" />
 				<t:textfield t:id="name" value="project.name" />
+				<br/>
 			</p:name>
-			<p:durationInWeeks>
-				<t:label for="durationInWeeks" />
-				<t:TextField t:id="durationInWeeks" type="number" value="project.durationInWeeks" min="1" max="99" validate="min=1, max=99"/>
-			</p:durationInWeeks>
-			<p:description>
-				<t:label for="description">Description - Subject area (e.g. CS/ME/etc.) and
-					any notes (e.g. prefer web design/power systems/etc.).</t:label>
-				<t:textarea t:id="description" t:mixins="summernote"
-					value="project.description" t:validate="required"></t:textarea>
-			</p:description>
+			<p:url>
+				<t:Label for="url">Website - Give a link to your own webpage regarding the project.</t:Label>
+				<t:TextField t:id="url" type="url" value="project.url"></t:TextField>
+				<br/>
+			</p:url>			
+			<p:background>
+				<t:label for="background">Background</t:label>
+				<t:textarea t:id="background" t:mixins="summernote" value="project.background"></t:textarea>
+				<br/>
+			</p:background>
+			<p:goals>
+				<t:label for="goals">Goals</t:label>
+				<t:textarea t:id="goals" t:mixins="summernote" value="project.goals"></t:textarea>
+				<br/>
+			</p:goals>
+			<p:technologies>
+				<t:label for="technologies">Technologies</t:label>
+				<t:textarea t:id="technologies" t:mixins="summernote" value="project.technologies"></t:textarea>
+				<br/>
+			</p:technologies>
+			<p:skills>
+				<t:label for="skills">Skills</t:label>
+				<t:textarea t:id="skills" t:mixins="summernote" value="project.skills"></t:textarea>
+				<br/>
+			</p:skills>
+			<p:ipInfo>
+				<t:label for="ipInfo">IP Info</t:label>
+				<t:textarea t:id="ipInfo" t:mixins="summernote" value="project.ipInfo"></t:textarea>
+				<br/>
+			</p:ipInfo>
+			<p:contactInfo>
+				<t:label for="contactInfo">Contact Info</t:label>
+				<t:textarea t:id="contactInfo" t:mixins="summernote" value="project.contactInfo"></t:textarea>
+				<br/>
+			</p:contactInfo>
+			
 			<p:subjects>
-				<t:label for="selectedSubjects"><a href="#subjectDescription" title="View Subject Descriptions">Subjects</a></t:label>
-				<t:checklist t:id="selectedSubjects" encoder="encoder"
-					model="subjectsModel" t:validate="required" />
+				<t:label for="selectedSubjects">Subjects</t:label>
+				<t:checklist t:id="selectedSubjects" encoder="encoder" model="subjectsModel" t:validate="required" />
+				<br/>
 			</p:subjects>
 		</t:beaneditform>
+		
+		
 		
 		<h2 id="subjectDescription">Subject Descriptions</h2>
 		<t:Grid source="subjects" row="subjectRow"
