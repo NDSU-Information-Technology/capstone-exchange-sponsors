@@ -10,19 +10,21 @@
 ## See the License for the specific language governing permissions and
 ## limitations under the License.
 
-New project submitted:
+<h2>New project submitted:</h2>
 
-User: $project.user.name
-Site: $project.user.site.name
+<b>User:</b> $project.user.name
+<b>Site:</b> $project.user.site.name
 
-Project Name: $project.name
-Potential Start: $project.potentialStart
+<b>Project Name:</b> $project.name
+<b>Submission Deadline:</b> $project.submission
+<b>Potential Start:</b> $project.potentialStart
+<b>Completion:</b> $project.completion
 
-
-Subjects:
+<b>Subjects:</b>
 #foreach ($subject in $project.subjects)
  -$subject.name
 #end
 
-
+<b>Background:</b>
+$project.background
 

@@ -19,6 +19,7 @@ import java.util.List;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.access.DataContext;
 import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.log4j.Logger;
 import org.apache.tapestry5.SymbolConstants;
@@ -97,10 +98,64 @@ public class VelocityEmailServiceImpl implements VelocityEmailService {
     
     return email;
   }
+  
+  @Override
+  public HtmlEmail setupHtmlEmail(VelocityContext context, String templateName, String subject) throws ResourceNotFoundException, ParseErrorException, Exception {
+    VelocityEngine engine = velocityService.getEngine();
+    
+    StringWriter writer = new StringWriter();
+    Template template = engine.getTemplate("edu/ndsu/eci/capstone_exchange_sponsors/velocity/" + templateName);
+    template.merge(context, writer);
+    
+    HtmlEmail email = emailService.getHtmlEmail();
+    
+    try {
+      email.setMsg(writer.toString());
+    } catch (EmailException e) {
+      LOGGER.fatal("This should have never happened", e);
+    }
+    
+    if (!production) {
+      email.setSubject("[TEST] " + subject);
+    } else {
+      email.setSubject(subject);
+    }
+    
+    return email;
+  }
 
   @Override
   public boolean sendAdminEmail(VelocityContext context, String templateName, String subject) throws ResourceNotFoundException, ParseErrorException, Exception {
     SimpleEmail email = setupSimpleEmail(context, templateName, subject);
+    email.setFrom(fromAddress);
+
+    ObjectContext objContext = DataContext.createDataContext();
+    List<User> admins = CapstoneDomainMap.getInstance().performUsersByRoleQuery(objContext, UserRole.ADMIN);
+    
+    if (!production) {
+      User logged = userInfo.getUser();
+      for (User user : admins) {
+        if (logged.getFederatedId().equals(user.getFederatedId())) {
+          email.addTo(user.getEmail());
+          break;
+        }
+      }
+      if (email.getToAddresses().isEmpty()) {
+        email.addTo("richard.frovarp@ndsu.edu");
+      }
+    } else {
+      for (User user : admins) {
+        email.addTo(user.getEmail());
+      }
+    }
+    
+    email.send();
+    return true;
+  }
+  
+  @Override
+  public boolean sendAdminHtmlEmail(VelocityContext context, String templateName, String subject) throws ResourceNotFoundException, ParseErrorException, Exception {
+    HtmlEmail email = setupHtmlEmail(context, templateName, subject);
     email.setFrom(fromAddress);
 
     ObjectContext objContext = DataContext.createDataContext();

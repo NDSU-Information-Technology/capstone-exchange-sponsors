@@ -217,7 +217,7 @@ public class ProjectSubmission {
   private void notifyAdmins() throws ResourceNotFoundException, ParseErrorException, Exception {
     VelocityContext velContext = new VelocityContext();
     velContext.put("project", project);
-    emailService.sendAdminEmail(velContext, "project-submitted.vm", "Project Submission");
+    emailService.sendAdminHtmlEmail(velContext, "project-submitted.vm", "Project Submission");
   }
   
   private void fixupSubjects() {

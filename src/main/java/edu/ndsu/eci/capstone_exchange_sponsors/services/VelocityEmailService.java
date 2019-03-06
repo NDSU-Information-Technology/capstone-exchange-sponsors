@@ -13,6 +13,7 @@
 // limitations under the License.
 package edu.ndsu.eci.capstone_exchange_sponsors.services;
 
+import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.exception.ParseErrorException;
@@ -33,8 +34,12 @@ public interface VelocityEmailService {
    */
   public SimpleEmail setupSimpleEmail(VelocityContext context, String templateName, String subject) throws ResourceNotFoundException, ParseErrorException, Exception;
 
+  public HtmlEmail setupHtmlEmail(VelocityContext context, String templateName, String subject) throws ResourceNotFoundException, ParseErrorException, Exception;
+  
   public boolean sendAdminEmail(VelocityContext context, String templateName, String subject) throws ResourceNotFoundException, ParseErrorException, Exception;
   
   public boolean sendUserEmail(VelocityContext context, String templateName, User user, String subject) throws ResourceNotFoundException, ParseErrorException, Exception;
+
+  public boolean sendAdminHtmlEmail(VelocityContext context, String templateName, String subject) throws ResourceNotFoundException, ParseErrorException, Exception;
 
 }
