@@ -66,19 +66,10 @@
 				</t:Grid>
 			</div>
 			<div id="tab2" class="tab-pane">
-				<t:Grid source="approvedSites" row="siteRow" include="name, url" add="expires, logo, tier">
+				<t:Grid source="approvedSites" row="siteRow" include="name">
 					<p:nameCell>
 						<t:eventlink event="selectSite" context="siteRow">${siteRow.name}</t:eventlink>
 					</p:nameCell>
-					<p:expiresCell>
-						${expiration}
-					</p:expiresCell>
-					<p:tierCell>
-						${siteTier}
-					</p:tierCell>
-					<p:logoCell>
-						<img src="${uploadedImage}" alt="Site Logo" style="width:100px;"/>
-					</p:logoCell>
 				</t:Grid>
 			</div>
 			<div id="tab3" class="tab-pane">

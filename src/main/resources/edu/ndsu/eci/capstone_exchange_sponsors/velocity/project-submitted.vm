@@ -12,10 +12,10 @@
 
 <h2>New project submitted:</h2>
 
+<b>Project Name:</b> $project.name
 <b>User:</b> $project.user.name
 <b>Site:</b> $project.user.site.name
 
-<b>Project Name:</b> $project.name
 <b>Submission Deadline:</b> $project.submission
 <b>Potential Start:</b> $project.potentialStart
 <b>Completion:</b> $project.completion

@@ -1,4 +1,4 @@
-package edu.ndsu.eci.capstone_exchange_sponsors.pages.account;
+package edu.ndsu.eci.capstone_exchange_sponsors.pages;
 
 import java.io.ByteArrayInputStream;
 
@@ -16,7 +16,7 @@ public class UploadStorePhoto {
   private LinkSource linkSource;
   
   public Link getUploadedFile(Site site) {
-    return linkSource.createPageRenderLink("account/UploadStorePhoto", false, new Object[] {site});
+    return linkSource.createPageRenderLink("UploadStorePhoto", false, new Object[] {site});
   }
   
   public Object onActivate(final Site site) {

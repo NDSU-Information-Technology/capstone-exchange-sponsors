@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html t:type="layout" title="View Sponsors"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+    
+    <h3>Strategic Partners</h3>
+    <t:Grid source="strategicSponsors" row="row"
+    	include="name, url"
+    	add="logo">
+    	<p:logoCell>
+    		<img src="${uploadedImage}" alt="Site Logo" style="width:100px;"/>
+    	</p:logoCell>
+    </t:Grid>
+    
+    <h3>General Partners</h3>
+    <t:Grid source="generalSponsors" row="row"
+    	include="name, url"
+    	add="logo">
+    	<p:logoCell>
+    		<img src="${uploadedImage}" alt="Site Logo" style="width:100px;"/>
+    	</p:logoCell>
+    </t:Grid>
+    
+</html>

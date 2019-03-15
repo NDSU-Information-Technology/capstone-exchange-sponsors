@@ -95,11 +95,10 @@ public class Layout {
       pageNames.add("Index");
       pageNames.add("Contact");
       pageNames.add("Privacy");
+      pageNames.add("ViewSponsors");
       
       if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
         pageNames.add("Account/Dashboard");
-      }
-      if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
         pageNames.add("Account/SponsorshipSubmission");
       }
       
@@ -114,6 +113,7 @@ public class Layout {
       pageNames.add("Index");
       pageNames.add("Contact");
       pageNames.add("Privacy");
+      pageNames.add("ViewSponsors");
       pageNames.add("Login");
     }
     
@@ -130,11 +130,10 @@ public class Layout {
       pseudoNames.add("Index");
       pseudoNames.add("Contact");
       pseudoNames.add("Privacy");
+      pseudoNames.add("View Sponsors");
       
       if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
         pseudoNames.add("Dashboard");
-      }
-      if (securityService.hasRole(FederatedAccountsRealm.APPROVED_USER_ROLE)) {
         pseudoNames.add("Sponsorship");
       }
       
@@ -149,6 +148,7 @@ public class Layout {
       pseudoNames.add("Index");
       pseudoNames.add("Contact");
       pseudoNames.add("Privacy");
+      pseudoNames.add("View Sponsors");
       pseudoNames.add("Login");
     }
     

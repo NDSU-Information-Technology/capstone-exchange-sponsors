@@ -28,6 +28,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
+import edu.ndsu.eci.capstone_exchange_sponsors.pages.UploadStorePhoto;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.CapstoneDomainMap;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
