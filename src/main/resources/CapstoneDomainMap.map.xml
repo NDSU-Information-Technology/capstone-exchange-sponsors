@@ -4,6 +4,29 @@
   xsi:schemaLocation="http://cayenne.apache.org/schema/3.0/modelMap http://cayenne.apache.org/schema/3.0/modelMap.xsd"
   project-version="3.0.0.1">
 	<property name="defaultPackage" value="edu.ndsu.eci.capstone_exchange_sponsors.persist"/>
+	<db-entity name="applicationDates">
+		<db-attribute name="applicationNotePk" type="INTEGER"/>
+		<db-attribute name="applicationPk" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="endDate" type="DATE" isMandatory="true"/>
+		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="startDate" type="DATE" isMandatory="true"/>
+	</db-entity>
+	<db-entity name="applicationNotes">
+		<db-attribute name="applicationPk" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="created" type="TIMESTAMP" isMandatory="true"/>
+		<db-attribute name="note" type="CLOB" isMandatory="true"/>
+		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="userPk" type="INTEGER" isMandatory="true"/>
+	</db-entity>
+	<db-entity name="applications">
+		<db-attribute name="cost" type="DOUBLE" isMandatory="true"/>
+		<db-attribute name="description" type="CLOB" isMandatory="true"/>
+		<db-attribute name="durationInWeeks" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="255"/>
+		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="sitePk" type="INTEGER" isMandatory="true"/>
+		<db-attribute name="teamSize" type="INTEGER" isMandatory="true"/>
+	</db-entity>
 	<db-entity name="countries">
 		<db-attribute name="created" type="TIMESTAMP" isMandatory="true"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="50"/>
@@ -91,6 +114,22 @@
 		<db-attribute name="url" type="VARCHAR" length="255"/>
 		<db-attribute name="workPhone" type="VARCHAR" length="255"/>
 	</db-entity>
+	<obj-entity name="Application" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Application" dbEntityName="applications">
+		<obj-attribute name="cost" type="java.lang.Double" db-attribute-path="cost"/>
+		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
+		<obj-attribute name="durationInWeeks" type="java.lang.Integer" db-attribute-path="durationInWeeks"/>
+		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+		<obj-attribute name="sitePk" type="java.lang.Integer" db-attribute-path="sitePk"/>
+		<obj-attribute name="teamSize" type="java.lang.Integer" db-attribute-path="teamSize"/>
+	</obj-entity>
+	<obj-entity name="ApplicationDate" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.ApplicationDate" dbEntityName="applicationDates">
+		<obj-attribute name="endDate" type="java.util.Date" db-attribute-path="endDate"/>
+		<obj-attribute name="startDate" type="java.util.Date" db-attribute-path="startDate"/>
+	</obj-entity>
+	<obj-entity name="ApplicationNote" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.ApplicationNote" dbEntityName="applicationNotes">
+		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
+		<obj-attribute name="note" type="java.lang.String" db-attribute-path="note"/>
+	</obj-entity>
 	<obj-entity name="Country" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Country" dbEntityName="countries">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
@@ -158,6 +197,27 @@
 		<obj-attribute name="url" type="java.lang.String" db-attribute-path="url"/>
 		<obj-attribute name="workPhone" type="java.lang.String" db-attribute-path="workPhone"/>
 	</obj-entity>
+	<db-relationship name="application" source="applicationDates" target="applications" toMany="false">
+		<db-attribute-pair source="applicationPk" target="pk"/>
+	</db-relationship>
+	<db-relationship name="note" source="applicationDates" target="applicationNotes" toMany="false">
+		<db-attribute-pair source="applicationNotePk" target="pk"/>
+	</db-relationship>
+	<db-relationship name="application" source="applicationNotes" target="applications" toMany="false">
+		<db-attribute-pair source="applicationPk" target="pk"/>
+	</db-relationship>
+	<db-relationship name="date" source="applicationNotes" target="applicationDates" toMany="false">
+		<db-attribute-pair source="pk" target="applicationNotePk"/>
+	</db-relationship>
+	<db-relationship name="user" source="applicationNotes" target="users" toMany="false">
+		<db-attribute-pair source="userPk" target="pk"/>
+	</db-relationship>
+	<db-relationship name="dates" source="applications" target="applicationDates" toMany="true">
+		<db-attribute-pair source="pk" target="applicationPk"/>
+	</db-relationship>
+	<db-relationship name="notes" source="applications" target="applicationNotes" toMany="true">
+		<db-attribute-pair source="pk" target="applicationPk"/>
+	</db-relationship>
 	<db-relationship name="sites" source="countries" target="sites" toMany="true">
 		<db-attribute-pair source="pk" target="countryPk"/>
 	</db-relationship>
@@ -206,6 +266,9 @@
 	<db-relationship name="projects" source="subjects" target="projectSubjects" toDependentPK="true" toMany="true">
 		<db-attribute-pair source="pk" target="subjectPk"/>
 	</db-relationship>
+	<db-relationship name="applications" source="users" target="applicationNotes" toMany="true">
+		<db-attribute-pair source="pk" target="userPk"/>
+	</db-relationship>
 	<db-relationship name="projectNotes" source="users" target="projectNotes" toMany="true">
 		<db-attribute-pair source="pk" target="userPk"/>
 	</db-relationship>
@@ -218,6 +281,11 @@
 	<db-relationship name="site" source="users" target="sites" toMany="false">
 		<db-attribute-pair source="sitePk" target="pk"/>
 	</db-relationship>
+	<obj-relationship name="application" source="ApplicationDate" target="Application" deleteRule="Nullify" db-relationship-path="application"/>
+	<obj-relationship name="note" source="ApplicationDate" target="ApplicationNote" deleteRule="Nullify" db-relationship-path="note"/>
+	<obj-relationship name="application" source="ApplicationNote" target="Application" deleteRule="Nullify" db-relationship-path="application"/>
+	<obj-relationship name="date" source="ApplicationNote" target="ApplicationDate" deleteRule="Nullify" db-relationship-path="date"/>
+	<obj-relationship name="user" source="ApplicationNote" target="User" deleteRule="Nullify" db-relationship-path="user"/>
 	<obj-relationship name="sites" source="Country" target="Site" deleteRule="Deny" db-relationship-path="sites"/>
 	<obj-relationship name="projectNotes" source="Project" target="ProjectNote" deleteRule="Deny" db-relationship-path="projectNotes"/>
 	<obj-relationship name="site" source="Project" target="Site" deleteRule="Nullify" db-relationship-path="site"/>
