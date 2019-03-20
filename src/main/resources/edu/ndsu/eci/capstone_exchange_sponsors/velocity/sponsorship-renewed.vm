@@ -1,0 +1,12 @@
+
+## Incomplete: Meant to give notification of sponsorship renewal. Not currently set up.
+## Should be tied to UpdateSponsorships.java under services folder.
+
+Site Sponsorship Renewed:
+
+Site: $user.site.name
+Sponsorship Tier: $sponsorship.tier
+Renew Date: 
+Expire Date:
+
+

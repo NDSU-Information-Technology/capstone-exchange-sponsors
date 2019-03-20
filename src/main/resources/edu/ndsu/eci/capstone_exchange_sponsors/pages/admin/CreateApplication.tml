@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+	xmlns:p="tapestry:parameter" t:type="adminlayout" title="Create Application">
+    
+    <h3>Application</h3>
+    <t:BeanEditForm t:id="appForm" object="application" >
+    	<p:name>
+			<t:Label for="name" />
+			<t:textfield t:id="name" value="application.name" />
+			<br/>
+		</p:name>
+    	<p:description>
+    		<t:label for="description">Background</t:label>
+			<t:textarea t:id="description" t:mixins="summernote" value="application.description"></t:textarea>
+			<br/>
+    	</p:description>
+    </t:BeanEditForm>
+    
+    <t:Grid source="applications" row="appRow">
+    
+    </t:Grid>
+    
+    <h3>Application Note</h3>
+    <t:BeanEditForm t:id="appNoteForm" object="applicationNote" >
+    
+    </t:BeanEditForm>
+    
+    <t:Grid source="applicationNotes" row="appNoteRow">
+    
+    </t:Grid>
+    
+    <h3>Application Date</h3>
+    <t:BeanEditForm t:id="appDateForm" object="applicationDate" >
+    
+    </t:BeanEditForm>
+    
+    <t:Grid source="applicationDates" row="appDateRow">
+    
+    </t:Grid>
+    
+</html>
