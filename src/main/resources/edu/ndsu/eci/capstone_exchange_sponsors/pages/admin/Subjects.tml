@@ -18,14 +18,8 @@
     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
     xmlns:p="tapestry:parameter" t:type="adminlayout" title="Subjects">
     
-    <t:beaneditform t:id="form" object="subject" exclude="created" reorder="name,status">
-    	<p:description>
-    		<t:textarea t:mixins="summernote" value="subject.description"></t:textarea>
-    	</p:description>
-    </t:beaneditform>
-    
+   
     <t:grid source="subjects" row="row" reorder="name,description">
-    	<p:nameCell><t:pagelink page="admin/subjects" context="row">${row.name}</t:pagelink></p:nameCell>
     	<p:descriptionCell><t:outputraw value="row.description"></t:outputraw></p:descriptionCell>
     </t:grid>
     

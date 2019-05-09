@@ -18,12 +18,10 @@
     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
     xmlns:p="tapestry:parameter" t:type="adminlayout" title="Countries">
     
-    <div>Not done as it shouldn't be really needed as the list of countries should be imported.</div>
+    <div>This info is automatically imported every few minutes from the faculty exchange application.</div>
     
-    <t:beaneditform t:id="form" object="country" exclude="created"></t:beaneditform>
     
-    <t:jquery.datatable source="countries" include="name,status,created" row="row">
-      <p:nameCell><t:pagelink context="row" page="admin/countries">${row.name}</t:pagelink></p:nameCell>
+    <t:jquery.datatable source="countries" include="name,isoA2,status,created" row="row">
     </t:jquery.datatable>
     
 </html> 

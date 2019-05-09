@@ -13,50 +13,30 @@
 // limitations under the License.
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.admin;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.SelectQuery;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.PageActivationContext;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
-
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
-import edu.ndsu.eci.capstone_exchange_sponsors.services.HtmlCleaner;
 
+/**
+ * Subjects viewing page.
+ *
+ */
 public class Subjects {
 
-  @PageActivationContext
-  @Property
-  private Subject subject;
-  
-  @Component
-  private BeanEditForm form;
-  
   @Inject
   private ObjectContext context;
   
   @Property
   private Subject row;
   
-  @Inject
-  private HtmlCleaner cleaner;
   
   @SuppressWarnings("unchecked")
   public List<Subject> getSubjects() {
     return context.performQuery(new SelectQuery(Subject.class));
-  }
-  
-  @CommitAfter
-  public void onSuccessFromForm() {
-    subject.setCreated(new Date());
-    subject.setDescription(cleaner.cleanCapstone(subject.getDescription()));;
-    context.registerNewObject(subject);
-    subject = null;
   }
 }

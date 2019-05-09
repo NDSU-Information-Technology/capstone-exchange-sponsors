@@ -13,29 +13,16 @@
 // limitations under the License.
 package edu.ndsu.eci.capstone_exchange_sponsors.pages.admin;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.SelectQuery;
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.PageActivationContext;
 import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.ioc.annotations.Inject;
-
-import com.googlecode.tapestry5cayenne.annotations.CommitAfter;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
 
 public class Countries {
-
-  @PageActivationContext
-  @Property
-  private Country country;
-  
-  @Component
-  private BeanEditForm form;
   
   @Inject
   private ObjectContext context;
@@ -48,10 +35,4 @@ public class Countries {
     return context.performQuery(new SelectQuery(Country.class));
   }
   
-  @CommitAfter
-  public void onSuccessFromForm() {
-    country.setCreated(new Date());
-    context.registerNewObject(country);
-    country = null;
-  }
 }
