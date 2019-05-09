@@ -24,7 +24,7 @@ import com.google.gson.reflect.TypeToken;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.DataSynchronization;
-import edu.ndsu.eci.capstone_exchange_sponsors.util.SrcCountry;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.datasync.SrcCountry;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 public class DataSynchronizationImpl implements DataSynchronization {

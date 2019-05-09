@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package edu.ndsu.eci.capstone_exchange_sponsors.util;
+package edu.ndsu.eci.capstone_exchange_sponsors.util.datasync;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
