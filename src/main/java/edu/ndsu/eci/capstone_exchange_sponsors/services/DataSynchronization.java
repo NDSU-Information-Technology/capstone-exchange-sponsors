@@ -23,4 +23,9 @@ public interface DataSynchronization {
    * Synchronize the list of countries by pulling from the faculty side.
    */
   public void synchronizeCountries();
+  
+  /**
+   * Synchronize the list of subjects by pulling from faculty side
+   */
+  public void synchronizeSubjects();
 }

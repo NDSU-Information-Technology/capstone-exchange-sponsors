@@ -23,8 +23,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Country;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Subject;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.DataSynchronization;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.datasync.SrcCountry;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.datasync.SrcSubject;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 
 public class DataSynchronizationImpl implements DataSynchronization {
@@ -61,6 +63,7 @@ public class DataSynchronizationImpl implements DataSynchronization {
       HttpEntity entity = resp.getEntity();
       // FIXME this should be UTF8
       String json = EntityUtils.toString(entity);
+      resp.close();
       ObjectContext context = DataContext.createDataContext();
       
       List<Country> countries = context.performQuery(new SelectQuery(Country.class));
@@ -91,6 +94,48 @@ public class DataSynchronizationImpl implements DataSynchronization {
     } catch (IOException e) {
       LOGGER.error("Failed to update countries", e);
     }
+  }
+
+  @Override
+  public void synchronizeSubjects() {
+    try {
+      HttpGet get = new HttpGet(remoteBasePath + "/rest/subjects");
+      CloseableHttpResponse resp = httpclient.execute(get);
+      HttpEntity entity = resp.getEntity();
+      // FIXME this should be UTF8
+      String json = EntityUtils.toString(entity);
+      resp.close();
+      ObjectContext context = DataContext.createDataContext();
+      
+      List<Subject> subjects = context.performQuery(new SelectQuery(Subject.class));
+      Map<Integer, Subject> map = new HashMap<>();
+      
+      for (Subject subject : subjects) {
+        map.put(subject.getSrcPk(), subject);
+      }
+      
+      List<SrcSubject> srcSubjects = gson.fromJson(json, new TypeToken<List<SrcSubject>>() {}.getType());
+      
+      for (SrcSubject src : srcSubjects) {
+        if (map.containsKey(src.getSubjectId())) {
+          src.pushToSubject(map.get(src.getSubjectId()));
+          map.remove(src.getSubjectId());
+        } else {
+          Subject subject = context.newObject(Subject.class);
+          subject.setCreated(new Date());
+          src.pushToSubject(subject);
+        }
+      }
+      
+      for (Subject subject : map.values()) {
+        subject.setStatus(Status.DECOMMISSIONED);
+      }
+      
+      context.commitChanges();
+    } catch (IOException e) {
+      LOGGER.error("Failed to update countries", e);
+    }
+    
   }
 
 }
