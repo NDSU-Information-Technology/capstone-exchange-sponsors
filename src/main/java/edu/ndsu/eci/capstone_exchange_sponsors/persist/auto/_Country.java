@@ -17,7 +17,9 @@ import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status;
 public abstract class _Country extends CayenneDataObject {
 
     public static final String CREATED_PROPERTY = "created";
+    public static final String ISO_A2_PROPERTY = "isoA2";
     public static final String NAME_PROPERTY = "name";
+    public static final String SRC_PK_PROPERTY = "srcPk";
     public static final String STATUS_PROPERTY = "status";
     public static final String SITES_PROPERTY = "sites";
 
@@ -30,11 +32,25 @@ public abstract class _Country extends CayenneDataObject {
         return (Date)readProperty("created");
     }
 
+    public void setIsoA2(String isoA2) {
+        writeProperty("isoA2", isoA2);
+    }
+    public String getIsoA2() {
+        return (String)readProperty("isoA2");
+    }
+
     public void setName(String name) {
         writeProperty("name", name);
     }
     public String getName() {
         return (String)readProperty("name");
+    }
+
+    public void setSrcPk(Integer srcPk) {
+        writeProperty("srcPk", srcPk);
+    }
+    public Integer getSrcPk() {
+        return (Integer)readProperty("srcPk");
     }
 
     public void setStatus(Status status) {

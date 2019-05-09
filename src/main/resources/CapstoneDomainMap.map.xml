@@ -29,8 +29,10 @@
 	</db-entity>
 	<db-entity name="countries">
 		<db-attribute name="created" type="TIMESTAMP" isMandatory="true"/>
+		<db-attribute name="isoA2" type="VARCHAR" isMandatory="true" length="2"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="50"/>
 		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="srcPk" type="INTEGER" isMandatory="true"/>
 		<db-attribute name="status" type="VARCHAR" isMandatory="true" length="20"/>
 	</db-entity>
 	<db-entity name="projectNotes">
@@ -98,6 +100,7 @@
 		<db-attribute name="description" type="CLOB" isMandatory="true"/>
 		<db-attribute name="name" type="VARCHAR" isMandatory="true" length="255"/>
 		<db-attribute name="pk" type="INTEGER" isPrimaryKey="true" isMandatory="true"/>
+		<db-attribute name="srcPk" type="INTEGER" isMandatory="true"/>
 		<db-attribute name="status" type="VARCHAR" isMandatory="true" length="20"/>
 	</db-entity>
 	<db-entity name="users">
@@ -132,7 +135,9 @@
 	</obj-entity>
 	<obj-entity name="Country" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Country" dbEntityName="countries">
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
+		<obj-attribute name="isoA2" type="java.lang.String" db-attribute-path="isoA2"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+		<obj-attribute name="srcPk" type="java.lang.Integer" db-attribute-path="srcPk"/>
 		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status" db-attribute-path="status"/>
 	</obj-entity>
 	<obj-entity name="Project" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.Project" dbEntityName="projects">
@@ -183,6 +188,7 @@
 		<obj-attribute name="created" type="java.util.Date" db-attribute-path="created"/>
 		<obj-attribute name="description" type="java.lang.String" db-attribute-path="description"/>
 		<obj-attribute name="name" type="java.lang.String" db-attribute-path="name"/>
+		<obj-attribute name="srcPk" type="java.lang.Integer" db-attribute-path="srcPk"/>
 		<obj-attribute name="status" type="edu.ndsu.eci.capstone_exchange_sponsors.util.enums.Status" db-attribute-path="status"/>
 	</obj-entity>
 	<obj-entity name="User" className="edu.ndsu.eci.capstone_exchange_sponsors.persist.User" dbEntityName="users">

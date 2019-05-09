@@ -56,6 +56,7 @@ import edu.ndsu.eci.capstone_exchange_sponsors.auth.FederatedAccountsRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.ILACRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.auth.LocalDevRealm;
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.User;
+import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.DataSynchronizationImpl;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.ECIFederatedAccountService;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.EmailServiceImpl;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.impl.FormInputTrimmerFilterImpl;
@@ -101,6 +102,7 @@ public class AppModule {
     binder.bind(VelocityService.class, VelocityServiceImpl.class);
     binder.bind(VelocityEmailService.class, VelocityEmailServiceImpl.class);
     binder.bind(UpdateSponsorships.class, UpdateSponsorshipsImpl.class);
+    binder.bind(DataSynchronization.class, DataSynchronizationImpl.class);
   }
 
   public static void contributeFederatedAccountService(MappedConfiguration<String, Object> configuration) {
@@ -272,13 +274,20 @@ public class AppModule {
    * Schedules jobs to run daily.
    * @param executor Executor service.
    * @param updateSponsorships Service that handles updating Sponsorships.
+   * @param dataSync data synchronization service
    */
   @Startup
-  public static void scheduleJobs(PeriodicExecutor executor, final UpdateSponsorships updateSponsorships) {
+  public static void scheduleJobs(PeriodicExecutor executor, final UpdateSponsorships updateSponsorships, final DataSynchronization dataSync) {
     // 4:00 always happens, and happens only once, and is outside of normal maintenance windows and backups
     executor.addJob(new CronSchedule("0 00 4 * * ?"), "Import Job", new Runnable() {
       public void run() {
         updateSponsorships.update();
+      }
+    });
+    
+    executor.addJob(new CronSchedule("0 */5 * * * ?"), "Country Sync Job", new Runnable() {
+      public void run() {
+        dataSync.synchronizeCountries();
       }
     });
   }

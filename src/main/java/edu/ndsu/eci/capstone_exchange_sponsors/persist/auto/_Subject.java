@@ -17,6 +17,7 @@ public abstract class _Subject extends CayenneDataObject {
     public static final String CREATED_PROPERTY = "created";
     public static final String DESCRIPTION_PROPERTY = "description";
     public static final String NAME_PROPERTY = "name";
+    public static final String SRC_PK_PROPERTY = "srcPk";
     public static final String STATUS_PROPERTY = "status";
 
     public static final String PK_PK_COLUMN = "pk";
@@ -40,6 +41,13 @@ public abstract class _Subject extends CayenneDataObject {
     }
     public String getName() {
         return (String)readProperty("name");
+    }
+
+    public void setSrcPk(Integer srcPk) {
+        writeProperty("srcPk", srcPk);
+    }
+    public Integer getSrcPk() {
+        return (Integer)readProperty("srcPk");
     }
 
     public void setStatus(Status status) {
