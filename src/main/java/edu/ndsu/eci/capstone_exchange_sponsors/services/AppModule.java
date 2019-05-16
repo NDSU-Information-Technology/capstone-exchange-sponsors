@@ -293,7 +293,7 @@ public class AppModule {
     
     executor.addJob(new CronSchedule("0 1/5 * * * ?"), "Subject Sync Job", new Runnable() {
       public void run() {
-        dataSync.synchronizeCountries();
+        dataSync.synchronizeSubjects();
       }
     });
   }
