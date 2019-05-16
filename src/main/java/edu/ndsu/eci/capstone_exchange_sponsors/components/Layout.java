@@ -127,7 +127,7 @@ public class Layout {
   public String getPseudoName() {
     if(loggedIn()) {
       pseudoNames = new ArrayList<>();
-      pseudoNames.add("Index");
+      pseudoNames.add("Home");
       pseudoNames.add("Contact");
       pseudoNames.add("Privacy");
       pseudoNames.add("View Sponsors");
@@ -145,7 +145,7 @@ public class Layout {
       
     } else {
       pseudoNames = new ArrayList<>();
-      pseudoNames.add("Index");
+      pseudoNames.add("Home");
       pseudoNames.add("Contact");
       pseudoNames.add("Privacy");
       pseudoNames.add("View Sponsors");
