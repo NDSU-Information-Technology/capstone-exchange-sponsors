@@ -282,9 +282,9 @@ public class BaseILACRealm extends AuthorizingRealm {
       return false;
     }
     
-    if (!isStemmable(getPermissionName(permission)) && getInvocation() == null) {
-      return false;
-    }
+//    if (!isStemmable(getPermissionName(permission)) && getInvocation() == null) {
+//      return false;
+//    }
     
     return true;
   }

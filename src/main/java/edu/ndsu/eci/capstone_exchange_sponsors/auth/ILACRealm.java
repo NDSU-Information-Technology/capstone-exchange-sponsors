@@ -19,7 +19,11 @@ import org.apache.tapestry5.plastic.MethodInvocation;
 import org.apache.tapestry5.services.Environment;
 
 import edu.ndsu.eci.capstone_exchange_sponsors.persist.Project;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Site;
+import edu.ndsu.eci.capstone_exchange_sponsors.persist.Sponsorship;
 import edu.ndsu.eci.capstone_exchange_sponsors.services.UserInfo;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorTier;
+import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.SponsorshipStatus;
 import edu.ndsu.eci.capstone_exchange_sponsors.util.enums.UserRole;
 
 public class ILACRealm extends BaseILACRealm {
@@ -27,6 +31,8 @@ public class ILACRealm extends BaseILACRealm {
   /** ability to edit a proposal */
   public static final String PROJECT_EDIT_INSTANCE = "project_edit:instance";
 
+  public static final String PROJECT_CREATE = "project:create";
+  
   private final UserInfo userInfo;
 
   public ILACRealm(Environment environment, UserInfo userInfo) {
@@ -56,4 +62,21 @@ public class ILACRealm extends BaseILACRealm {
 
   }
 
+  @InstanceAccessMethod(PROJECT_CREATE)
+  public boolean isProjectCreateAllowed() {
+    Site site = userInfo.getUser().getSite();
+    boolean spons = false;
+    for (Sponsorship sponsor : site.getSponsorships()) {
+      if (sponsor.getStatus() == SponsorshipStatus.ACTIVE && sponsor.getTier() == SponsorTier.STRATEGIC_PARTNER) {
+        spons = true;
+      }
+    }
+    
+    if (!spons) {
+      return false;
+    }
+
+    // FIXME this only works for the first year
+    return site.getProjects().isEmpty();
+  }
 }
