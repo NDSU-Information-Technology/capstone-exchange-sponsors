@@ -111,6 +111,7 @@ public class ProjectSubmission {
   /**
    * Setup the form if it is a new submission
    */
+  @RequiresPermissions(ILACRealm.PROJECT_CREATE)
   public void onActivate() {
     if (project != null) {
       return;

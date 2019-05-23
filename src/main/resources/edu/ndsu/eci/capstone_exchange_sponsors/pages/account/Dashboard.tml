@@ -116,9 +116,11 @@
 							<t:PageLink page="account/projectnotes" context="projectRow">View Notes</t:PageLink>
 						</p:notesCell>
 					</t:grid>
+          <t:security.hasPermission permission="${createPermission}">
 					<div>
 						<t:pagelink page="account/projectsubmission">Create Project</t:pagelink>
 					</div>
+          </t:security.hasPermission>
 					<br/> <br/>
 					<div>
 						<table class="table table-hover table-bordered table-striped">

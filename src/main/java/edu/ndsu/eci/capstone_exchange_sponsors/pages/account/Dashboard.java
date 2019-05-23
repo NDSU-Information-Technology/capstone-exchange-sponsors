@@ -88,8 +88,6 @@ public class Dashboard {
   @Property
   private List<Project> projects;
   
-  
-  
   /**
    * Setup render, get logged in user
    */
@@ -146,6 +144,10 @@ public class Dashboard {
    */
   public Link getUploadedImage() {
     return uploadStore.getUploadedFile(userInfo.getUser().getSite());
+  }
+  
+  public String getCreatePermission() {
+    return ILACRealm.PROJECT_CREATE;
   }
   
 }
